@@ -1,14 +1,15 @@
 import React from 'react';
-import Navbar from "./components/navbar/Navbar";
-import {Outlet} from "react-router-dom";
-import Grid from "@mui/material/Grid"
+import DrawBoard from "./components/draw-board/DrawBoard";
+import {Container} from "@mui/material";
 
 function App() {
     return (
-        <Grid container>
-            <Navbar/>
-            <Outlet/>
-        </Grid>
+        <Container
+            maxWidth="md"
+            sx={{margin: "30px auto"}}
+        >
+            <DrawBoard/>
+        </Container>
     );
 }
 
