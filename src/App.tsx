@@ -1,15 +1,21 @@
-import React from 'react';
-import DrawBoard from "./components/draw-board/DrawBoard";
-import {Container} from "@mui/material";
+import React, {Suspense} from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+
+const NormalLayout = React.lazy(() => import("./layout/NormalLayout"))
+const Game = React.lazy(() => import('./components/game-play/Game'));
 
 function App() {
     return (
-        <Container
-            maxWidth="md"
-            sx={{margin: "30px auto"}}
-        >
-            <DrawBoard/>
-        </Container>
+        <BrowserRouter>
+            <Suspense fallback={<div>Page is loading ...</div>}>
+                <Routes>
+                    <Route element={<NormalLayout/>}>
+                        <Route path="/" element={<Game/>}>
+                        </Route>
+                    </Route>
+                </Routes>
+            </Suspense>
+        </BrowserRouter>
     );
 }
 

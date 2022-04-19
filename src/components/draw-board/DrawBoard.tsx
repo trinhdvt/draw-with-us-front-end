@@ -61,7 +61,7 @@ const DrawBoard = () => {
     };
 
     return (
-        <Grid container justifyContent="flex-end">
+        <Grid container justifyContent="center">
             <Grid item container md={5}
                   sx={parentStyles}
                   direction="column"
