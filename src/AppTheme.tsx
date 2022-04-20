@@ -1,15 +1,6 @@
 import {createTheme} from "@mui/material";
 
 export const appTheme = createTheme(({
-    components: {
-        MuiButton: {
-            styleOverrides: {
-                root: {
-                    fontSize: '1.5rem !important',
-                }
-            }
-        }
-    },
     typography: {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         fontSize: 14,

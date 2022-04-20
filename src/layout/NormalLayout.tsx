@@ -4,18 +4,22 @@ import Header from "../components/commons/header/Header";
 import Footer from "../components/commons/footer/Footer";
 import {Container} from "@mui/material";
 
+const containerStyles = {
+    margin: "30px auto",
+}
+
 const NormalLayout = () => {
     return (
-        <div>
+        <main style={{backgroundColor: "aquamarine"}}>
             <Container
                 maxWidth="md"
-                sx={{margin: "30px auto"}}
+                sx={containerStyles}
             >
                 <Header/>
                 <Outlet/>
                 <Footer/>
             </Container>
-        </div>
+        </main>
     );
 };
 

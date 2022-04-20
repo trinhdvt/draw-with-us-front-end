@@ -1,6 +1,6 @@
 import {Grid, styled, Typography} from '@mui/material';
 import React from 'react';
-import Logo from '../../../assets/logo.svg';
+import Logo from '../../../assets/images/logo.svg';
 
 const Img = styled('img')({
     width: "auto",
