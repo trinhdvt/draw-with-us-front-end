@@ -1,5 +1,6 @@
 import React, {Suspense} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import LoadingProgress from "./components/commons/LoadingProgress";
 
 const NormalLayout = React.lazy(() => import("./layout/NormalLayout"))
 const Game = React.lazy(() => import('./components/game-play/Game'));
@@ -8,7 +9,7 @@ const HomePage = React.lazy(() => import('./components/home/HomePage'))
 function App() {
     return (
         <BrowserRouter>
-            <Suspense fallback={<div>Page is loading ...</div>}>
+            <Suspense fallback={<LoadingProgress/>}>
                 <Routes>
                     <Route element={<NormalLayout/>}>
                         <Route path="/" element={<HomePage/>}/>
