@@ -9,6 +9,7 @@ import UndoIcon from '@mui/icons-material/Undo';
 import API from "../../api";
 import randomTarget from "./RandomTarget";
 import notify from "../../utils/Notify";
+import ListUser from "../user/ListUser";
 
 const canvasStyle = {
     border: '0.0625rem solid #9c9c9c',
@@ -92,6 +93,9 @@ const DrawBoard = () => {
 
     return (
         <Grid container justifyContent="center" direction="row">
+            <Grid item md={3}>
+                <ListUser/>
+            </Grid>
             <Grid item container md={5}
                   sx={parentStyles}
                   direction="column"
