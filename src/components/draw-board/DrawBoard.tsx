@@ -1,28 +1,52 @@
 import React from 'react';
 import {ReactSketchCanvas, ReactSketchCanvasRef} from "react-sketch-canvas";
-import {Button, Divider, FormControlLabel, Grid, Stack, Switch} from "@mui/material";
+import {Button, Divider, FormControlLabel, Grid, Stack, Switch, Typography} from "@mui/material";
 import LoadingButton from '@mui/lab/LoadingButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ResultTable, {Row} from "./PredictResultTable";
 import UndoIcon from '@mui/icons-material/Undo';
 import API from "../../api";
+import randomTarget from "./RandomTarget";
+import notify from "../../utils/Notify";
 
-const styles = {
+const canvasStyle = {
     border: '0.0625rem solid #9c9c9c',
     borderRadius: '0.25rem',
     margin: 'auto'
 };
+
 const parentStyles = {
     margin: '0px 30px',
 };
 
 const DrawBoard = () => {
+    const drawTarget = randomTarget();
     const [result, setResult] = React.useState<Row[]>([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [eraseMode, setEraseMode] = React.useState(false);
+    const [target, setTarget] = React.useState(drawTarget);
     const canvasRef = React.createRef<ReactSketchCanvasRef>();
-
+    React.useEffect(() => {
+        setTarget(drawTarget);
+    }, []);
+    const checkResults = (predicted: Row[]) => {
+        const threshold = 15;
+        const filtered = predicted.filter(r => Math.ceil(r.prob as number) >= threshold);
+        const isTrue = filtered.map(r => r.id).indexOf(target['en']) != -1;
+        if (isTrue) {
+            notify({
+                title: "Yay!",
+                text: "You got it right!"
+            });
+        } else {
+            notify({
+                title: "Oops!",
+                text: "You got it wrong!",
+                icon: "warning"
+            });
+        }
+    };
     const predict = async () => {
         try {
             setIsLoading(true);
@@ -33,21 +57,27 @@ const DrawBoard = () => {
             });
 
             const data = response.data;
-            const rs: Row[] = [];
+            console.log(data);
+
+            const rawRows: Row[] = [];
             for (const dataKey in data) {
-                rs.push({
+                rawRows.push({
                     id: dataKey,
-                    prob: `${(data[dataKey] * 100).toFixed(2)}%`
-                });
+                    prob: Math.ceil(data[dataKey] * 100)
+                })
             }
-            setResult(rs);
+            setResult(rawRows.map(r => ({
+                id: r.id,
+                prob: `${r.prob}%`
+            })));
+            checkResults(rawRows);
         } catch (e) {
             console.error(e);
         } finally {
             setIsLoading(false);
         }
     }
-    const clearCanvas = () => {
+    const clearCanvas = async () => {
         canvasRef.current?.clearCanvas();
         canvasRef.current?.resetCanvas();
         setResult([]);
@@ -61,15 +91,19 @@ const DrawBoard = () => {
     };
 
     return (
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" direction="row">
             <Grid item container md={5}
                   sx={parentStyles}
                   direction="column"
             >
-                <Grid item md>
+                <Grid item container justifyContent="center" alignItems="flex-end">
+                    <Typography variant="h4" sx={{paddingRight: "5px"}}>Let's draw: </Typography>
+                    <Typography variant="h3">{target['vi']}</Typography>
+                </Grid>
+                <Grid item md={5}>
                     <ReactSketchCanvas
                         ref={canvasRef}
-                        style={styles}
+                        style={canvasStyle}
                         height="300px"
                         width="100%"
                         strokeColor="black"
@@ -82,13 +116,14 @@ const DrawBoard = () => {
                 </Grid>
             </Grid>
 
-            <Grid item md={2} sx={parentStyles}>
+            <Grid item container md={2} sx={parentStyles}>
                 <Stack
                     direction="column"
                     spacing={2}
                     divider={<Divider orientation="horizontal" flexItem/>}
                     justifyContent="flex-start"
                     alignItems="center"
+                    sx={{paddingTop: "50px"}}
                 >
                     <LoadingButton
                         onClick={predict}
