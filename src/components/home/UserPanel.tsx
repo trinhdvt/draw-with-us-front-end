@@ -85,6 +85,9 @@ const UserPanel = () => {
                 <Button
                     startIcon={<MeetingRoomIcon/>}
                     variant="contained"
+                    onClick={() => {
+                        navigate("/room")
+                    }}
                 >
                     Rooms
                 </Button>
