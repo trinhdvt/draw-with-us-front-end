@@ -6,6 +6,7 @@ const NormalLayout = React.lazy(() => import("./layout/NormalLayout"));
 const Game = React.lazy(() => import('./components/game-play/Game'));
 const HomePage = React.lazy(() => import('./components/home/HomePage'));
 const RoomPage = React.lazy(() => import("./components/room/RoomPage"));
+const Gallery = React.lazy(() => import("./components/gallery/Gallery"));
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                         <Route path="/" element={<HomePage/>}/>
                         <Route path="/play" element={<Game/>}/>
                         <Route path="/room" element={<RoomPage/>}/>
+                        <Route path="/gallery" element={<Gallery/>}/>
                     </Route>
                 </Routes>
             </Suspense>
