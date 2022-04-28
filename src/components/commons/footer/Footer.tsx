@@ -3,19 +3,23 @@ import {Divider, Grid, Stack, styled, Typography} from '@mui/material';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import {Link} from "react-router-dom";
 
 const StyledFooter = styled("footer")({
     marginTop: "20px"
 })
 
 const Footer = () => {
-    const footerText = ['Help', 'About Us', 'Contact Us'];
+    const footerText = ['Gallery', 'About Us', 'Contact Us'];
+    const footerLink = ['gallery', '#', '#'];
     const footerTxtComponent = () => {
         return footerText.map((item, index) => {
             return (
-                <Typography key={index} variant="body2" color="textSecondary" align="center">
-                    {item}
-                </Typography>
+                <Link to={footerLink[index]}>
+                    <Typography key={index} variant="body2" color="textSecondary" align="center">
+                        {item}
+                    </Typography>
+                </Link>
             )
         })
     }
