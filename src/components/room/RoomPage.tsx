@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Button, Grid, TextField, Typography} from '@mui/material';
-import Room, {roomDefault} from "./Room";
+import Room, {roomDefault, RoomProps} from "./Room";
 import {makeStyles} from "@mui/styles";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
@@ -36,6 +36,14 @@ const useStyles = makeStyles({
 const RoomPage = () => {
     const classes = useStyles();
     const navigate = useNavigate();
+    const [selectedRoom, setSelectedRoom] = React.useState("");
+    const [roomProps] = React.useState(() => {
+        const sampleProps: RoomProps[] = [];
+        for (let i = 0; i < 8; i++) {
+            sampleProps.push({...roomDefault, hidden: (i > 4), roomId: Math.random().toString(36).slice(2, 7)});
+        }
+        return sampleProps;
+    });
 
     return (
         <Grid container className={classes.roomContainer}>
@@ -65,14 +73,12 @@ const RoomPage = () => {
             </Grid>
             <Grid item container justifyContent="space-evenly" className={classes.roomPanel}
             >
-                <Room {...roomDefault}/>
-                <Room {...roomDefault}/>
-                <Room {...roomDefault}/>
-                <Room {...roomDefault}/>
-                <Room {...roomDefault}/>
-                <Room {...roomDefault} hidden={true}/>
-                <Room {...roomDefault} hidden={true}/>
-                <Room {...roomDefault} hidden={true}/>
+                {roomProps.map((p, k) =>
+                    <Room {...p} key={k}
+                          selected={p.roomId == selectedRoom}
+                          onClick={() => setSelectedRoom(p.roomId)}
+                    />)
+                }
             </Grid>
             <Grid item container justifyContent="center" className={classes.roomControl}>
                 <Grid item container md={5} justifyContent="space-evenly">

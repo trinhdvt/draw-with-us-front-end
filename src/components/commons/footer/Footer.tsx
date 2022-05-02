@@ -15,7 +15,7 @@ const Footer = () => {
     const footerTxtComponent = () => {
         return footerText.map((item, index) => {
             return (
-                <Link to={footerLink[index]}>
+                <Link to={footerLink[index]} key={index}>
                     <Typography key={index} variant="body2" color="textSecondary" align="center">
                         {item}
                     </Typography>

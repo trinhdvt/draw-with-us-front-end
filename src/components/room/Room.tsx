@@ -15,9 +15,12 @@ const useStyles = makeStyles({
             borderColor: "rgba(0,121,255,.7)"
         }
     },
+    selected: {
+        borderColor: "rgba(0,121,255,.7)"
+    }
 });
 
-interface RoomProps {
+interface RoomProps extends React.HTMLAttributes<HTMLElement> {
     hidden?: boolean;
     roomId: string;
     roomTopic: string;
@@ -25,6 +28,7 @@ interface RoomProps {
     roomAvatar: string;
     currentPlayers: number;
     maxPlayers: number;
+    selected?: boolean;
 }
 
 const Room = (props: RoomProps) => {
@@ -33,9 +37,10 @@ const Room = (props: RoomProps) => {
 
     return (
         <Grid item container
-              direction="column" className={classes.gameRoom}
+              direction="column" className={`${classes.gameRoom} ${props.selected ? classes.selected : ""}`}
               md={2.5}
               sx={{visibility: props.hidden ? "hidden" : "visible"}}
+              onClick={props.onClick}
         >
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
@@ -74,6 +79,7 @@ const Room = (props: RoomProps) => {
 };
 const roomDefault: RoomProps = {
     hidden: false,
+    selected: false,
     roomId: "1pxzs",
     roomTopic: "John Doe",
     roomOwner: "Trinh DVT",
