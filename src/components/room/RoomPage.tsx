@@ -76,7 +76,7 @@ const RoomPage = () => {
                 {roomProps.map((p, k) =>
                     <Room {...p} key={k}
                           selected={p.roomId == selectedRoom}
-                          onClick={() => setSelectedRoom(p.roomId)}
+                          onClick={() => setSelectedRoom(selectedRoom != p.roomId ? p.roomId : "")}
                     />)
                 }
             </Grid>
