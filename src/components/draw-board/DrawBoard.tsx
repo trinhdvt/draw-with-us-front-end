@@ -4,12 +4,13 @@ import {Button, Divider, FormControlLabel, Grid, Stack, Switch, Typography} from
 import LoadingButton from '@mui/lab/LoadingButton';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import ResultTable, {Row} from "./PredictResultTable";
+import {Row} from "./PredictResultTable";
 import UndoIcon from '@mui/icons-material/Undo';
 import API from "../../api";
 import randomTarget from "./RandomTarget";
 import notify from "../../utils/Notify";
 import ListUser from "../user/ListUser";
+import LinearProgressWithLabel from "./CountdownTimer";
 
 const canvasStyle = {
     border: '0.0625rem solid #9c9c9c',
@@ -23,7 +24,6 @@ const parentStyles = {
 
 const DrawBoard = () => {
     const drawTarget = randomTarget();
-    const [result, setResult] = React.useState<Row[]>([]);
     const [isLoading, setIsLoading] = React.useState(false);
     const [eraseMode, setEraseMode] = React.useState(false);
     const [target, setTarget] = React.useState(drawTarget);
@@ -51,7 +51,6 @@ const DrawBoard = () => {
     const predict = async () => {
         try {
             setIsLoading(true);
-            setResult([]);
 
             const response = await API.post("/predict/v1", {
                 data: (await canvasRef.current?.exportImage("png"))
@@ -67,10 +66,6 @@ const DrawBoard = () => {
                     prob: Math.ceil(data[dataKey] * 100)
                 })
             }
-            setResult(rawRows.map(r => ({
-                id: r.id,
-                prob: `${r.prob}%`
-            })));
             checkResults(rawRows);
         } catch (e) {
             console.error(e);
@@ -81,14 +76,47 @@ const DrawBoard = () => {
     const clearCanvas = async () => {
         canvasRef.current?.clearCanvas();
         canvasRef.current?.resetCanvas();
-        setResult([]);
     };
     const toggleEraseMode = () => {
         canvasRef.current?.eraseMode(!eraseMode);
         setEraseMode(!eraseMode);
     };
+    const [timeout, setTimeout] = React.useState(0);
+    const MAX_TIME = 15; // seconds
+    const defaultTimer = {
+        remainPercent: 100,
+        displayValue: MAX_TIME
+    };
+    const [progress, setProgress] = React.useState(defaultTimer);
+
+    React.useEffect(() => {
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            let remaining = Math.ceil((timeout - now) / 1000);
+            if (remaining <= 0) {
+                clearInterval(timer);
+                if (timeout == 0) return;
+                notify({
+                    title: "Time's up!",
+                    text: "You have no more time to draw!",
+                    icon: "warning"
+                });
+            }
+
+            remaining = Math.max(0, remaining);
+            setProgress({
+                remainPercent: remaining / MAX_TIME * 100,
+                displayValue: remaining
+            });
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [timeout]);
+
     const undo = () => {
         canvasRef.current?.undo();
+        // demo countdown timer
+        setTimeout(new Date().getTime() + MAX_TIME * 1000);
     };
 
     return (
@@ -116,7 +144,7 @@ const DrawBoard = () => {
                     />
                 </Grid>
                 <Grid item md sx={{marginTop: "20px"}}>
-                    <ResultTable rows={result} isLoading={isLoading}/>
+                    <LinearProgressWithLabel value={progress.remainPercent} displayvalue={progress.displayValue}/>
                 </Grid>
             </Grid>
 
