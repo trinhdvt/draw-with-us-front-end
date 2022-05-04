@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import {ThemeProvider} from "@mui/material";
 import {appTheme} from "./AppTheme";
-import 'sweetalert2/dist/sweetalert2.css';
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
