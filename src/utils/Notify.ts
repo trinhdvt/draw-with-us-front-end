@@ -1,4 +1,5 @@
 import Swal, {SweetAlertOptions} from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const defaultOption: SweetAlertOptions = {
     icon: 'success',
@@ -8,7 +9,7 @@ const defaultOption: SweetAlertOptions = {
 }
 
 function notify({title, text, ...otherOptions}: SweetAlertOptions) {
-    Swal.fire({
+    return Swal.fire({
         title,
         text,
         ...defaultOption,
