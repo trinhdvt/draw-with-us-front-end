@@ -85,12 +85,16 @@ const RoomPage = () => {
                     <Button
                         startIcon={<MeetingRoomIcon/>}
                         variant="contained"
+                        onClick={() => {
+                            navigate("/create");
+                        }}
                     >
                         New Room
                     </Button>
                     <Button
                         startIcon={<SportsEsportsIcon/>}
                         variant="contained"
+                        disabled={selectedRoom == ""}
                     >
                         Play
                     </Button>
