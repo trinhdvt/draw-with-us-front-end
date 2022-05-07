@@ -1,10 +1,8 @@
-import React from 'react';
+import React from "react";
 import DrawBoard from "../draw-board/DrawBoard";
 
 const Game = () => {
-    return (
-        <DrawBoard/>
-    );
+    return <DrawBoard />;
 };
 
 export default Game;

@@ -1,24 +1,24 @@
-import React from 'react';
-import {Avatar, Button, Grid, TextField, Typography} from '@mui/material';
-import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import PersonPinIcon from '@mui/icons-material/PersonPin';
+import React from "react";
+import {Avatar, Button, Grid, TextField, Typography} from "@mui/material";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
 import avatar from "../../assets/images/avatar.png";
 import {makeStyles, styled, withStyles} from "@mui/styles";
 import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles({
     userControl: {
-        margin: "5px 0px 20px 0px !important"
+        margin: "5px 0px 20px 0px !important",
     },
     listItemIcon: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
     upperText: {
         textTransform: "uppercase",
-    }
+    },
 });
 
 const CssAvatar = styled(Avatar)({
@@ -28,13 +28,13 @@ const CssAvatar = styled(Avatar)({
 
 const CssTextField = withStyles({
     root: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
+        "& .MuiOutlinedInput-root": {
+            "& fieldset": {
                 border: "2px solid gray",
                 borderRadius: 12,
             },
-            '&.Mui-focused fieldset': {
-                borderColor: 'purple',
+            "&.Mui-focused fieldset": {
+                borderColor: "purple",
             },
         },
     },
@@ -45,14 +45,17 @@ const UserPanel = () => {
     const navigate = useNavigate();
     const playGame = () => {
         navigate("/play");
-    }
+    };
 
     return (
-        <Grid item container
-              className={classes.userControl}
-              md={5} direction="column"
-              alignItems="center"
-              rowSpacing={2}
+        <Grid
+            item
+            container
+            className={classes.userControl}
+            md={5}
+            direction="column"
+            alignItems="center"
+            rowSpacing={2}
         >
             <Grid item>
                 <Typography
@@ -64,15 +67,17 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <CssAvatar src={avatar} alt="avatar"/>
+                <CssAvatar src={avatar} alt="avatar" />
             </Grid>
-            <Grid item container
-                  justifyContent="center"
-                  alignItems="center"
-                  sx={{paddingBottom: "6px"}}
+            <Grid
+                item
+                container
+                justifyContent="center"
+                alignItems="center"
+                sx={{paddingBottom: "6px"}}
             >
                 <Grid item className={classes.listItemIcon}>
-                    <PersonPinIcon color="error" sx={{paddingRight: "5px"}}/>
+                    <PersonPinIcon color="error" sx={{paddingRight: "5px"}} />
                     <CssTextField
                         id="outlined-size-small"
                         size="small"
@@ -83,16 +88,16 @@ const UserPanel = () => {
             </Grid>
             <Grid item container justifyContent="space-evenly">
                 <Button
-                    startIcon={<MeetingRoomIcon/>}
+                    startIcon={<MeetingRoomIcon />}
                     variant="contained"
                     onClick={() => {
-                        navigate("/room")
+                        navigate("/room");
                     }}
                 >
                     Rooms
                 </Button>
                 <Button
-                    startIcon={<SportsEsportsIcon/>}
+                    startIcon={<SportsEsportsIcon />}
                     variant="contained"
                     onClick={playGame}
                 >

@@ -1,11 +1,19 @@
-import React from 'react';
+import React from "react";
 import {ReactSketchCanvas, ReactSketchCanvasRef} from "react-sketch-canvas";
-import {Button, Divider, FormControlLabel, Grid, Stack, Switch, Typography} from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
-import UndoIcon from '@mui/icons-material/Undo';
+import {
+    Button,
+    Divider,
+    FormControlLabel,
+    Grid,
+    Stack,
+    Switch,
+    Typography,
+} from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import UndoIcon from "@mui/icons-material/Undo";
 import API from "../../api";
 import randomTarget from "./RandomTarget";
 import notify from "../../utils/Notify";
@@ -13,19 +21,19 @@ import ListUser from "../user/ListUser";
 import LinearProgressWithLabel from "./CountdownTimer";
 
 const canvasStyle = {
-    border: '0.0625rem solid #9c9c9c',
-    borderRadius: '0.25rem',
-    margin: 'auto'
+    border: "0.0625rem solid #9c9c9c",
+    borderRadius: "0.25rem",
+    margin: "auto",
 };
 
 const parentStyles = {
-    margin: '0px 30px',
+    margin: "0px 30px",
 };
 
 type PredictResult = {
     id: string;
     prob: number;
-}
+};
 
 const DrawBoard = () => {
     const drawTarget = randomTarget();
@@ -37,27 +45,29 @@ const DrawBoard = () => {
     const MAX_TIME = 15; // seconds
     const defaultTimer = {
         remainPercent: 100,
-        displayValue: MAX_TIME
+        displayValue: MAX_TIME,
     };
     const [progress, setProgress] = React.useState(defaultTimer);
     const [timerId, setTimer] = React.useState<number>();
 
     const checkResults = (predicted: PredictResult[]) => {
         const threshold = 15;
-        const filtered = predicted.filter(r => Math.ceil(r.prob as number) >= threshold);
-        const isTrue = filtered.map(r => r.id).indexOf(target['en']) != -1;
+        const filtered = predicted.filter(
+            r => Math.ceil(r.prob as number) >= threshold
+        );
+        const isTrue = filtered.map(r => r.id).indexOf(target["en"]) != -1;
         if (isTrue) {
             clearInterval(timerId);
             notify({
                 title: "Yay!",
-                text: "You got it right!"
+                text: "You got it right!",
             });
         } else {
             notify({
                 title: "Oops!",
                 text: "You got it wrong!",
                 icon: "warning",
-                timer: 1000
+                timer: 1000,
             });
         }
     };
@@ -66,7 +76,7 @@ const DrawBoard = () => {
             setIsLoading(true);
 
             const response = await API.post("/predict/v1", {
-                data: (await canvasRef.current?.exportImage("png"))
+                data: await canvasRef.current?.exportImage("png"),
             });
 
             const data = response.data;
@@ -76,8 +86,8 @@ const DrawBoard = () => {
             for (const dataKey in data) {
                 rawRows.push({
                     id: dataKey,
-                    prob: Math.ceil(data[dataKey] * 100)
-                })
+                    prob: Math.ceil(data[dataKey] * 100),
+                });
             }
             checkResults(rawRows);
         } catch (e) {
@@ -85,7 +95,7 @@ const DrawBoard = () => {
         } finally {
             setIsLoading(false);
         }
-    }
+    };
     const clearCanvas = () => {
         canvasRef.current?.clearCanvas();
         canvasRef.current?.resetCanvas();
@@ -116,14 +126,14 @@ const DrawBoard = () => {
                 notify({
                     title: "Time's up!",
                     text: "You have no more time to draw!",
-                    icon: "error"
+                    icon: "error",
                 });
             }
 
             remaining = Math.max(0, remaining);
             setProgress({
-                remainPercent: remaining / MAX_TIME * 100,
-                displayValue: remaining
+                remainPercent: (remaining / MAX_TIME) * 100,
+                displayValue: remaining,
             });
         }, 1000);
         setTimer(Number(timer));
@@ -135,9 +145,9 @@ const DrawBoard = () => {
 
         notify({
             title: "Drawing time!",
-            html: `You have <b>${MAX_TIME} seconds</b> to draw <b>${drawTarget['en']}</b>!`,
+            html: `You have <b>${MAX_TIME} seconds</b> to draw <b>${drawTarget["en"]}</b>!`,
             icon: "info",
-            timer: 3000
+            timer: 3000,
         }).then(() => {
             setTimeout(new Date().getTime() + MAX_TIME * 1000);
         });
@@ -149,7 +159,7 @@ const DrawBoard = () => {
             text: "Draw an image about the word below to get the points!",
             icon: "info",
             timer: undefined,
-            showConfirmButton: true
+            showConfirmButton: true,
         }).then(() => {
             beginGame();
         });
@@ -158,15 +168,19 @@ const DrawBoard = () => {
     return (
         <Grid container justifyContent="center" direction="row">
             <Grid item md={3}>
-                <ListUser/>
+                <ListUser />
             </Grid>
-            <Grid item container md={5}
-                  sx={parentStyles}
-                  direction="column"
-            >
-                <Grid item container justifyContent="center" alignItems="flex-end">
-                    <Typography variant="h4" sx={{paddingRight: "5px"}}>Let's draw: </Typography>
-                    <Typography variant="h3">{target['vi']}</Typography>
+            <Grid item container md={5} sx={parentStyles} direction="column">
+                <Grid
+                    item
+                    container
+                    justifyContent="center"
+                    alignItems="flex-end"
+                >
+                    <Typography variant="h4" sx={{paddingRight: "5px"}}>
+                        Let's draw:{" "}
+                    </Typography>
+                    <Typography variant="h3">{target["vi"]}</Typography>
                 </Grid>
                 <Grid item md={5}>
                     <ReactSketchCanvas
@@ -180,7 +194,10 @@ const DrawBoard = () => {
                     />
                 </Grid>
                 <Grid item md sx={{marginTop: "20px"}}>
-                    <LinearProgressWithLabel value={progress.remainPercent} displayvalue={progress.displayValue}/>
+                    <LinearProgressWithLabel
+                        value={progress.remainPercent}
+                        displayvalue={progress.displayValue}
+                    />
                 </Grid>
             </Grid>
 
@@ -188,7 +205,7 @@ const DrawBoard = () => {
                 <Stack
                     direction="column"
                     spacing={2}
-                    divider={<Divider orientation="horizontal" flexItem/>}
+                    divider={<Divider orientation="horizontal" flexItem />}
                     justifyContent="flex-start"
                     alignItems="center"
                     sx={{paddingTop: "50px"}}
@@ -197,29 +214,41 @@ const DrawBoard = () => {
                         onClick={predict}
                         loading={isLoading}
                         variant="contained"
-                        endIcon={<ArrowForwardIcon/>}
+                        endIcon={<ArrowForwardIcon />}
                         loadingPosition="end"
                     >
                         Check it!
                     </LoadingButton>
-                    <Button onClick={clearCanvas} variant="outlined" color="error"
-                            endIcon={<HighlightOffIcon color="error"/>}
+                    <Button
+                        onClick={clearCanvas}
+                        variant="outlined"
+                        color="error"
+                        endIcon={<HighlightOffIcon color="error" />}
                     >
                         Clear
                     </Button>
-                    <Button variant="outlined" onClick={undo}
-                            endIcon={<UndoIcon color="primary"/>}
+                    <Button
+                        variant="outlined"
+                        onClick={undo}
+                        endIcon={<UndoIcon color="primary" />}
                     >
                         Undo
                     </Button>
                     <FormControlLabel
-                        control={<Switch checked={eraseMode} onClick={toggleEraseMode}/>}
+                        control={
+                            <Switch
+                                checked={eraseMode}
+                                onClick={toggleEraseMode}
+                            />
+                        }
                         label={eraseMode ? "Eraser" : "Pen"}
                         labelPlacement="end"
                     />
-                    <Button variant="outlined" onClick={resetGame}
-                            color="warning"
-                            endIcon={<RestartAltIcon/>}
+                    <Button
+                        variant="outlined"
+                        onClick={resetGame}
+                        color="warning"
+                        endIcon={<RestartAltIcon />}
                     >
                         Reset
                     </Button>
