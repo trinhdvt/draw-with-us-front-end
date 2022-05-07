@@ -1,10 +1,10 @@
-import React from 'react';
-import {Button, Grid, MenuItem, Select, Typography} from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import TimerIcon from '@mui/icons-material/Timer';
+import React from "react";
+import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import TimerIcon from "@mui/icons-material/Timer";
 import {makeStyles} from "@mui/styles";
 import TopicCard, {topicDefault, TopicProps} from "./TopicCard";
-import ConstructionIcon from '@mui/icons-material/Construction';
+import ConstructionIcon from "@mui/icons-material/Construction";
 
 const useStyles = makeStyles({
     roomContainer: {
@@ -28,9 +28,8 @@ const useStyles = makeStyles({
         width: "100%",
         maxHeight: "40px",
         textAlign: "center",
-    }
+    },
 });
-
 
 const CreateRoom = () => {
     const classes = useStyles();
@@ -40,7 +39,7 @@ const CreateRoom = () => {
     const [topicList] = React.useState(() => {
         const sampleProps: TopicProps[] = [];
         for (let i = 0; i < 8; i++) {
-            sampleProps.push({...topicDefault, hidden: (i > 4), id: i + ""});
+            sampleProps.push({...topicDefault, hidden: i > 4, id: i + ""});
         }
         return sampleProps;
     });
@@ -48,12 +47,21 @@ const CreateRoom = () => {
 
     return (
         <Grid container className={classes.roomPanel}>
-            <Grid item container md={4} direction="column"
-                  className={classes.roomContainer}
+            <Grid
+                item
+                container
+                md={4}
+                direction="column"
+                className={classes.roomContainer}
             >
-                <Grid item container alignItems="center" className={classes.settingRow}>
+                <Grid
+                    item
+                    container
+                    alignItems="center"
+                    className={classes.settingRow}
+                >
                     <Grid item md={2}>
-                        <AccountCircleIcon color="primary"/>
+                        <AccountCircleIcon color="primary" />
                     </Grid>
                     <Grid item md>
                         <Typography>Max User</Typography>
@@ -61,7 +69,7 @@ const CreateRoom = () => {
                     <Grid item md={4}>
                         <Select
                             value={maxUser}
-                            onChange={(e) => setMaxUser(Number(e.target.value))}
+                            onChange={e => setMaxUser(Number(e.target.value))}
                             className={classes.settingSelect}
                         >
                             <MenuItem value={10}>10</MenuItem>
@@ -73,7 +81,7 @@ const CreateRoom = () => {
                 </Grid>
                 <Grid item container alignItems="center">
                     <Grid item md={2}>
-                        <TimerIcon color="primary"/>
+                        <TimerIcon color="primary" />
                     </Grid>
                     <Grid item md>
                         <Typography>Timeout (sec)</Typography>
@@ -81,20 +89,27 @@ const CreateRoom = () => {
                     <Grid item md={4}>
                         <Select
                             value={timeOut}
-                            onChange={(e) => setTimeout(Number(e.target.value))}
+                            onChange={e => setTimeout(Number(e.target.value))}
                             className={classes.settingSelect}
                         >
-                            {timeOutList.map((time) => {
-                                return (<MenuItem value={time} key={time}>
-                                    {time}
-                                </MenuItem>);
+                            {timeOutList.map(time => {
+                                return (
+                                    <MenuItem value={time} key={time}>
+                                        {time}
+                                    </MenuItem>
+                                );
                             })}
                         </Select>
                     </Grid>
                 </Grid>
-                <Grid item sx={{marginTop: "auto"}} container justifyContent="center">
+                <Grid
+                    item
+                    sx={{marginTop: "auto"}}
+                    container
+                    justifyContent="center"
+                >
                     <Button
-                        startIcon={<ConstructionIcon/>}
+                        startIcon={<ConstructionIcon />}
                         variant="contained"
                         disabled={selectedTopic === ""}
                     >
@@ -103,23 +118,36 @@ const CreateRoom = () => {
                 </Grid>
             </Grid>
             <Grid item container md direction="column">
-                <Grid item className={classes.roomContainer}
-                      sx={{marginLeft: "15px"}}
+                <Grid
+                    item
+                    className={classes.roomContainer}
+                    sx={{marginLeft: "15px"}}
                 >
-                    <Typography>Select any topic below or <b>Sign in</b> to create your own topic</Typography>
+                    <Typography>
+                        Select any topic below or <b>Sign in</b> to create your
+                        own topic
+                    </Typography>
                 </Grid>
-                <Grid item container justifyContent="space-evenly"
-                      sx={{marginTop: "10px"}} className={classes.topicPanel}
+                <Grid
+                    item
+                    container
+                    justifyContent="space-evenly"
+                    sx={{marginTop: "10px"}}
+                    className={classes.topicPanel}
                 >
                     {topicList.map((p, idx) => {
                         return (
-                            <TopicCard {...p} key={idx}
-                                       selected={selectedTopic === p.id}
-                                       onClick={() => {
-                                           setSelectedTopic(selectedTopic === p.id ? "" : p.id)
-                                       }}
+                            <TopicCard
+                                {...p}
+                                key={idx}
+                                selected={selectedTopic === p.id}
+                                onClick={() => {
+                                    setSelectedTopic(
+                                        selectedTopic === p.id ? "" : p.id
+                                    );
+                                }}
                             />
-                        )
+                        );
                     })}
                 </Grid>
             </Grid>

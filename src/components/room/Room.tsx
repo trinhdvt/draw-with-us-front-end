@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import {Avatar, Grid, Typography} from "@mui/material";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 import sampleImg from "../../assets/images/avatar.png";
 import {makeStyles} from "@mui/styles";
 
@@ -12,12 +12,12 @@ const useStyles = makeStyles({
         marginBottom: "25px",
         backgroundColor: "#fff",
         "&:hover": {
-            borderColor: "rgba(0,121,255,.7)"
-        }
+            borderColor: "rgba(0,121,255,.7)",
+        },
     },
     selected: {
-        borderColor: "rgba(0,121,255,.7)"
-    }
+        borderColor: "rgba(0,121,255,.7)",
+    },
 });
 
 interface RoomProps extends React.HTMLAttributes<HTMLElement> {
@@ -36,15 +36,20 @@ const Room = (props: RoomProps) => {
     const classes = useStyles();
 
     return (
-        <Grid item container
-              direction="column" className={`${classes.gameRoom} ${props.selected ? classes.selected : ""}`}
-              md={2.5}
-              sx={{visibility: props.hidden ? "hidden" : "visible"}}
-              onClick={props.onClick}
+        <Grid
+            item
+            container
+            direction="column"
+            className={`${classes.gameRoom} ${
+                props.selected ? classes.selected : ""
+            }`}
+            md={2.5}
+            sx={{visibility: props.hidden ? "hidden" : "visible"}}
+            onClick={props.onClick}
         >
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <Avatar src={props.roomAvatar} alt="avatar"/>
+                    <Avatar src={props.roomAvatar} alt="avatar" />
                 </Grid>
                 <Grid item md>
                     <Typography>{props.roomOwner}</Typography>
@@ -68,10 +73,12 @@ const Room = (props: RoomProps) => {
             </Grid>
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <PersonIcon/>
+                    <PersonIcon />
                 </Grid>
                 <Grid item md>
-                    <Typography>{props.currentPlayers}/{props.maxPlayers}</Typography>
+                    <Typography>
+                        {props.currentPlayers}/{props.maxPlayers}
+                    </Typography>
                 </Grid>
             </Grid>
         </Grid>
@@ -85,7 +92,7 @@ const roomDefault: RoomProps = {
     roomOwner: "Trinh DVT",
     roomAvatar: sampleImg,
     currentPlayers: 5,
-    maxPlayers: 10
+    maxPlayers: 10,
 };
 
 export default Room;
