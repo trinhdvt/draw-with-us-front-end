@@ -8,6 +8,9 @@ const HomePage = React.lazy(() => import("./components/home/HomePage"));
 const RoomPage = React.lazy(() => import("./components/room/RoomPage"));
 const Gallery = React.lazy(() => import("./components/gallery/Gallery"));
 const CreateRoom = React.lazy(() => import("./components/room/CreateRoom"));
+const CollectionPage = React.lazy(
+    () => import("./components/collection/Collection")
+);
 
 function App() {
     return (
@@ -20,6 +23,10 @@ function App() {
                         <Route path="/room" element={<RoomPage />} />
                         <Route path="/create" element={<CreateRoom />} />
                         <Route path="/gallery" element={<Gallery />} />
+                        <Route
+                            path="/collection"
+                            element={<CollectionPage />}
+                        />
                     </Route>
                 </Routes>
             </Suspense>
