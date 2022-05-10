@@ -2,38 +2,43 @@ import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TimerIcon from "@mui/icons-material/Timer";
-import {makeStyles} from "@mui/styles";
 import TopicCard, {topicDefault, TopicProps} from "./TopicCard";
 import ConstructionIcon from "@mui/icons-material/Construction";
+import AddIcon from "@mui/icons-material/Add";
+import {useNavigate} from "react-router-dom";
 
-const useStyles = makeStyles({
-    roomContainer: {
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        padding: "10px",
+const styles = {
+    settingRow: {
+        marginBottom: "10px",
+    },
+    selectCss: {
+        width: "100%",
+        maxHeight: "40px",
+        textAlign: "center",
+    },
+    collectionPanel: {
+        maxHeight: "230px",
+        overflow: "auto",
+        marginTop: "10px",
     },
     roomPanel: {
         backgroundColor: "#9fbdca",
         padding: "10px",
         borderRadius: "10px",
     },
-    topicPanel: {
-        maxHeight: "230px",
-        overflow: "auto",
+    container: {
+        backgroundColor: "#fff",
+        borderRadius: "10px",
+        padding: "10px",
     },
-    settingRow: {
-        marginBottom: "10px",
-    },
-    settingSelect: {
-        width: "100%",
-        maxHeight: "40px",
-        textAlign: "center",
-    },
-});
+};
+
+type Collection = "all" | "public" | "official" | "your";
 
 const CreateRoom = () => {
-    const classes = useStyles();
+    const navigate = useNavigate();
     const [maxUser, setMaxUser] = React.useState(10);
+    const [collection, setCollection] = React.useState<Collection>("all");
     const timeOutList = [30, 45, 60, 90, 120];
     const [timeOut, setTimeout] = React.useState(timeOutList[0]);
     const [topicList] = React.useState(() => {
@@ -43,22 +48,23 @@ const CreateRoom = () => {
         }
         return sampleProps;
     });
-    const [selectedTopic, setSelectedTopic] = React.useState("");
+    const [crtCollection, setCrtCollection] = React.useState("");
+    const isLogin = true;
 
     return (
-        <Grid container className={classes.roomPanel}>
+        <Grid container sx={styles["roomPanel"]}>
             <Grid
                 item
                 container
                 md={4}
                 direction="column"
-                className={classes.roomContainer}
+                sx={styles["container"]}
             >
                 <Grid
                     item
                     container
                     alignItems="center"
-                    className={classes.settingRow}
+                    sx={styles["settingRow"]}
                 >
                     <Grid item md={2}>
                         <AccountCircleIcon color="primary" />
@@ -70,7 +76,7 @@ const CreateRoom = () => {
                         <Select
                             value={maxUser}
                             onChange={e => setMaxUser(Number(e.target.value))}
-                            className={classes.settingSelect}
+                            sx={styles["selectCss"]}
                         >
                             <MenuItem value={10}>10</MenuItem>
                             <MenuItem value={15}>15</MenuItem>
@@ -90,7 +96,7 @@ const CreateRoom = () => {
                         <Select
                             value={timeOut}
                             onChange={e => setTimeout(Number(e.target.value))}
-                            className={classes.settingSelect}
+                            sx={styles["selectCss"]}
                         >
                             {timeOutList.map(time => {
                                 return (
@@ -111,7 +117,7 @@ const CreateRoom = () => {
                     <Button
                         startIcon={<ConstructionIcon />}
                         variant="contained"
-                        disabled={selectedTopic === ""}
+                        disabled={crtCollection === ""}
                     >
                         Create
                     </Button>
@@ -120,30 +126,80 @@ const CreateRoom = () => {
             <Grid item container md direction="column">
                 <Grid
                     item
-                    className={classes.roomContainer}
-                    sx={{marginLeft: "15px"}}
+                    container={isLogin}
+                    alignItems="center"
+                    sx={{
+                        ...styles["container"],
+                        marginLeft: "15px",
+                        width: "95%",
+                    }}
                 >
-                    <Typography>
-                        Select any topic below or <b>Sign in</b> to create your
-                        own topic
-                    </Typography>
+                    {!isLogin ? (
+                        <Typography>
+                            Select any topic below or <b>Sign in</b> to create
+                            your own topic
+                        </Typography>
+                    ) : (
+                        <>
+                            <Grid item md={5}>
+                                <Typography>Select one topic</Typography>
+                            </Grid>
+                            <Grid
+                                item
+                                container
+                                md
+                                justifyContent="space-evenly"
+                            >
+                                <Grid item md={5}>
+                                    <Select
+                                        sx={styles["selectCss"]}
+                                        value={collection}
+                                        onChange={e =>
+                                            setCollection(
+                                                e.target.value as Collection
+                                            )
+                                        }
+                                    >
+                                        <MenuItem value="all">All</MenuItem>
+                                        <MenuItem value="your">
+                                            Your topic
+                                        </MenuItem>
+                                        <MenuItem value="public">
+                                            Public
+                                        </MenuItem>
+                                        <MenuItem value="official">
+                                            Official
+                                        </MenuItem>
+                                    </Select>
+                                </Grid>
+                                <Grid item>
+                                    <Button
+                                        startIcon={<AddIcon />}
+                                        variant="contained"
+                                        onClick={() => navigate("/collection")}
+                                    >
+                                        Create
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </>
+                    )}
                 </Grid>
                 <Grid
                     item
                     container
                     justifyContent="space-evenly"
-                    sx={{marginTop: "10px"}}
-                    className={classes.topicPanel}
+                    sx={styles["collectionPanel"]}
                 >
                     {topicList.map((p, idx) => {
                         return (
                             <TopicCard
                                 {...p}
                                 key={idx}
-                                selected={selectedTopic === p.id}
+                                selected={crtCollection === p.id}
                                 onClick={() => {
-                                    setSelectedTopic(
-                                        selectedTopic === p.id ? "" : p.id
+                                    setCrtCollection(
+                                        crtCollection === p.id ? "" : p.id
                                     );
                                 }}
                             />

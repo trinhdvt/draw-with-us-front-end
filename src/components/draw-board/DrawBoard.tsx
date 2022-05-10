@@ -15,7 +15,7 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import UndoIcon from "@mui/icons-material/Undo";
 import API from "../../api";
-import randomTarget from "./RandomTarget";
+import randomTarget from "../../utils/RandomTarget";
 import notify from "../../utils/Notify";
 import ListUser from "../user/ListUser";
 import LinearProgressWithLabel from "./CountdownTimer";
