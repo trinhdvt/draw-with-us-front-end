@@ -1,82 +1,25 @@
 import React from "react";
-import {
-    Button,
-    Divider,
-    Grid,
-    Stack,
-    TextField,
-    Typography,
-} from "@mui/material";
-import {makeStyles, withStyles} from "@mui/styles";
+import {Button, Divider, Grid, Stack, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
+import DividerWithText from "../commons/DividerWithText";
+import CssTextField from "../commons/CssTextField";
 
-const useStyles = makeStyles({
-    userControl: {
-        margin: "5px 0px 20px 0px !important",
-    },
-    upperText: {
-        textTransform: "uppercase",
-    },
-    container: {
-        display: "flex",
-        alignItems: "center",
-    },
-    border: {
-        borderBottom: "2px solid lightgray",
-        width: "100%",
-    },
-    content: {
-        padding: "0 10px 0 10px",
-    },
-});
-
-const CssTextField = withStyles({
-    root: {
-        "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-                border: "2px solid gray",
-                borderRadius: 12,
-            },
-            "&.Mui-focused fieldset": {
-                borderColor: "purple",
-            },
-        },
-    },
-})(TextField);
-
-const DividerWithText = ({children}: {children: React.ReactNode}) => {
-    const classes = useStyles();
-    return (
-        <div className={classes.container}>
-            <div className={classes.border} />
-            <div className={classes.content}>{children}</div>
-            <div className={classes.border} />
-        </div>
-    );
-};
 const LoginPanel = () => {
-    const classes = useStyles();
-
     return (
         <Grid
             item
             container
-            className={classes.userControl}
+            className="mt-1"
             md={5}
+            rowSpacing={2}
             direction="column"
             alignItems="center"
-            rowSpacing={2}
-            // justifyContent="space-between"
         >
             <Grid item>
-                <Typography
-                    variant="h2"
-                    align="center"
-                    className={classes.upperText}
-                >
+                <Typography variant="h2" className="uppercase text-center">
                     Login Here
                 </Typography>
             </Grid>
@@ -95,17 +38,11 @@ const LoginPanel = () => {
                     direction="column"
                 >
                     <Grid item xs={5}>
-                        <CssTextField
-                            required
-                            id="outlined-required"
-                            size="small"
-                            label="Email"
-                        />
+                        <CssTextField required size="small" label="Email" />
                     </Grid>
                     <Grid item xs={5}>
                         <CssTextField
                             required
-                            id="outlined-password-input"
                             label="Password"
                             size="small"
                             type="password"
@@ -117,7 +54,7 @@ const LoginPanel = () => {
                     container
                     md={5}
                     justifyContent="space-evenly"
-                    sx={{marginBottom: "25px"}}
+                    className="mb-[25px]"
                 >
                     <Stack
                         direction="column"

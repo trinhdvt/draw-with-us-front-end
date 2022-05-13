@@ -1,7 +1,6 @@
 import React from "react";
 import {Avatar, Grid, Stack, Typography} from "@mui/material";
 import sample from "../../assets/images/avatar.png";
-import {makeStyles} from "@mui/styles";
 
 export interface UserProps {
     name: string;
@@ -9,28 +8,20 @@ export interface UserProps {
     point: number;
 }
 
-const useStyles = makeStyles({
-    boldText: {
-        fontWeight: "bold",
-    },
-});
-
 const User = (props: UserProps) => {
-    const classes = useStyles();
-
     return (
         <Grid container direction="row" alignItems="center">
-            <Grid item md={3} sx={{paddingRight: "10px"}}>
+            <Grid item md={3} className="pr-[10px]">
                 <Avatar src={props.avatar ?? sample} />
             </Grid>
 
             <Grid item md={9}>
                 <Stack direction="column">
-                    <Typography className={classes.boldText} noWrap={true}>
+                    <Typography className="font-bold" noWrap={true}>
                         {props.name}
                     </Typography>
                     <Typography>
-                        <span className={classes.boldText}>{props.point}</span>
+                        <span className="font-bold">{props.point}</span>
                         &nbsp;points
                     </Typography>
                 </Stack>

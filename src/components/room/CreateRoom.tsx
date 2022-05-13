@@ -2,49 +2,27 @@ import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TimerIcon from "@mui/icons-material/Timer";
-import TopicCard, {topicDefault, TopicProps} from "./TopicCard";
+import CollectionCard, {
+    collectionDefault,
+    CollectionProps,
+} from "./CollectionCard";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
-
-const styles = {
-    settingRow: {
-        marginBottom: "10px",
-    },
-    selectCss: {
-        width: "100%",
-        maxHeight: "40px",
-        textAlign: "center",
-    },
-    collectionPanel: {
-        maxHeight: "230px",
-        overflow: "auto",
-        marginTop: "10px",
-    },
-    roomPanel: {
-        backgroundColor: "#9fbdca",
-        padding: "10px",
-        borderRadius: "10px",
-    },
-    container: {
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        padding: "10px",
-    },
-};
-
-type Collection = "all" | "public" | "official" | "your";
+import styles from "./styles/Room.module.scss";
+import clsx from "clsx";
+import {CollectionType} from "../../models/Collection";
 
 const CreateRoom = () => {
     const navigate = useNavigate();
     const [maxUser, setMaxUser] = React.useState(10);
-    const [collection, setCollection] = React.useState<Collection>("all");
+    const [collection, setCollection] = React.useState(CollectionType.ALL);
     const timeOutList = [30, 45, 60, 90, 120];
     const [timeOut, setTimeout] = React.useState(timeOutList[0]);
     const [topicList] = React.useState(() => {
-        const sampleProps: TopicProps[] = [];
+        const sampleProps: CollectionProps[] = [];
         for (let i = 0; i < 8; i++) {
-            sampleProps.push({...topicDefault, hidden: i > 4, id: i + ""});
+            sampleProps.push({...collectionDefault, hidden: i > 4, id: i + ""});
         }
         return sampleProps;
     });
@@ -52,20 +30,15 @@ const CreateRoom = () => {
     const isLogin = true;
 
     return (
-        <Grid container sx={styles["roomPanel"]}>
+        <Grid container className={styles.subPanel}>
             <Grid
                 item
                 container
                 md={4}
                 direction="column"
-                sx={styles["container"]}
+                className={styles.container}
             >
-                <Grid
-                    item
-                    container
-                    alignItems="center"
-                    sx={styles["settingRow"]}
-                >
+                <Grid item container alignItems="center" className="mb-[10px]">
                     <Grid item md={2}>
                         <AccountCircleIcon color="primary" />
                     </Grid>
@@ -75,8 +48,8 @@ const CreateRoom = () => {
                     <Grid item md={4}>
                         <Select
                             value={maxUser}
+                            className={styles.selectBox}
                             onChange={e => setMaxUser(Number(e.target.value))}
-                            sx={styles["selectCss"]}
                         >
                             <MenuItem value={10}>10</MenuItem>
                             <MenuItem value={15}>15</MenuItem>
@@ -95,8 +68,8 @@ const CreateRoom = () => {
                     <Grid item md={4}>
                         <Select
                             value={timeOut}
+                            className={styles.selectBox}
                             onChange={e => setTimeout(Number(e.target.value))}
-                            sx={styles["selectCss"]}
                         >
                             {timeOutList.map(time => {
                                 return (
@@ -110,7 +83,7 @@ const CreateRoom = () => {
                 </Grid>
                 <Grid
                     item
-                    sx={{marginTop: "auto"}}
+                    className="mt-auto"
                     container
                     justifyContent="center"
                 >
@@ -127,12 +100,8 @@ const CreateRoom = () => {
                 <Grid
                     item
                     container={isLogin}
+                    className={clsx(styles.container, "ml-[15px] w-[95%]")}
                     alignItems="center"
-                    sx={{
-                        ...styles["container"],
-                        marginLeft: "15px",
-                        width: "95%",
-                    }}
                 >
                     {!isLogin ? (
                         <Typography>
@@ -152,11 +121,11 @@ const CreateRoom = () => {
                             >
                                 <Grid item md={5}>
                                     <Select
-                                        sx={styles["selectCss"]}
+                                        className={styles.selectBox}
                                         value={collection}
                                         onChange={e =>
                                             setCollection(
-                                                e.target.value as Collection
+                                                e.target.value as CollectionType
                                             )
                                         }
                                     >
@@ -189,11 +158,11 @@ const CreateRoom = () => {
                     item
                     container
                     justifyContent="space-evenly"
-                    sx={styles["collectionPanel"]}
+                    className={styles.collectionPanel}
                 >
                     {topicList.map((p, idx) => {
                         return (
-                            <TopicCard
+                            <CollectionCard
                                 {...p}
                                 key={idx}
                                 selected={crtCollection === p.id}
