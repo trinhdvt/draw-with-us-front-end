@@ -1,0 +1,16 @@
+@import "src/components/room/styles/Room.module.scss";
+
+.topicPanel {
+  height: 270px;
+  overflow: auto;
+  margin-top: 10px;
+  background-color: #9fbdca;
+  border-radius: 10px;
+  border: 1px #5d8899 solid;
+  padding: 3px;
+}
+
+.settingPanel {
+  @extend .subPanel;
+}
+

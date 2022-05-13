@@ -67,9 +67,9 @@ const Sample = () => {
         <canvas
             width={CANVAS_SIZE}
             height={CANVAS_SIZE}
-            style={{backgroundColor: "#fff"}}
+            className="bg-white"
             ref={canvasRef}
-        ></canvas>
+        />
     );
 };
 

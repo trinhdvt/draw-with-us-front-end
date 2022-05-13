@@ -1,47 +1,14 @@
 import React from "react";
-import {Avatar, Button, Grid, TextField, Typography} from "@mui/material";
+import {Button, Grid, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import avatar from "../../assets/images/avatar.png";
-import {makeStyles, styled, withStyles} from "@mui/styles";
 import {useNavigate} from "react-router-dom";
-
-const useStyles = makeStyles({
-    userControl: {
-        margin: "5px 0px 20px 0px !important",
-    },
-    listItemIcon: {
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    upperText: {
-        textTransform: "uppercase",
-    },
-});
-
-const CssAvatar = styled(Avatar)({
-    width: "100px !important",
-    height: "100px !important",
-});
-
-const CssTextField = withStyles({
-    root: {
-        "& .MuiOutlinedInput-root": {
-            "& fieldset": {
-                border: "2px solid gray",
-                borderRadius: 12,
-            },
-            "&.Mui-focused fieldset": {
-                borderColor: "purple",
-            },
-        },
-    },
-})(TextField);
+import CssTextField from "../commons/CssTextField";
+import LargeAvatar from "../commons/LargeAvatar";
 
 const UserPanel = () => {
-    const classes = useStyles();
     const navigate = useNavigate();
     const playGame = () => {
         navigate("/play");
@@ -51,23 +18,19 @@ const UserPanel = () => {
         <Grid
             item
             container
-            className={classes.userControl}
+            className="mt-[5px] mb-[20px]"
             md={5}
             direction="column"
             alignItems="center"
             rowSpacing={2}
         >
             <Grid item>
-                <Typography
-                    variant="h2"
-                    align="center"
-                    className={classes.upperText}
-                >
+                <Typography variant="h2" align="center" className="uppercase">
                     Play now
                 </Typography>
             </Grid>
             <Grid item>
-                <CssAvatar src={avatar} alt="avatar" />
+                <LargeAvatar src={avatar} alt="avatar" />
             </Grid>
             <Grid
                 item
@@ -76,8 +39,13 @@ const UserPanel = () => {
                 alignItems="center"
                 sx={{paddingBottom: "6px"}}
             >
-                <Grid item className={classes.listItemIcon}>
-                    <PersonPinIcon color="error" sx={{paddingRight: "5px"}} />
+                <Grid
+                    item
+                    container
+                    alignItems="center"
+                    justifyContent="center"
+                >
+                    <PersonPinIcon color="error" className="pr-[5px]" />
                     <CssTextField
                         id="outlined-size-small"
                         size="small"

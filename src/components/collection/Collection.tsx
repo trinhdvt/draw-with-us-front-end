@@ -15,40 +15,8 @@ import {allTopic} from "../../utils/TopicData";
 import Topic from "../../models/Topic";
 import SearchIcon from "@mui/icons-material/Search";
 import Tag from "../../custom/Tag";
-
-const styles = {
-    selectCss: {
-        width: "100%",
-        maxHeight: "40px",
-        textAlign: "center",
-    },
-    topicPanel: {
-        height: "270px",
-        overflow: "auto",
-        marginTop: "10px",
-        backgroundColor: "#9fbdca",
-        borderRadius: "10px",
-        border: "1px #5d8899 solid",
-        padding: "3px",
-    },
-    roomPanel: {
-        backgroundColor: "#9fbdca",
-        padding: "10px",
-        borderRadius: "10px",
-        height: "350px",
-    },
-    container: {
-        backgroundColor: "#fff",
-        borderRadius: "10px",
-        padding: "10px",
-    },
-    "mb-5": {
-        marginBottom: "5px",
-    },
-    "mb-10": {
-        marginBottom: "15px",
-    },
-};
+import styles from "./Collection.module.scss";
+import clsx from "clsx";
 
 const Collection = () => {
     const [topics, setTopics] = React.useState<Topic[]>([]);
@@ -89,16 +57,16 @@ const Collection = () => {
     };
 
     return (
-        <Grid container sx={styles["roomPanel"]}>
+        <Grid container className={styles.settingPanel}>
             <Grid
                 item
                 container
                 md={4}
                 direction="column"
-                sx={styles["container"]}
+                className={styles.container}
             >
-                <Grid item container direction="column" sx={styles["mb-10"]}>
-                    <Typography sx={styles["mb-5"]}>1. Topic name</Typography>
+                <Grid item container direction="column" className="mb-[10px]">
+                    <Typography className="mb-[5px]">1. Topic name</Typography>
                     <TextField
                         variant="outlined"
                         size="small"
@@ -108,7 +76,7 @@ const Collection = () => {
                         }}
                     />
                 </Grid>
-                <Grid item container alignItems="center" sx={styles["mb-10"]}>
+                <Grid item container alignItems="center" className="mb-[10px]">
                     <Typography>2. Share with others</Typography>
                     <MyCheckbox
                         checked={isPublic}
@@ -116,7 +84,7 @@ const Collection = () => {
                     />
                 </Grid>
                 <Grid item container>
-                    <Typography sx={styles["mb-10"]}>
+                    <Typography className="mb-[10px]">
                         3. Select topic below
                     </Typography>
                     <Grid item container>
@@ -170,7 +138,7 @@ const Collection = () => {
                                 <Button
                                     startIcon={<AddIcon />}
                                     variant="contained"
-                                    sx={{width: "90%"}}
+                                    className="w-[90%]"
                                     disabled={!currentTopic}
                                     onClick={onTopicAdd}
                                 >
@@ -182,9 +150,9 @@ const Collection = () => {
                 </Grid>
                 <Grid
                     item
-                    sx={{marginTop: "auto"}}
                     container
                     justifyContent="center"
+                    className="mt-auto"
                 >
                     <Button
                         startIcon={<ConstructionIcon />}
@@ -199,39 +167,32 @@ const Collection = () => {
                 item
                 container
                 direction="column"
-                sx={{...styles["container"], marginLeft: "auto"}}
                 md={7.9}
+                className={clsx(styles.container, "ml-auto")}
             >
                 <Grid item container alignItems="center">
                     <Typography>
                         You have select {addTopics.length}/340 topics
                     </Typography>
-                    <Box
-                        sx={{
-                            display: "flex",
-                            alignItems: "flex-end",
-                            marginLeft: "auto",
-                        }}
-                    >
+                    <Box className="flex items-end ml-auto">
                         <SearchIcon
                             sx={{color: "action.active", mr: 1, my: 0.5}}
                         />
                         <TextField
                             size="small"
                             variant="standard"
-                            placeholder="topic"
+                            placeholder="Topic"
                         />
                     </Box>
                 </Grid>
                 <Grid
                     item
                     container
-                    sx={{
-                        ...styles["topicPanel"],
-                        alignItems: isEmpty ? "center" : "flex-start",
-                        justifyContent: isEmpty ? "center" : "flex-start",
-                        alignContent: isEmpty ? "center" : "flex-start",
-                    }}
+                    className={clsx(
+                        styles.topicPanel,
+                        isEmpty && "items-center justify-center content-center",
+                        !isEmpty && "content-start"
+                    )}
                 >
                     {isEmpty ? (
                         <Typography>

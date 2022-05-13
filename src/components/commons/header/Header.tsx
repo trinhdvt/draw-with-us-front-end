@@ -1,25 +1,29 @@
 import React from "react";
 import {Grid, styled} from "@mui/material";
-import Logo from "../../../assets/images/logo.svg";
+import logoImg from "../../../assets/images/logo.svg";
+import {useNavigate} from "react-router-dom";
 
-const Img = styled("img")({
+const Logo = styled("img")({
     width: "auto",
     height: "90px",
+    "&:hover": {
+        cursor: "pointer",
+    },
 });
 
-const headerStyles = {
-    marginBottom: "20px",
-};
-const logoStyles = {
-    marginBottom: "10px",
-};
-
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
-        <Grid container justifyContent="center" sx={headerStyles}>
+        <Grid container justifyContent="center" className="mb-[20px]">
             <Grid item container xs={6} direction="column" alignItems="center">
-                <Grid item sx={logoStyles}>
-                    <Img src={Logo} alt="logo" />
+                <Grid item className="mb-[10px]">
+                    <Logo
+                        src={logoImg}
+                        alt="logo"
+                        loading="lazy"
+                        onClick={() => navigate("/")}
+                    />
                 </Grid>
             </Grid>
         </Grid>
