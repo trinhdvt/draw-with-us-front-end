@@ -1,20 +1,13 @@
 import React from "react";
 import {Avatar, Grid, Typography} from "@mui/material";
-import sampleImg from "../../assets/images/avatar.png";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import styles from "./styles/Room.module.scss";
 import clsx from "clsx";
+import {CollectionProps} from "../../models/Collection";
 
-interface CollectionProps extends React.HTMLAttributes<HTMLElement> {
-    hidden?: boolean;
-    selected?: boolean;
-    thumbnail: string;
-    name: string;
-    type: string;
-    id: string;
-}
-
-const CollectionCard = (props: CollectionProps) => {
+const CollectionCard = (
+    props: CollectionProps & React.HTMLAttributes<HTMLElement>
+) => {
     return (
         <Grid
             {...props}
@@ -25,7 +18,8 @@ const CollectionCard = (props: CollectionProps) => {
             alignItems="center"
             className={clsx(
                 styles.gameCollection,
-                props.selected && styles.selected
+                props.selected && styles.selected,
+                props.hidden && "invisible"
             )}
         >
             <Grid item>
@@ -42,15 +36,4 @@ const CollectionCard = (props: CollectionProps) => {
     );
 };
 
-const collectionDefault: CollectionProps = {
-    thumbnail: sampleImg,
-    name: "Easy",
-    type: "Default",
-    hidden: false,
-    selected: false,
-    id: "",
-};
-
 export default CollectionCard;
-export {collectionDefault};
-export type {CollectionProps};

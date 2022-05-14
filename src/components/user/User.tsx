@@ -1,6 +1,5 @@
 import React from "react";
 import {Avatar, Grid, Stack, Typography} from "@mui/material";
-import sample from "../../assets/images/avatar.png";
 
 export interface UserProps {
     name: string;
@@ -12,7 +11,9 @@ const User = (props: UserProps) => {
     return (
         <Grid container direction="row" alignItems="center">
             <Grid item md={3} className="pr-[10px]">
-                <Avatar src={props.avatar ?? sample} />
+                <Avatar
+                    src={props.avatar ?? "https://cdn.trinhdvt.tech/avatar.png"}
+                />
             </Grid>
 
             <Grid item md={9}>
