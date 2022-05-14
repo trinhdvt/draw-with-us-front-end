@@ -14,20 +14,16 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import UndoIcon from "@mui/icons-material/Undo";
-import API from "../../api";
 import randomTarget from "../../utils/RandomTarget";
 import notify from "../../utils/Notify";
 import ListUser from "../user/ListUser";
 import LinearProgressWithLabel from "./CountdownTimer";
+import {PredictAPI} from "../../api/HttpClient";
 
 const canvasStyle = {
     border: "0.0625rem solid #9c9c9c",
     borderRadius: "0.25rem",
     margin: "auto",
-};
-
-const parentStyles = {
-    margin: "0px 30px",
 };
 
 type PredictResult = {
@@ -75,7 +71,7 @@ const DrawBoard = () => {
         try {
             setIsLoading(true);
 
-            const response = await API.post("/predict/v1", {
+            const response = await PredictAPI.post("/predict/v1", {
                 data: await canvasRef.current?.exportImage("png"),
             });
 
@@ -170,14 +166,20 @@ const DrawBoard = () => {
             <Grid item md={3}>
                 <ListUser />
             </Grid>
-            <Grid item container md={5} sx={parentStyles} direction="column">
+            <Grid
+                item
+                container
+                md={5}
+                direction="column"
+                className="mx-[30px]"
+            >
                 <Grid
                     item
                     container
                     justifyContent="center"
                     alignItems="flex-end"
                 >
-                    <Typography variant="h4" sx={{paddingRight: "5px"}}>
+                    <Typography variant="h4" className="pr-[5px]">
                         Let's draw:{" "}
                     </Typography>
                     <Typography variant="h3">{target["vi"]}</Typography>
@@ -193,7 +195,7 @@ const DrawBoard = () => {
                         eraserWidth={5}
                     />
                 </Grid>
-                <Grid item md sx={{marginTop: "20px"}}>
+                <Grid item md className="mt-[20px]">
                     <LinearProgressWithLabel
                         value={progress.remainPercent}
                         displayvalue={progress.displayValue}
@@ -201,14 +203,14 @@ const DrawBoard = () => {
                 </Grid>
             </Grid>
 
-            <Grid item container md={2} sx={parentStyles}>
+            <Grid item container md={2} className="mx-[30px]">
                 <Stack
                     direction="column"
                     spacing={2}
                     divider={<Divider orientation="horizontal" flexItem />}
                     justifyContent="flex-start"
                     alignItems="center"
-                    sx={{paddingTop: "50px"}}
+                    className="pt-[50px]"
                 >
                     <LoadingButton
                         onClick={predict}

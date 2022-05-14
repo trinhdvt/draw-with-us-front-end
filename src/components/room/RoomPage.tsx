@@ -7,8 +7,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useNavigate} from "react-router-dom";
 import styles from "./styles/Room.module.scss";
+import {useSocket} from "../../context/Socket";
 
 const RoomPage = () => {
+    const socket = useSocket();
+
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
     const [roomProps] = React.useState(() => {
@@ -22,6 +25,15 @@ const RoomPage = () => {
         }
         return sampleProps;
     });
+
+    React.useEffect(() => {
+        socket?.on("greeting", msg => {
+            console.log(msg);
+        });
+        return () => {
+            socket?.off("greeting");
+        };
+    }, [socket]);
 
     return (
         <Grid container className={styles.container}>
