@@ -2,30 +2,29 @@ import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TimerIcon from "@mui/icons-material/Timer";
-import CollectionCard, {
-    collectionDefault,
-    CollectionProps,
-} from "./CollectionCard";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import styles from "./styles/Room.module.scss";
 import clsx from "clsx";
-import {CollectionType} from "../../models/Collection";
+import {allCollections} from "../../services/CollectionServices";
+import {CollectionProps, CollectionType} from "../../models/Collection";
+import CollectionCard from "./CollectionCard";
 
 const CreateRoom = () => {
     const navigate = useNavigate();
+
     const [maxUser, setMaxUser] = React.useState(10);
-    const [collection, setCollection] = React.useState(CollectionType.ALL);
     const timeOutList = [30, 45, 60, 90, 120];
+
+    const [filterType, setFilter] = React.useState(CollectionType.ALL);
     const [timeOut, setTimeout] = React.useState(timeOutList[0]);
-    const [topicList] = React.useState(() => {
-        const sampleProps: CollectionProps[] = [];
-        for (let i = 0; i < 8; i++) {
-            sampleProps.push({...collectionDefault, hidden: i > 4, id: i + ""});
-        }
-        return sampleProps;
-    });
+    const [collection, setCollection] = React.useState<CollectionProps[]>([]);
+
+    React.useEffect(() => {
+        allCollections().then(data => setCollection(data));
+    }, []);
+
     const [crtCollection, setCrtCollection] = React.useState("");
     const isLogin = true;
 
@@ -122,21 +121,25 @@ const CreateRoom = () => {
                                 <Grid item md={5}>
                                     <Select
                                         className={styles.selectBox}
-                                        value={collection}
+                                        value={filterType}
                                         onChange={e =>
-                                            setCollection(
+                                            setFilter(
                                                 e.target.value as CollectionType
                                             )
                                         }
                                     >
-                                        <MenuItem value="all">All</MenuItem>
-                                        <MenuItem value="your">
+                                        <MenuItem value={CollectionType.ALL}>
+                                            All
+                                        </MenuItem>
+                                        <MenuItem value={CollectionType.YOUR}>
                                             Your topic
                                         </MenuItem>
-                                        <MenuItem value="public">
+                                        <MenuItem value={CollectionType.PUBLIC}>
                                             Public
                                         </MenuItem>
-                                        <MenuItem value="official">
+                                        <MenuItem
+                                            value={CollectionType.OFFICIAL}
+                                        >
                                             Official
                                         </MenuItem>
                                     </Select>
@@ -160,20 +163,18 @@ const CreateRoom = () => {
                     justifyContent="space-evenly"
                     className={styles.collectionPanel}
                 >
-                    {topicList.map((p, idx) => {
-                        return (
-                            <CollectionCard
-                                {...p}
-                                key={idx}
-                                selected={crtCollection === p.id}
-                                onClick={() => {
-                                    setCrtCollection(
-                                        crtCollection === p.id ? "" : p.id
-                                    );
-                                }}
-                            />
-                        );
-                    })}
+                    {collection.map((p, idx) => (
+                        <CollectionCard
+                            {...p}
+                            key={idx}
+                            selected={crtCollection === p.id}
+                            onClick={() => {
+                                setCrtCollection(
+                                    crtCollection === p.id ? "" : p.id
+                                );
+                            }}
+                        />
+                    ))}
                 </Grid>
             </Grid>
         </Grid>

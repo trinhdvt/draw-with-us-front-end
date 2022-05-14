@@ -3,7 +3,6 @@ import {Button, Grid, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
-import avatar from "../../assets/images/avatar.png";
 import {useNavigate} from "react-router-dom";
 import CssTextField from "../commons/CssTextField";
 import LargeAvatar from "../commons/LargeAvatar";
@@ -11,7 +10,8 @@ import LargeAvatar from "../commons/LargeAvatar";
 const UserPanel = () => {
     const navigate = useNavigate();
     const playGame = () => {
-        navigate("/play");
+        const roomId = "123456";
+        navigate(`/play/${roomId}`);
     };
 
     return (
@@ -30,7 +30,10 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <LargeAvatar src={avatar} alt="avatar" />
+                <LargeAvatar
+                    src="https://cdn.trinhdvt.tech/avatar.png"
+                    alt="avatar"
+                />
             </Grid>
             <Grid
                 item

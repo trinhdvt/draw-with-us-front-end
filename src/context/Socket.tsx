@@ -17,10 +17,10 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
     React.useEffect(() => {
         try {
             const socketCnn = io(BackendUrl, options);
-            socketCnn.on("connect", () => {
-                console.log(`connected ${socketCnn.id}`);
-            });
             setConnection(socketCnn);
+            socketCnn.onAny((eventName, ...args) => {
+                console.log(`event ${eventName}`, ...args);
+            });
         } catch (e) {
             console.error(e);
         }

@@ -1,7 +1,6 @@
 import React from "react";
 import {Avatar, Grid, Typography} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
-import sampleImg from "../../assets/images/avatar.png";
 import clsx from "clsx";
 import styles from "./styles/Room.module.scss";
 
@@ -75,7 +74,7 @@ const roomDefault: RoomProps = {
     roomId: "1pxzs",
     roomTopic: "John Doe",
     roomOwner: "Trinh DVT",
-    roomAvatar: sampleImg,
+    roomAvatar: "https://cdn.trinhdvt.tech/avatar.png",
     currentPlayers: 5,
     maxPlayers: 10,
 };
