@@ -21,8 +21,8 @@ const Sample = () => {
     const RATIO = CANVAS_SIZE / BASE_SIZE;
     const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-    const draw = () => {
-        const ctx = canvasRef.current!.getContext("2d");
+    const draw = React.useCallback(() => {
+        const ctx = canvasRef.current?.getContext("2d");
         if (!ctx) return;
         ctx.strokeStyle = "black";
         const drawLine = (
@@ -35,7 +35,7 @@ const Sample = () => {
                 x => x * RATIO
             );
             let amount = 0.0;
-            setInterval(function () {
+            setInterval(() => {
                 amount += 0.1;
                 amount = Math.min(amount, 1);
                 ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
@@ -58,10 +58,11 @@ const Sample = () => {
                 );
             }
         }
-    };
+    }, [RATIO]);
+
     React.useEffect(() => {
         draw();
-    }, []);
+    }, [draw]);
 
     return (
         <canvas

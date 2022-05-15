@@ -8,8 +8,10 @@ const ListUser = () => {
         fetch("https://jsonplaceholder.typicode.com/users")
             .then(response => response.json())
             .then(json => {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 const userProps: UserProps[] = [];
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 json.forEach(user => {
                     userProps.push({
