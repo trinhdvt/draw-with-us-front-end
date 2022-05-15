@@ -7,7 +7,9 @@ import {
 } from "../models/Collection";
 
 const allCollections = async () => {
-    const response = await BackendAPI.get<CollectionProps[]>("/api/collection");
+    const response = await BackendAPI.get<CollectionProps[]>(
+        "/api/collections"
+    );
     const data = response.data.map(item => ({
         ...item,
         type: CollectionType[Number(item["type"])],
