@@ -6,9 +6,11 @@ import PersonPinIcon from "@mui/icons-material/PersonPin";
 import {useNavigate} from "react-router-dom";
 import CssTextField from "../commons/CssTextField";
 import LargeAvatar from "../commons/LargeAvatar";
+import {useUser} from "../../context/UserContext";
 
 const UserPanel = () => {
     const navigate = useNavigate();
+    const {user} = useUser();
     const playGame = () => {
         const roomId = "123456";
         navigate(`/play/${roomId}`);
@@ -30,10 +32,7 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <LargeAvatar
-                    src="https://cdn.trinhdvt.tech/avatar.png"
-                    alt="avatar"
-                />
+                <LargeAvatar src={user.avatar} alt="avatar" />
             </Grid>
             <Grid
                 item

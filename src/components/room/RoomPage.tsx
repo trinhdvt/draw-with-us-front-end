@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useNavigate} from "react-router-dom";
 import styles from "./styles/Room.module.scss";
-import {useSocket} from "../../context/Socket";
+import {useSocket} from "../../context/SocketContext";
 
 const RoomPage = () => {
     const socket = useSocket();

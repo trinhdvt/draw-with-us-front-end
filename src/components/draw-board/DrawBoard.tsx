@@ -180,7 +180,7 @@ const DrawBoard = () => {
                     alignItems="flex-end"
                 >
                     <Typography variant="h4" className="pr-[5px]">
-                        Let's draw:{" "}
+                        Let&apos;s draw:{" "}
                     </Typography>
                     <Typography variant="h3">{target["vi"]}</Typography>
                 </Grid>

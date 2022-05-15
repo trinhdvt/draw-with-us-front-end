@@ -1,5 +1,5 @@
-import {Divider, Grid} from "@mui/material";
 import React from "react";
+import {Divider, Grid} from "@mui/material";
 import UserPanel from "./UserPanel";
 import LoginPanel from "./LoginPanel";
 

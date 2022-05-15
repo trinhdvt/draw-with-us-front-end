@@ -35,7 +35,7 @@ const Collection = () => {
         }
     }, [loading]);
 
-    const onTopicSelect = (_: React.SyntheticEvent, value: any) => {
+    const onTopicSelect = (_: React.SyntheticEvent, value: unknown) => {
         setCurrentTopic(value as Topic);
     };
 
@@ -196,7 +196,7 @@ const Collection = () => {
                 >
                     {isEmpty ? (
                         <Typography>
-                            You haven't select any topics yet
+                            You haven&apos;t select any topics yet
                         </Typography>
                     ) : (
                         addTopics.map((topic, index) => (
