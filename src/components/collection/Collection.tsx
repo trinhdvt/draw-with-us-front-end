@@ -11,12 +11,12 @@ import {
 import ConstructionIcon from "@mui/icons-material/Construction";
 import MyCheckbox from "../../custom/Checkbox";
 import AddIcon from "@mui/icons-material/Add";
-import {allTopic} from "../../utils/TopicData";
 import Topic from "../../models/Topic";
 import SearchIcon from "@mui/icons-material/Search";
 import Tag from "../../custom/Tag";
 import styles from "./Collection.module.scss";
 import clsx from "clsx";
+import {allTopics} from "../../services/TopicServices";
 
 const Collection = () => {
     const [topics, setTopics] = React.useState<Topic[]>([]);
@@ -27,11 +27,10 @@ const Collection = () => {
     const [currentTopic, setCurrentTopic] = React.useState<Topic | null>(null);
     const [addTopics, setAddTopic] = React.useState<Topic[]>([]);
     const isEmpty = addTopics.length == 0;
-    const disabled = isEmpty || topicName.trim() == "";
 
     React.useEffect(() => {
         if (loading) {
-            setTopics(allTopic());
+            allTopics().then(data => setTopics(data));
         }
     }, [loading]);
 
@@ -53,7 +52,9 @@ const Collection = () => {
 
     const removeTopic = (topic: Topic) => {
         setAddTopic(prev => prev.filter(t => t.id !== topic.id));
-        setTopics(prev => [...prev, topic]);
+        setTopics(prev =>
+            [...prev, topic].sort((a, b) => a.name.localeCompare(b.name))
+        );
     };
 
     return (
@@ -157,7 +158,7 @@ const Collection = () => {
                     <Button
                         startIcon={<ConstructionIcon />}
                         variant="contained"
-                        disabled={disabled}
+                        disabled={isEmpty || topicName.trim() == ""}
                     >
                         Create
                     </Button>
