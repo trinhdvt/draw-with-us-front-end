@@ -7,9 +7,11 @@ import UserProvider from "./context/UserContext";
 const NormalLayout = React.lazy(() => import("./layout/NormalLayout"));
 const Game = React.lazy(() => import("./components/game-play/Game"));
 const HomePage = React.lazy(() => import("./components/home/HomePage"));
-const RoomPage = React.lazy(() => import("./components/room/RoomPage"));
+const Room = React.lazy(() => import("./components/room"));
 const Gallery = React.lazy(() => import("./components/gallery/Gallery"));
-const CreateRoom = React.lazy(() => import("./components/room/CreateRoom"));
+const CreateRoom = React.lazy(
+    () => import("./components/room/create-room/CreateRoom")
+);
 const CollectionPage = React.lazy(
     () => import("./components/collection/Collection")
 );
@@ -24,7 +26,7 @@ function App() {
                             <Route element={<NormalLayout />}>
                                 <Route path="/" element={<HomePage />} />
                                 <Route path="/play" element={<Game />} />
-                                <Route path="/room" element={<RoomPage />} />
+                                <Route path="/room" element={<Room />} />
                                 <Route
                                     path="/create"
                                     element={<CreateRoom />}

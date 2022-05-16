@@ -1,5 +1,5 @@
 import {BackendAPI} from "../api/HttpClient";
-import Topic from "../models/Topic";
+import Topic from "../@types/Topic";
 
 const allTopics = async () => {
     const response = await BackendAPI.get<Topic[]>("/api/topics");

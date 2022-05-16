@@ -11,12 +11,13 @@ import {
 import ConstructionIcon from "@mui/icons-material/Construction";
 import MyCheckbox from "../../custom/Checkbox";
 import AddIcon from "@mui/icons-material/Add";
-import Topic from "../../models/Topic";
+import Topic from "../../@types/Topic";
 import SearchIcon from "@mui/icons-material/Search";
 import Tag from "../../custom/Tag";
 import styles from "./Collection.module.scss";
 import clsx from "clsx";
 import {allTopics} from "../../services/TopicServices";
+import CssTextField from "../commons/CssTextField";
 
 const Collection = () => {
     const [topics, setTopics] = React.useState<Topic[]>([]);
@@ -68,7 +69,7 @@ const Collection = () => {
             >
                 <Grid item container direction="column" className="mb-[10px]">
                     <Typography className="mb-[5px]">1. Topic name</Typography>
-                    <TextField
+                    <CssTextField
                         variant="outlined"
                         size="small"
                         value={topicName}

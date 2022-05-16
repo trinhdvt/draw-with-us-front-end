@@ -12,10 +12,13 @@
   border-radius: 10px;
 }
 
+$max-height: 350px;
+
 .subPanel {
   background-color: #9fbdca;
   padding: 10px;
   border-radius: 10px;
+  height: $max-height;
 }
 
 .header {
@@ -34,7 +37,7 @@
 }
 
 .collectionPanel {
-  max-height: 230px;
+  max-height: $max-height;
   overflow: auto;
   margin-top: 10px;
 }

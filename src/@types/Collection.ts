@@ -5,23 +5,23 @@ enum CollectionType {
     OFFICIAL,
 }
 
-interface CollectionProps {
+interface Collection {
     hidden?: boolean;
     selected?: boolean;
     thumbnail: string;
     name: string;
-    type: string;
+    type: CollectionType;
     id: string;
 }
 
-const CollectionDefault: CollectionProps = {
+const CollectionDefault: Collection = {
     thumbnail: "",
     name: "Easy",
-    type: "Default",
+    type: CollectionType.ALL,
     hidden: false,
     selected: false,
     id: "",
 };
 
 export {CollectionType, CollectionDefault};
-export type {CollectionProps};
+export type {Collection};
