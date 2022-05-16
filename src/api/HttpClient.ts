@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BackendUrl = "http://localhost:8888/";
+const BackendUrl = "https://backend.draw-with.trinhdvt.tech/";
 const PredictUrl = "https://api.draw-with.trinhdvt.tech";
 
 const BackendAPI = axios.create({
