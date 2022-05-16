@@ -1,19 +1,10 @@
 import {BackendAPI} from "../api/HttpClient";
 
-import {
-    CollectionDefault,
-    CollectionProps,
-    CollectionType,
-} from "../models/Collection";
+import {CollectionDefault, Collection} from "../@types/Collection";
 
 const allCollections = async () => {
-    const response = await BackendAPI.get<CollectionProps[]>(
-        "/api/collections"
-    );
-    const data = response.data.map(item => ({
-        ...item,
-        type: CollectionType[Number(item["type"])],
-    }));
+    const response = await BackendAPI.get<Collection[]>("/api/collections");
+    const data = response.data;
     const size = data.length;
     if (size % 4 !== 0) {
         for (let i = 0; i < 4 - (size % 4); i++) {

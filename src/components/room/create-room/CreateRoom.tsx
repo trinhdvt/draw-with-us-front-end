@@ -5,28 +5,99 @@ import TimerIcon from "@mui/icons-material/Timer";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
-import styles from "./styles/Room.module.scss";
+import styles from "../styles/Room.module.scss";
 import clsx from "clsx";
-import {allCollections} from "../../services/CollectionServices";
-import {CollectionProps, CollectionType} from "../../models/Collection";
+import {allCollections} from "../../../services/CollectionServices";
+import {Collection, CollectionType} from "../../../@types/Collection";
 import CollectionCard from "./CollectionCard";
+import {useUser} from "../../../context/UserContext";
+import RoomServices from "../../../services/RoomServices";
+import {Room} from "../../../@types/Room";
+
+enum Action {
+    SET_MAX_USER,
+    SET_TIME_OUT,
+    SET_COLLECTION,
+}
+
+interface NewRoomAction {
+    type: Action;
+    payload: unknown;
+}
+
+type NewRoomState = Room;
+
+const NewRoomReducer = (state: NewRoomState, action: NewRoomAction) => {
+    const {type, payload} = action;
+    switch (type) {
+        case Action.SET_MAX_USER:
+            return {...state, maxUsers: payload as number};
+        case Action.SET_TIME_OUT:
+            return {...state, timeOut: payload as number};
+        case Action.SET_COLLECTION:
+            return {...state, collectionId: payload as string};
+        default:
+            return state;
+    }
+};
+
+interface CollectionState {
+    origin: Collection[];
+    filtered: Collection[];
+}
 
 const CreateRoom = () => {
-    const navigate = useNavigate();
-
-    const [maxUser, setMaxUser] = React.useState(10);
+    const maxUserList = [10, 15, 30, 50];
     const timeOutList = [30, 45, 60, 90, 120];
 
+    const navigate = useNavigate();
+    const {user} = useUser();
+    const [state, dispatch] = React.useReducer(NewRoomReducer, {
+        maxUsers: maxUserList[0],
+        timeOut: timeOutList[0],
+        collectionId: "",
+        sid: user.sid,
+    });
+    const [filterState, setFilterState] = React.useState<CollectionState>({
+        origin: [],
+        filtered: [],
+    });
     const [filterType, setFilter] = React.useState(CollectionType.ALL);
-    const [timeOut, setTimeout] = React.useState(timeOutList[0]);
-    const [collection, setCollection] = React.useState<CollectionProps[]>([]);
+
+    const {filtered, origin} = filterState;
 
     React.useEffect(() => {
-        allCollections().then(data => setCollection(data));
+        allCollections().then(data => {
+            setFilterState({
+                origin: data,
+                filtered: data,
+            });
+        });
     }, []);
 
-    const [crtCollection, setCrtCollection] = React.useState("");
+    React.useEffect(() => {
+        switch (filterType) {
+            case CollectionType.ALL:
+                return setFilterState(prev => ({
+                    ...prev,
+                    filtered: prev.origin,
+                }));
+
+            default:
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
+                setFilterState(prev => ({
+                    ...prev,
+                    filtered: origin.filter(c => c.type == filterType),
+                }));
+        }
+    }, [filterType, origin]);
+
     const isLogin = true;
+    const onCreateRoom = async () => {
+        const data = await RoomServices.create(state);
+        console.log(data);
+    };
 
     return (
         <Grid container className={styles.subPanel}>
@@ -46,14 +117,22 @@ const CreateRoom = () => {
                     </Grid>
                     <Grid item md={4}>
                         <Select
-                            value={maxUser}
+                            value={state.maxUsers}
                             className={styles.selectBox}
-                            onChange={e => setMaxUser(Number(e.target.value))}
+                            onChange={e =>
+                                dispatch({
+                                    type: Action.SET_MAX_USER,
+                                    payload: e.target.value,
+                                })
+                            }
                         >
-                            <MenuItem value={10}>10</MenuItem>
-                            <MenuItem value={15}>15</MenuItem>
-                            <MenuItem value={30}>30</MenuItem>
-                            <MenuItem value={50}>50</MenuItem>
+                            {maxUserList.map(m => {
+                                return (
+                                    <MenuItem key={m} value={m}>
+                                        {m}
+                                    </MenuItem>
+                                );
+                            })}
                         </Select>
                     </Grid>
                 </Grid>
@@ -66,9 +145,14 @@ const CreateRoom = () => {
                     </Grid>
                     <Grid item md={4}>
                         <Select
-                            value={timeOut}
+                            value={state.timeOut}
                             className={styles.selectBox}
-                            onChange={e => setTimeout(Number(e.target.value))}
+                            onChange={e =>
+                                dispatch({
+                                    type: Action.SET_TIME_OUT,
+                                    payload: e.target.value,
+                                })
+                            }
                         >
                             {timeOutList.map(time => {
                                 return (
@@ -89,7 +173,8 @@ const CreateRoom = () => {
                     <Button
                         startIcon={<ConstructionIcon />}
                         variant="contained"
-                        disabled={crtCollection === ""}
+                        disabled={state.collectionId === ""}
+                        onClick={onCreateRoom}
                     >
                         Create
                     </Button>
@@ -163,15 +248,17 @@ const CreateRoom = () => {
                     justifyContent="space-evenly"
                     className={styles.collectionPanel}
                 >
-                    {collection.map((p, idx) => (
+                    {filtered.map((p, idx) => (
                         <CollectionCard
                             {...p}
                             key={idx}
-                            selected={crtCollection === p.id}
+                            selected={state.collectionId === p.id}
                             onClick={() => {
-                                setCrtCollection(
-                                    crtCollection === p.id ? "" : p.id
-                                );
+                                dispatch({
+                                    type: Action.SET_COLLECTION,
+                                    payload:
+                                        state.collectionId == p.id ? "" : p.id,
+                                });
                             }}
                         />
                     ))}

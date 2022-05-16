@@ -1,10 +1,10 @@
 import React from "react";
-import {Avatar, Grid, Typography} from "@mui/material";
+import {Avatar, Grid, GridProps, Typography} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import clsx from "clsx";
 import styles from "./styles/Room.module.scss";
 
-interface RoomProps extends React.HTMLAttributes<HTMLElement> {
+interface RoomProps {
     hidden?: boolean;
     roomId: string;
     roomTopic: string;
@@ -15,7 +15,7 @@ interface RoomProps extends React.HTMLAttributes<HTMLElement> {
     selected?: boolean;
 }
 
-const Room = (props: RoomProps) => {
+const RoomCard = (props: RoomProps & GridProps) => {
     const FIRST_COL_SIZE = 5;
 
     return (
@@ -79,6 +79,6 @@ const roomDefault: RoomProps = {
     maxPlayers: 10,
 };
 
-export default Room;
+export default RoomCard;
 export {roomDefault};
 export type {RoomProps};

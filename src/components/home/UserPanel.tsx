@@ -5,15 +5,14 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import {useNavigate} from "react-router-dom";
 import CssTextField from "../commons/CssTextField";
-import LargeAvatar from "../commons/LargeAvatar";
 import {useUser} from "../../context/UserContext";
+import StyledAvatar from "../commons/StyledAvatar";
 
 const UserPanel = () => {
     const navigate = useNavigate();
     const {user} = useUser();
     const playGame = () => {
-        const roomId = "123456";
-        navigate(`/play/${roomId}`);
+        navigate(`/play`);
     };
 
     return (
@@ -32,7 +31,11 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <LargeAvatar src={user.avatar} alt="avatar" />
+                <StyledAvatar
+                    className="w-[100px] h-[100px]"
+                    src={user.avatar}
+                    alt="avatar"
+                />
             </Grid>
             <Grid
                 item

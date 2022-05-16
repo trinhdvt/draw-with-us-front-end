@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Button, Grid, TextField, Typography} from "@mui/material";
-import Room, {roomDefault, RoomProps} from "./Room";
+import RoomCard, {roomDefault, RoomProps} from "./RoomCard";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import SearchIcon from "@mui/icons-material/Search";
@@ -69,7 +69,7 @@ const RoomPage = () => {
                 className={styles.mainPanel}
             >
                 {roomProps.map((p, k) => (
-                    <Room
+                    <RoomCard
                         {...p}
                         key={k}
                         selected={p.roomId == selectedRoom}
