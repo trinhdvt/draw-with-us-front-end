@@ -2,10 +2,14 @@ import React from "react";
 
 interface UserProps {
     sid: string;
-    avatar: string;
+    avatar?: string;
+    name: string;
+    id: string;
 }
 
 const DefaultUser: UserProps = {
+    name: "",
+    id: "",
     sid: "",
     avatar: "https://cdn.trinhdvt.tech/avatar.png",
 };
@@ -40,3 +44,4 @@ const useUser = () => {
 
 export default UserProvider;
 export {useUser};
+export type {UserProps};

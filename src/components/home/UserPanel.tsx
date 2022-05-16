@@ -1,4 +1,7 @@
 import React from "react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import Jdenticon from "react-jdenticon";
 import {Button, Grid, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
@@ -7,10 +10,13 @@ import {useNavigate} from "react-router-dom";
 import CssTextField from "../commons/CssTextField";
 import {useUser} from "../../context/UserContext";
 import StyledAvatar from "../commons/StyledAvatar";
+import {useSocket} from "../../context/SocketContext";
 
 const UserPanel = () => {
     const navigate = useNavigate();
-    const {user} = useUser();
+    const {user, setUser} = useUser();
+    const socket = useSocket();
+
     const playGame = () => {
         navigate(`/play`);
     };
@@ -31,11 +37,9 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <StyledAvatar
-                    className="w-[100px] h-[100px]"
-                    src={user.avatar}
-                    alt="avatar"
-                />
+                <StyledAvatar className="w-[100px] h-[100px] bg-white">
+                    <Jdenticon size="100" value={user.sid} />
+                </StyledAvatar>
             </Grid>
             <Grid
                 item
@@ -52,9 +56,11 @@ const UserPanel = () => {
                 >
                     <PersonPinIcon color="error" className="pr-[5px]" />
                     <CssTextField
-                        id="outlined-size-small"
                         size="small"
                         label="Nickname"
+                        value={user.name}
+                        onChange={e => setUser({...user, name: e.target.value})}
+                        onBlur={() => socket?.emit("user:update", user)}
                         required
                     />
                 </Grid>
