@@ -1,14 +1,16 @@
 import React from "react";
 import {Box, Button, Grid, TextField} from "@mui/material";
-import RoomCard, {roomDefault, RoomProps} from "./RoomCard";
+import RoomCard, {RoomDefault, RoomProps} from "./RoomCard";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import SearchIcon from "@mui/icons-material/Search";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
+import RoomServices from "../../services/RoomServices";
 
 const SearchField = React.memo(() => {
+    console.log("SearchField");
     return (
         <Box className="flex items-end w-[110px] ml-4">
             <SearchIcon sx={{color: "action.active", mr: 1, my: 0.5}} />
@@ -21,41 +23,39 @@ SearchField.displayName = "SearchField";
 const RoomPage = () => {
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
-    const [roomProps] = React.useState(() => {
+    const [rooms, setRooms] = React.useState(() => {
         const sampleProps: RoomProps[] = [];
-        for (let i = 0; i < 8; i++) {
-            sampleProps.push({
-                ...roomDefault,
-                hidden: i > 4,
-                roomId: Math.random().toString(36).slice(2, 7),
-            });
+        for (let i = 0; i < 6; i++) {
+            sampleProps.push(RoomDefault());
         }
         return sampleProps;
     });
 
+    const onRoomSelect = (roomId: string) => {
+        setSelectedRoom(roomId != selectedRoom ? roomId : "");
+    };
+
+    React.useEffect(() => {
+        RoomServices.getAll().then(data => {
+            setRooms(prev => [...data, ...prev]);
+        });
+    }, []);
+
     return (
         <RoomLayout title="Room List" headerChildren={<SearchField />}>
-            <Grid
-                item
-                container
-                justifyContent="space-evenly"
-                className={styles.mainPanel}
-            >
-                {roomProps.map((p, k) => (
+            <Grid item container className={styles.mainPanel}>
+                {rooms.map(room => (
                     <RoomCard
-                        {...p}
-                        key={k}
-                        selected={p.roomId == selectedRoom}
-                        onClick={() =>
-                            setSelectedRoom(
-                                selectedRoom != p.roomId ? p.roomId : ""
-                            )
-                        }
+                        md={2.85}
+                        {...room}
+                        key={room.id}
+                        selected={room.id == selectedRoom}
+                        onClick={() => onRoomSelect(room.id)}
                     />
                 ))}
             </Grid>
             <Grid item container justifyContent="center" className="mt-[10px]">
-                <Grid item container md={5} justifyContent="space-evenly">
+                <Grid item container md={4.5} justifyContent="space-evenly">
                     <Button
                         startIcon={<MeetingRoomIcon />}
                         variant="contained"
@@ -69,6 +69,7 @@ const RoomPage = () => {
                         startIcon={<SportsEsportsIcon />}
                         variant="contained"
                         disabled={selectedRoom == ""}
+                        className="w-[135px]"
                     >
                         Play
                     </Button>

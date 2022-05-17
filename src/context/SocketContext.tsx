@@ -1,7 +1,7 @@
 import React from "react";
 import {io, Socket, ManagerOptions, SocketOptions} from "socket.io-client";
 import {BackendUrl} from "../api/HttpClient";
-import {UserProps, useUser} from "./UserContext";
+import {IUser, useUser} from "./UserContext";
 
 const SocketContext = React.createContext<Socket | null>(null);
 
@@ -28,7 +28,7 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
             socketCnn.on("connect", () => {
                 setUser({...user, sid: socketCnn.id});
             });
-            socketCnn.emit("user:init", (response: UserProps) => {
+            socketCnn.emit("user:init", (response: IUser) => {
                 console.log(response);
                 setUser(response);
             });

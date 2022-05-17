@@ -1,7 +1,4 @@
 import React from "react";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import Jdenticon from "react-jdenticon";
 import {Button, Grid, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
@@ -9,8 +6,8 @@ import PersonPinIcon from "@mui/icons-material/PersonPin";
 import {useNavigate} from "react-router-dom";
 import CssTextField from "../commons/CssTextField";
 import {useUser} from "../../context/UserContext";
-import StyledAvatar from "../commons/StyledAvatar";
 import {useSocket} from "../../context/SocketContext";
+import RandomAvatar from "../commons/RandomAvatar";
 
 const UserPanel = () => {
     const navigate = useNavigate();
@@ -37,9 +34,11 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <StyledAvatar className="w-[100px] h-[100px] bg-white">
-                    <Jdenticon size="100" value={user.sid} />
-                </StyledAvatar>
+                <RandomAvatar
+                    size="100"
+                    value={user.sid}
+                    className="w-[100px] h-[100px] bg-white"
+                />
             </Grid>
             <Grid
                 item

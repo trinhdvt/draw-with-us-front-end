@@ -2,17 +2,19 @@
   background-color: #fff;
   border-radius: 10px;
   padding: 10px;
-}
 
-.mainPanel {
-  background-color: #9fbdca;
-  padding-top: 25px;
-  max-height: 350px;
-  overflow: auto;
-  border-radius: 10px;
 }
 
 $max-height: 350px;
+
+.mainPanel {
+  background-color: #9fbdca;
+  border-bottom: 10px solid #9fbdca;
+  border-top: 10px solid #9fbdca;
+  max-height: $max-height;
+  overflow: auto;
+  border-radius: 10px;
+}
 
 .subPanel {
   background-color: #9fbdca;
@@ -43,10 +45,11 @@ $max-height: 350px;
 }
 
 .gameRoom {
-  border: 5px solid #fff;
+  border: 7px solid #fff;
   border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 25px;
+  padding: 5px;
+  margin: 0 0 8px 8px;
+  cursor: pointer;
   background-color: #fff;
 
   &:hover {

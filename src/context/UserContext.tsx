@@ -1,13 +1,13 @@
 import React from "react";
 
-interface UserProps {
+interface IUser {
     sid: string;
     avatar?: string;
     name: string;
     id: string;
 }
 
-const DefaultUser: UserProps = {
+const DefaultUser: IUser = {
     name: "",
     id: "",
     sid: "",
@@ -15,14 +15,14 @@ const DefaultUser: UserProps = {
 };
 
 interface UserContextProps {
-    user: UserProps;
-    setUser: (user: UserProps) => void;
+    user: IUser;
+    setUser: (user: IUser) => void;
 }
 
 const UserContext = React.createContext<UserContextProps | null>(null);
 
 const UserProvider = ({children}: {children: React.ReactNode}) => {
-    const [user, setUser] = React.useState<UserProps>(DefaultUser);
+    const [user, setUser] = React.useState<IUser>(DefaultUser);
     const contextValue = React.useMemo(() => {
         return {user, setUser};
     }, [user]);
@@ -44,4 +44,4 @@ const useUser = () => {
 
 export default UserProvider;
 export {useUser};
-export type {UserProps};
+export type {IUser};
