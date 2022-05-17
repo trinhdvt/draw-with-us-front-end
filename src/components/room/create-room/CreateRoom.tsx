@@ -12,7 +12,7 @@ import {Collection, CollectionType} from "../../../@types/Collection";
 import CollectionCard from "./CollectionCard";
 import {useUser} from "../../../context/UserContext";
 import RoomServices from "../../../services/RoomServices";
-import {Room} from "../../../@types/Room";
+import {RoomRequest} from "../../../@types/Room";
 import RoomLayout from "../../../layout/RoomLayout";
 
 enum Action {
@@ -26,7 +26,7 @@ interface NewRoomAction {
     payload: unknown;
 }
 
-type NewRoomState = Room;
+type NewRoomState = RoomRequest;
 
 const NewRoomReducer = (state: NewRoomState, action: NewRoomAction) => {
     const {type, payload} = action;
@@ -77,21 +77,20 @@ const CreateRoom = () => {
     }, []);
 
     React.useEffect(() => {
+        let filterRs: Collection[];
         switch (filterType) {
             case CollectionType.ALL:
-                return setFilterState(prev => ({
-                    ...prev,
-                    filtered: prev.origin,
-                }));
+                filterRs = origin;
+                break;
 
             default:
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                setFilterState(prev => ({
-                    ...prev,
-                    filtered: origin.filter(c => c.type == filterType),
-                }));
+                filterRs = origin.filter(c => c.type == filterType);
         }
+
+        setFilterState(prev => ({
+            ...prev,
+            filtered: filterRs,
+        }));
     }, [filterType, origin]);
 
     const isLogin = true;
