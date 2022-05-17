@@ -1,17 +1,24 @@
 import React from "react";
-import {Box, Button, Grid, TextField, Typography} from "@mui/material";
+import {Box, Button, Grid, TextField} from "@mui/material";
 import RoomCard, {roomDefault, RoomProps} from "./RoomCard";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import SearchIcon from "@mui/icons-material/Search";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useNavigate} from "react-router-dom";
-import styles from "./styles/Room.module.scss";
-import {useSocket} from "../../context/SocketContext";
+import styles from "../../assets/styles/Room.module.scss";
+import RoomLayout from "../../layout/RoomLayout";
+
+const SearchField = React.memo(() => {
+    return (
+        <Box className="flex items-end w-[110px] ml-4">
+            <SearchIcon sx={{color: "action.active", mr: 1, my: 0.5}} />
+            <TextField variant="standard" />
+        </Box>
+    );
+});
+SearchField.displayName = "SearchField";
 
 const RoomPage = () => {
-    const socket = useSocket();
-
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
     const [roomProps] = React.useState(() => {
@@ -26,42 +33,8 @@ const RoomPage = () => {
         return sampleProps;
     });
 
-    React.useEffect(() => {
-        socket?.on("greeting", msg => {
-            console.log(msg);
-        });
-        return () => {
-            socket?.off("greeting");
-        };
-    }, [socket]);
-
     return (
-        <Grid container className={styles.container}>
-            <Grid item container alignItems="center" className={styles.header}>
-                <Grid item md={1.3}>
-                    <Button
-                        startIcon={<ArrowBackIcon />}
-                        className={styles.backBtn}
-                        onClick={() => {
-                            navigate("/");
-                        }}
-                    >
-                        Back
-                    </Button>
-                </Grid>
-                <Grid item md={1.7}>
-                    <Box className="flex items-end">
-                        <SearchIcon
-                            sx={{color: "action.active", mr: 1, my: 0.5}}
-                        />
-                        <TextField variant="standard" />
-                    </Box>
-                </Grid>
-                <Grid item md container justifyContent="center">
-                    <Typography variant="h3">Room list</Typography>
-                </Grid>
-                <Grid item md={3} />
-            </Grid>
+        <RoomLayout title="Room List" headerChildren={<SearchField />}>
             <Grid
                 item
                 container
@@ -101,7 +74,7 @@ const RoomPage = () => {
                     </Button>
                 </Grid>
             </Grid>
-        </Grid>
+        </RoomLayout>
     );
 };
 

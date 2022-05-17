@@ -5,7 +5,7 @@ import TimerIcon from "@mui/icons-material/Timer";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
-import styles from "../styles/Room.module.scss";
+import styles from "../../../assets/styles/Room.module.scss";
 import clsx from "clsx";
 import {allCollections} from "../../../services/CollectionServices";
 import {Collection, CollectionType} from "../../../@types/Collection";
@@ -13,6 +13,7 @@ import CollectionCard from "./CollectionCard";
 import {useUser} from "../../../context/UserContext";
 import RoomServices from "../../../services/RoomServices";
 import {Room} from "../../../@types/Room";
+import RoomLayout from "../../../layout/RoomLayout";
 
 enum Action {
     SET_MAX_USER,
@@ -100,171 +101,189 @@ const CreateRoom = () => {
     };
 
     return (
-        <Grid container className={styles.subPanel}>
-            <Grid
-                item
-                container
-                md={4}
-                direction="column"
-                className={styles.container}
-            >
-                <Grid item container alignItems="center" className="mb-[10px]">
-                    <Grid item md={2}>
-                        <AccountCircleIcon color="primary" />
-                    </Grid>
-                    <Grid item md>
-                        <Typography>Max User</Typography>
-                    </Grid>
-                    <Grid item md={4}>
-                        <Select
-                            value={state.maxUsers}
-                            className={styles.selectBox}
-                            onChange={e =>
-                                dispatch({
-                                    type: Action.SET_MAX_USER,
-                                    payload: e.target.value,
-                                })
-                            }
-                        >
-                            {maxUserList.map(m => {
-                                return (
-                                    <MenuItem key={m} value={m}>
-                                        {m}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </Grid>
-                </Grid>
-                <Grid item container alignItems="center">
-                    <Grid item md={2}>
-                        <TimerIcon color="primary" />
-                    </Grid>
-                    <Grid item md>
-                        <Typography>Timeout (sec)</Typography>
-                    </Grid>
-                    <Grid item md={4}>
-                        <Select
-                            value={state.timeOut}
-                            className={styles.selectBox}
-                            onChange={e =>
-                                dispatch({
-                                    type: Action.SET_TIME_OUT,
-                                    payload: e.target.value,
-                                })
-                            }
-                        >
-                            {timeOutList.map(time => {
-                                return (
-                                    <MenuItem value={time} key={time}>
-                                        {time}
-                                    </MenuItem>
-                                );
-                            })}
-                        </Select>
-                    </Grid>
-                </Grid>
+        <RoomLayout title="Create Room">
+            <Grid container className={styles.subPanel}>
                 <Grid
                     item
-                    className="mt-auto"
                     container
-                    justifyContent="center"
+                    md={4}
+                    direction="column"
+                    className={styles.container}
                 >
-                    <Button
-                        startIcon={<ConstructionIcon />}
-                        variant="contained"
-                        disabled={state.collectionId === ""}
-                        onClick={onCreateRoom}
+                    <Grid
+                        item
+                        container
+                        alignItems="center"
+                        className="mb-[10px]"
                     >
-                        Create
-                    </Button>
-                </Grid>
-            </Grid>
-            <Grid item container md direction="column">
-                <Grid
-                    item
-                    container={isLogin}
-                    className={clsx(styles.container, "ml-[15px] w-[95%]")}
-                    alignItems="center"
-                >
-                    {!isLogin ? (
-                        <Typography>
-                            Select any topic below or <b>Sign in</b> to create
-                            your own topic
-                        </Typography>
-                    ) : (
-                        <>
-                            <Grid item md={5}>
-                                <Typography>Select one topic</Typography>
-                            </Grid>
-                            <Grid
-                                item
-                                container
-                                md
-                                justifyContent="space-evenly"
+                        <Grid item md={2}>
+                            <AccountCircleIcon color="primary" />
+                        </Grid>
+                        <Grid item md>
+                            <Typography>Max User</Typography>
+                        </Grid>
+                        <Grid item md={4}>
+                            <Select
+                                value={state.maxUsers}
+                                className={styles.selectBox}
+                                onChange={e =>
+                                    dispatch({
+                                        type: Action.SET_MAX_USER,
+                                        payload: e.target.value,
+                                    })
+                                }
                             >
-                                <Grid item md={5}>
-                                    <Select
-                                        className={styles.selectBox}
-                                        value={filterType}
-                                        onChange={e =>
-                                            setFilter(
-                                                e.target.value as CollectionType
-                                            )
-                                        }
-                                    >
-                                        <MenuItem value={CollectionType.ALL}>
-                                            All
+                                {maxUserList.map(m => {
+                                    return (
+                                        <MenuItem key={m} value={m}>
+                                            {m}
                                         </MenuItem>
-                                        <MenuItem value={CollectionType.YOUR}>
-                                            Your topic
+                                    );
+                                })}
+                            </Select>
+                        </Grid>
+                    </Grid>
+                    <Grid item container alignItems="center">
+                        <Grid item md={2}>
+                            <TimerIcon color="primary" />
+                        </Grid>
+                        <Grid item md>
+                            <Typography>Timeout (sec)</Typography>
+                        </Grid>
+                        <Grid item md={4}>
+                            <Select
+                                value={state.timeOut}
+                                className={styles.selectBox}
+                                onChange={e =>
+                                    dispatch({
+                                        type: Action.SET_TIME_OUT,
+                                        payload: e.target.value,
+                                    })
+                                }
+                            >
+                                {timeOutList.map(time => {
+                                    return (
+                                        <MenuItem value={time} key={time}>
+                                            {time}
                                         </MenuItem>
-                                        <MenuItem value={CollectionType.PUBLIC}>
-                                            Public
-                                        </MenuItem>
-                                        <MenuItem
-                                            value={CollectionType.OFFICIAL}
-                                        >
-                                            Official
-                                        </MenuItem>
-                                    </Select>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        startIcon={<AddIcon />}
-                                        variant="contained"
-                                        onClick={() => navigate("/collection")}
-                                    >
-                                        Create
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </>
-                    )}
+                                    );
+                                })}
+                            </Select>
+                        </Grid>
+                    </Grid>
+                    <Grid
+                        item
+                        className="mt-auto"
+                        container
+                        justifyContent="center"
+                    >
+                        <Button
+                            startIcon={<ConstructionIcon />}
+                            variant="contained"
+                            disabled={state.collectionId === ""}
+                            onClick={onCreateRoom}
+                        >
+                            Create
+                        </Button>
+                    </Grid>
                 </Grid>
-                <Grid
-                    item
-                    container
-                    justifyContent="space-evenly"
-                    className={styles.collectionPanel}
-                >
-                    {filtered.map((p, idx) => (
-                        <CollectionCard
-                            {...p}
-                            key={idx}
-                            selected={state.collectionId === p.id}
-                            onClick={() => {
-                                dispatch({
-                                    type: Action.SET_COLLECTION,
-                                    payload:
-                                        state.collectionId == p.id ? "" : p.id,
-                                });
-                            }}
-                        />
-                    ))}
+                <Grid item container md direction="column">
+                    <Grid
+                        item
+                        container={isLogin}
+                        className={clsx(styles.container, "ml-[15px] w-[95%]")}
+                        alignItems="center"
+                    >
+                        {!isLogin ? (
+                            <Typography>
+                                Select any topic below or <b>Sign in</b> to
+                                create your own topic
+                            </Typography>
+                        ) : (
+                            <>
+                                <Grid item md={5}>
+                                    <Typography>Select one topic</Typography>
+                                </Grid>
+                                <Grid
+                                    item
+                                    container
+                                    md
+                                    justifyContent="space-evenly"
+                                >
+                                    <Grid item md={5}>
+                                        <Select
+                                            className={styles.selectBox}
+                                            value={filterType}
+                                            onChange={e =>
+                                                setFilter(
+                                                    e.target
+                                                        .value as CollectionType
+                                                )
+                                            }
+                                        >
+                                            <MenuItem
+                                                value={CollectionType.ALL}
+                                            >
+                                                All
+                                            </MenuItem>
+                                            <MenuItem
+                                                value={CollectionType.YOUR}
+                                            >
+                                                Your topic
+                                            </MenuItem>
+                                            <MenuItem
+                                                value={CollectionType.PUBLIC}
+                                            >
+                                                Public
+                                            </MenuItem>
+                                            <MenuItem
+                                                value={CollectionType.OFFICIAL}
+                                            >
+                                                Official
+                                            </MenuItem>
+                                        </Select>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button
+                                            startIcon={<AddIcon />}
+                                            variant="contained"
+                                            onClick={() =>
+                                                navigate("/collection")
+                                            }
+                                        >
+                                            Create
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </>
+                        )}
+                    </Grid>
+                    <Grid
+                        item
+                        container
+                        justifyContent="space-evenly"
+                        className={styles.collectionPanel}
+                    >
+                        {filtered.map((p, idx) => (
+                            <CollectionCard
+                                {...p}
+                                key={idx}
+                                selected={state.collectionId === p.id}
+                                onClick={() => {
+                                    dispatch({
+                                        type: Action.SET_COLLECTION,
+                                        payload:
+                                            state.collectionId == p.id
+                                                ? ""
+                                                : p.id,
+                                    });
+                                }}
+                            />
+                        ))}
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </RoomLayout>
     );
 };
 

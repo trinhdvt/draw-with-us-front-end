@@ -2,7 +2,7 @@ import React from "react";
 import {Box, Button, Divider, Grid, Stack, TextField} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Sample from "./Sample";
-import styles from "./Gallery.module.scss";
+import styles from "../../assets/styles/Gallery.module.scss";
 import clsx from "clsx";
 
 const Gallery = () => {
