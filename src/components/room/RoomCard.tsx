@@ -2,7 +2,7 @@ import React from "react";
 import {Avatar, Grid, GridProps, Typography} from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import clsx from "clsx";
-import styles from "./styles/Room.module.scss";
+import styles from "../../assets/styles/Room.module.scss";
 
 interface RoomProps {
     hidden?: boolean;
