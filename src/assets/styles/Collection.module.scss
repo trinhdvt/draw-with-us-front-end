@@ -1,16 +1,14 @@
-@import "Room.module";
+@import "Common";
 
 .topicPanel {
-  height: 270px;
-  overflow: auto;
-  margin-top: 10px;
-  background-color: #9fbdca;
+  @extend .scrollableContainer;
+  background-color: $blue-light;
   border-radius: 10px;
-  border: 1px #5d8899 solid;
+  border: 1px $blue-sky solid;
   padding: 3px;
 }
 
-.settingPanel {
-  @extend .subPanel;
+.searchBar {
+  @extend .white-rounded;
+  margin-left: auto;
 }
-

@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 
 const Logo = styled("img")({
     width: "auto",
-    height: "90px",
+    height: "80px",
     "&:hover": {
         cursor: "pointer",
     },
@@ -15,9 +15,9 @@ const Header = () => {
     const logoUrl = "https://cdn.trinhdvt.tech/logo.svg";
 
     return (
-        <Grid container justifyContent="center" className="mb-[20px]">
+        <Grid container justifyContent="center" className="mb-[10px]">
             <Grid item container xs={6} direction="column" alignItems="center">
-                <Grid item className="mb-[10px]">
+                <Grid item className="">
                     <Logo
                         src={logoUrl}
                         alt="logo"

@@ -23,7 +23,6 @@ const CollectionCard = (props: Collection & GridProps) => {
         <Grid
             {...others}
             item
-            md={2.5}
             container
             direction="column"
             alignItems="center"

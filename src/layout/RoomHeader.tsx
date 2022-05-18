@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Grid, GridProps, Typography} from "@mui/material";
-import styles from "../../assets/styles/Room.module.scss";
+import styles from "../assets/styles/Room.module.scss";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useNavigate} from "react-router-dom";
 

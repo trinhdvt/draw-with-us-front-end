@@ -1,7 +1,6 @@
 import React from "react";
 import {
     Autocomplete,
-    Box,
     Button,
     CircularProgress,
     Grid,
@@ -12,19 +11,19 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import MyCheckbox from "../commons/Checkbox";
 import AddIcon from "@mui/icons-material/Add";
 import Topic from "../../@types/Topic";
-import SearchIcon from "@mui/icons-material/Search";
 import Tag from "../commons/Tag";
 import styles from "../../assets/styles/Collection.module.scss";
 import clsx from "clsx";
 import {allTopics} from "../../services/TopicServices";
 import CssTextField from "../commons/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
+import SearchField from "../commons/SearchField";
 
 const Collection = () => {
     const [topics, setTopics] = React.useState<Topic[]>([]);
     const [open, setOpen] = React.useState(false);
     const loading = open && topics.length == 0;
-    const [topicName, setTopicName] = React.useState("");
+    const [collectionName, setCollectionName] = React.useState("");
     const [isPublic, setPublic] = React.useState(true);
     const [currentTopic, setCurrentTopic] = React.useState<Topic | null>(null);
     const [addTopics, setAddTopic] = React.useState<Topic[]>([]);
@@ -61,13 +60,13 @@ const Collection = () => {
 
     return (
         <RoomLayout title="Create Collection">
-            <Grid container className={styles.settingPanel}>
+            <Grid container className={styles.subContainer}>
                 <Grid
                     item
                     container
                     md={4}
                     direction="column"
-                    className={styles.container}
+                    className={styles.sidePanel}
                 >
                     <Grid
                         item
@@ -75,15 +74,16 @@ const Collection = () => {
                         direction="column"
                         className="mb-[10px]"
                     >
-                        <Typography className="mb-[5px]">
-                            1. Topic name
+                        <Typography className="mb-[5px] capitalize">
+                            1. Collection name*
                         </Typography>
                         <CssTextField
                             variant="outlined"
                             size="small"
-                            value={topicName}
+                            autoComplete="off"
+                            value={collectionName}
                             onChange={e => {
-                                setTopicName(e.target.value);
+                                setCollectionName(e.target.value);
                             }}
                         />
                     </Grid>
@@ -93,15 +93,17 @@ const Collection = () => {
                         alignItems="center"
                         className="mb-[10px]"
                     >
-                        <Typography>2. Share with others</Typography>
+                        <Typography className="capitalize">
+                            2. Share with others
+                        </Typography>
                         <MyCheckbox
                             checked={isPublic}
                             onClick={() => setPublic(!isPublic)}
                         />
                     </Grid>
                     <Grid item container>
-                        <Typography className="mb-[10px]">
-                            3. Select topic below
+                        <Typography className="mb-[10px] capitalize">
+                            3. Select topic below*
                         </Typography>
                         <Grid item container>
                             <Grid
@@ -124,6 +126,7 @@ const Collection = () => {
                                             option.id == value.id
                                         }
                                         getOptionLabel={option => option.name}
+                                        sx={{"& input": {maxWidth: "80%"}}}
                                         renderInput={params => (
                                             <TextField
                                                 {...params}
@@ -174,7 +177,7 @@ const Collection = () => {
                         <Button
                             startIcon={<ConstructionIcon />}
                             variant="contained"
-                            disabled={isEmpty || topicName.trim() == ""}
+                            disabled={isEmpty || collectionName.trim() == ""}
                         >
                             Create
                         </Button>
@@ -185,22 +188,16 @@ const Collection = () => {
                     container
                     direction="column"
                     md={7.9}
-                    className={clsx(styles.container, "ml-auto")}
+                    className={styles.searchBar}
                 >
                     <Grid item container alignItems="center">
                         <Typography>
-                            You have select {addTopics.length}/340 topics
+                            You have select <b>{addTopics.length}/340</b> topics
                         </Typography>
-                        <Box className="flex items-end ml-auto">
-                            <SearchIcon
-                                sx={{color: "action.active", mr: 1, my: 0.5}}
-                            />
-                            <TextField
-                                size="small"
-                                variant="standard"
-                                placeholder="Topic"
-                            />
-                        </Box>
+                        <SearchField
+                            className="ml-auto w-[150px]"
+                            placeholder="Topic name"
+                        />
                     </Grid>
                     <Grid
                         item
@@ -209,7 +206,7 @@ const Collection = () => {
                             styles.topicPanel,
                             isEmpty &&
                                 "items-center justify-center content-center",
-                            !isEmpty && "content-st,art"
+                            !isEmpty && "content-start"
                         )}
                     >
                         {isEmpty ? (

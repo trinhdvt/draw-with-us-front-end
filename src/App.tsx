@@ -5,44 +5,39 @@ import SocketProvider from "./context/SocketContext";
 import UserProvider from "./context/UserContext";
 
 const NormalLayout = React.lazy(() => import("./layout/NormalLayout"));
-const Game = React.lazy(() => import("./components/game-play/Game"));
+const Game = React.lazy(() => import("./components/game-play"));
 const HomePage = React.lazy(() => import("./components/home/HomePage"));
 const Room = React.lazy(() => import("./components/room"));
 const Gallery = React.lazy(() => import("./components/gallery/Gallery"));
 const CreateRoom = React.lazy(
     () => import("./components/room/create-room/CreateRoom")
 );
-const CollectionPage = React.lazy(
+const CreateCollection = React.lazy(
     () => import("./components/collection/Collection")
 );
 
-function App() {
-    return (
-        <UserProvider>
-            <SocketProvider>
-                <BrowserRouter>
-                    <Suspense fallback={<LoadingProgress />}>
-                        <Routes>
-                            <Route element={<NormalLayout />}>
-                                <Route path="/" element={<HomePage />} />
-                                <Route path="/play" element={<Game />} />
-                                <Route path="/room" element={<Room />} />
-                                <Route
-                                    path="/create"
-                                    element={<CreateRoom />}
-                                />
-                                <Route path="/gallery" element={<Gallery />} />
-                                <Route
-                                    path="/collection"
-                                    element={<CollectionPage />}
-                                />
-                            </Route>
-                        </Routes>
-                    </Suspense>
-                </BrowserRouter>
-            </SocketProvider>
-        </UserProvider>
-    );
-}
+const App = () => (
+    <UserProvider>
+        <SocketProvider>
+            <BrowserRouter>
+                <Suspense fallback={<LoadingProgress />}>
+                    <Routes>
+                        <Route element={<NormalLayout />}>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/play" element={<Game />} />
+                            <Route path="/room" element={<Room />} />
+                            <Route path="/create" element={<CreateRoom />} />
+                            <Route path="/gallery" element={<Gallery />} />
+                            <Route
+                                path="/collection"
+                                element={<CreateCollection />}
+                            />
+                        </Route>
+                    </Routes>
+                </Suspense>
+            </BrowserRouter>
+        </SocketProvider>
+    </UserProvider>
+);
 
 export default App;

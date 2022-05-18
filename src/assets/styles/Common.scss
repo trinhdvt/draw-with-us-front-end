@@ -1,0 +1,52 @@
+@import "normalize.css";
+@import "Color";
+
+$max-height: 350px;
+$scroll-container-height: 250px;
+
+.container-border {
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.white-rounded {
+  @extend .container-border;
+  background-color: $white;
+}
+
+.subContainer {
+  background-color: $blue-light;
+  @extend .container-border;
+  height: $max-height;
+}
+
+.scrollableContainer {
+  height: $scroll-container-height;
+  max-height: $scroll-container-height;
+  overflow: auto;
+  margin-top: 10px;
+
+}
+
+.sidePanel {
+  @extend .white-rounded;
+  max-height: 330px;
+}
+
+.btn-border {
+  border-radius: 10px;
+  border: 2px solid $blue-light;
+}
+
+.card {
+  border: 7px solid $white;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 0 8px 8px;
+  cursor: pointer;
+  background-color: $white;
+
+  &:hover {
+    border-color: $blue-sky;
+  }
+}

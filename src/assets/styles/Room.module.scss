@@ -1,26 +1,24 @@
-.container {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 10px;
+@import "Common";
 
-}
-
+$container-max-height: 465px;
 $max-height: 350px;
 
+.container {
+  @extend .white-rounded;
+  max-height: $container-max-height;
+}
+
+.collectionOption {
+  @extend .white-rounded;
+}
+
 .mainPanel {
-  background-color: #9fbdca;
-  border-bottom: 10px solid #9fbdca;
-  border-top: 10px solid #9fbdca;
+  background-color: $blue-light;
+  border-bottom: 10px solid $blue-light;
+  border-top: 10px solid $blue-light;
   max-height: $max-height;
   overflow: auto;
   border-radius: 10px;
-}
-
-.subPanel {
-  background-color: #9fbdca;
-  padding: 10px;
-  border-radius: 10px;
-  height: $max-height;
 }
 
 .header {
@@ -28,8 +26,8 @@ $max-height: 350px;
 }
 
 .backBtn {
-  border-radius: 5px;
-  border: 2px solid #9fbdca;
+  @extend .btn-border;
+  margin-right: 10px;
 }
 
 .selectBox {
@@ -39,30 +37,19 @@ $max-height: 350px;
 }
 
 .collectionPanel {
-  max-height: $max-height;
-  overflow: auto;
-  margin-top: 10px;
+  @extend .scrollableContainer;
 }
 
 .gameRoom {
-  border: 7px solid #fff;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 0 0 8px 8px;
-  cursor: pointer;
-  background-color: #fff;
-
-  &:hover {
-    border-color: rgba(0, 121, 255, .7);
-  }
+  @extend .card;
 }
 
 .gameCollection {
   @extend .gameRoom;
   padding: 0;
-  margin-bottom: 10px;
+  margin: 0 4px 8px 4px;
 }
 
 .selected {
-  border-color: rgba(0, 121, 255, .7);
+  border-color: $blue-sky;
 }

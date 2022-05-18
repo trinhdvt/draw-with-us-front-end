@@ -1,0 +1,36 @@
+$tag-height: 24px;
+
+.tag {
+  display: flex;
+  align-items: center;
+  height: $tag-height;
+  margin: 2px;
+  line-height: 22px;
+  background-color: #fafafa;
+  border: 3px solid #e8e8e8;
+  border-radius: 4px;
+  box-sizing: content-box;
+  padding: 0 4px 0 10px;
+  outline: 0;
+  overflow: hidden;
+
+  &:hover {
+    border-color: #8b8192;
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  svg {
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px;
+
+    &:hover {
+      color: red;
+    }
+  }
+}
