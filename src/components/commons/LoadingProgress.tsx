@@ -3,15 +3,7 @@ import {CircularProgress} from "@mui/material";
 
 function LoadingProgress() {
     return (
-        <div
-            style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: window.innerWidth,
-                height: window.innerHeight,
-            }}
-        >
+        <div className="flex justify-center items-center w-screen h-screen">
             <CircularProgress size={300} thickness={1} />
         </div>
     );

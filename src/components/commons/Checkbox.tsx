@@ -53,7 +53,6 @@ const MyCheckbox = (props: CheckboxProps) => {
             color="default"
             checkedIcon={<BpCheckedIcon />}
             icon={<BpIcon />}
-            inputProps={{"aria-label": "Checkbox demo"}}
             {...props}
         />
     );

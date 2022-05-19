@@ -6,41 +6,13 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import styles from "../../../assets/styles/Room.module.scss";
-import clsx from "clsx";
 import {allCollections} from "../../../services/CollectionServices";
 import {Collection, CollectionType} from "../../../@types/Collection";
 import CollectionCard from "./CollectionCard";
 import {useUser} from "../../../context/UserContext";
 import RoomServices from "../../../services/RoomServices";
-import {RoomRequest} from "../../../@types/Room";
 import RoomLayout from "../../../layout/RoomLayout";
-
-enum Action {
-    SET_MAX_USER,
-    SET_TIME_OUT,
-    SET_COLLECTION,
-}
-
-interface NewRoomAction {
-    type: Action;
-    payload: unknown;
-}
-
-type NewRoomState = RoomRequest;
-
-const NewRoomReducer = (state: NewRoomState, action: NewRoomAction) => {
-    const {type, payload} = action;
-    switch (type) {
-        case Action.SET_MAX_USER:
-            return {...state, maxUsers: payload as number};
-        case Action.SET_TIME_OUT:
-            return {...state, timeOut: payload as number};
-        case Action.SET_COLLECTION:
-            return {...state, collectionId: payload as string};
-        default:
-            return state;
-    }
-};
+import {Action, NewRoomReducer} from "./RoomReducer";
 
 interface CollectionState {
     origin: Collection[];
@@ -101,13 +73,13 @@ const CreateRoom = () => {
 
     return (
         <RoomLayout title="Create Room">
-            <Grid container className={styles.subPanel}>
+            <Grid container className={styles.subContainer}>
                 <Grid
                     item
                     container
                     md={4}
                     direction="column"
-                    className={styles.container}
+                    className={styles.sidePanel}
                 >
                     <Grid
                         item
@@ -132,13 +104,11 @@ const CreateRoom = () => {
                                     })
                                 }
                             >
-                                {maxUserList.map(m => {
-                                    return (
-                                        <MenuItem key={m} value={m}>
-                                            {m}
-                                        </MenuItem>
-                                    );
-                                })}
+                                {maxUserList.map(m => (
+                                    <MenuItem key={m} value={m}>
+                                        {m}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Grid>
                     </Grid>
@@ -160,21 +130,19 @@ const CreateRoom = () => {
                                     })
                                 }
                             >
-                                {timeOutList.map(time => {
-                                    return (
-                                        <MenuItem value={time} key={time}>
-                                            {time}
-                                        </MenuItem>
-                                    );
-                                })}
+                                {timeOutList.map(time => (
+                                    <MenuItem value={time} key={time}>
+                                        {time}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </Grid>
                     </Grid>
                     <Grid
                         item
-                        className="mt-auto"
                         container
                         justifyContent="center"
+                        className="mt-auto"
                     >
                         <Button
                             startIcon={<ConstructionIcon />}
@@ -186,17 +154,23 @@ const CreateRoom = () => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid item container md direction="column">
+                <Grid
+                    item
+                    container
+                    md={7.8}
+                    direction="column"
+                    className="ml-auto"
+                >
                     <Grid
                         item
                         container={isLogin}
-                        className={clsx(styles.container, "ml-[15px] w-[95%]")}
                         alignItems="center"
+                        className={styles.collectionOption}
                     >
                         {!isLogin ? (
                             <Typography>
-                                Select any topic below or <b>Sign in</b> to
-                                create your own topic
+                                Select any topic collection or <b>Sign in</b> to
+                                create your own.
                             </Typography>
                         ) : (
                             <>
@@ -257,16 +231,12 @@ const CreateRoom = () => {
                             </>
                         )}
                     </Grid>
-                    <Grid
-                        item
-                        container
-                        justifyContent="space-evenly"
-                        className={styles.collectionPanel}
-                    >
+                    <Grid item container className={styles.collectionPanel}>
                         {filtered.map((p, idx) => (
                             <CollectionCard
                                 {...p}
                                 key={idx}
+                                md={2.75}
                                 selected={state.collectionId === p.id}
                                 onClick={() => {
                                     dispatch({

@@ -1,35 +1,25 @@
 import React from "react";
-import {Box, Button, Grid, TextField} from "@mui/material";
+import {Button, Grid} from "@mui/material";
 import RoomCard, {RoomDefault, RoomProps} from "./RoomCard";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import SearchIcon from "@mui/icons-material/Search";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
 import RoomServices from "../../services/RoomServices";
-
-const SearchField = React.memo(() => {
-    console.log("SearchField");
-    return (
-        <Box className="flex items-end w-[110px] ml-4">
-            <SearchIcon sx={{color: "action.active", mr: 1, my: 0.5}} />
-            <TextField variant="standard" />
-        </Box>
-    );
-});
-SearchField.displayName = "SearchField";
+import SearchField from "../commons/SearchField";
 
 const RoomPage = () => {
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
-    const [rooms, setRooms] = React.useState(() => {
+    const defaultRooms = React.useMemo(() => {
         const sampleProps: RoomProps[] = [];
         for (let i = 0; i < 6; i++) {
             sampleProps.push(RoomDefault());
         }
         return sampleProps;
-    });
+    }, []);
+    const [rooms, setRooms] = React.useState(defaultRooms);
 
     const onRoomSelect = (roomId: string) => {
         setSelectedRoom(roomId != selectedRoom ? roomId : "");
@@ -37,12 +27,17 @@ const RoomPage = () => {
 
     React.useEffect(() => {
         RoomServices.getAll().then(data => {
-            setRooms(prev => [...data, ...prev]);
+            setRooms([...data, ...defaultRooms]);
         });
     }, []);
 
     return (
-        <RoomLayout title="Room List" headerChildren={<SearchField />}>
+        <RoomLayout
+            title="Room List"
+            headerChildren={
+                <SearchField className="w-[130px]" placeholder="Room's ID" />
+            }
+        >
             <Grid item container className={styles.mainPanel}>
                 {rooms.map(room => (
                     <RoomCard

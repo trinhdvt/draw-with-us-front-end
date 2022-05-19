@@ -1,8 +1,8 @@
 import React from "react";
-import {Button, Grid, Typography} from "@mui/material";
+import {Button, Grid, InputAdornment, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {useNavigate} from "react-router-dom";
 import CssTextField from "../commons/CssTextField";
 import {useUser} from "../../context/UserContext";
@@ -53,13 +53,19 @@ const UserPanel = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    <PersonPinIcon color="error" className="pr-[5px]" />
                     <CssTextField
                         size="small"
                         label="Nickname"
                         value={user.name}
                         onChange={e => setUser({...user, name: e.target.value})}
                         onBlur={() => socket?.emit("user:update", user)}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <AccountCircleIcon color="primary" />
+                                </InputAdornment>
+                            ),
+                        }}
                         required
                     />
                 </Grid>
