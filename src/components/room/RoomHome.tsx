@@ -9,7 +9,7 @@ import RoomLayout from "../../layout/RoomLayout";
 import RoomServices from "../../services/RoomServices";
 import SearchField from "../commons/SearchField";
 
-const RoomPage = () => {
+const RoomHome = () => {
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
     const defaultRooms = React.useMemo(() => {
@@ -29,7 +29,7 @@ const RoomPage = () => {
         RoomServices.getAll().then(data => {
             setRooms([...data, ...defaultRooms]);
         });
-    }, []);
+    }, [defaultRooms]);
 
     return (
         <RoomLayout
@@ -74,4 +74,4 @@ const RoomPage = () => {
     );
 };
 
-export default RoomPage;
+export default RoomHome;

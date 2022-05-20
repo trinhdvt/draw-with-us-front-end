@@ -11,7 +11,8 @@ const Game = () => {
     const [target] = React.useState(() => randomTarget());
     const MAX_TIME = 15;
     const timerRef = React.useRef<TimerRef>(null);
-    const onPredict = (image?: string) => {
+
+    const onPredict = async (image?: string) => {
         console.log(image);
         timerRef.current?.stopCountdown();
     };
@@ -31,7 +32,10 @@ const Game = () => {
                 <ListPlayer />
             </Grid>
             <Grid item container md={8} direction="column" className="ml-auto">
-                <DrawBoard onPredict={onPredict} className="max-h-[320px]" />
+                <DrawBoard
+                    predictCallback={onPredict}
+                    className="max-h-[320px]"
+                />
                 <Grid item width="340px">
                     <CountdownTimer
                         ref={timerRef}

@@ -10,20 +10,28 @@ import {
 } from "@mui/material";
 import {ReactSketchCanvas, ReactSketchCanvasRef} from "react-sketch-canvas";
 import styles from "../../assets/styles/Game.module.scss";
-import LoadingButton from "@mui/lab/LoadingButton";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import UndoIcon from "@mui/icons-material/Undo";
+import clsx from "clsx";
+import LoadingButton from "../commons/LoadingButton";
 
 interface DrawBoardProps {
-    onPredict: (image?: string) => void;
+    predictCallback: (image?: string) => Promise<void>;
 }
 
 const DrawBoard = (props: DrawBoardProps & GridProps) => {
-    const {onPredict, ...others} = props;
-    const canvasRef = React.createRef<ReactSketchCanvasRef>();
+    const {predictCallback, ...others} = props;
+    const canvasRef = React.useRef<ReactSketchCanvasRef>(null);
     const [eraseMode, setEraseMode] = React.useState(false);
     const [isLoading, setLoading] = React.useState(false);
+
+    const onPrediction = async () => {
+        setLoading(true);
+        const imageData = await canvasRef.current?.exportImage("png");
+        await predictCallback(imageData);
+        setLoading(false);
+    };
 
     return (
         <Grid container item md {...others}>
@@ -34,8 +42,12 @@ const DrawBoard = (props: DrawBoardProps & GridProps) => {
                     width="300px"
                     strokeColor="black"
                     strokeWidth={2}
-                    eraserWidth={5}
-                    className={styles.drawCanvas}
+                    eraserWidth={10}
+                    className={clsx(
+                        styles.drawCanvas,
+                        "hover:cursor-pencil",
+                        eraseMode && "hover:cursor-erase"
+                    )}
                 />
             </Grid>
             <Grid item md={2}>
@@ -47,17 +59,10 @@ const DrawBoard = (props: DrawBoardProps & GridProps) => {
                     alignItems="center"
                 >
                     <LoadingButton
-                        loading={isLoading}
+                        isLoading={isLoading}
                         variant="contained"
                         endIcon={<ArrowForwardIcon />}
-                        loadingPosition="end"
-                        onClick={async () => {
-                            setLoading(true);
-                            const imageData =
-                                await canvasRef.current?.exportImage("png");
-                            onPredict(imageData);
-                            setLoading(false);
-                        }}
+                        onClick={onPrediction}
                     >
                         Check
                     </LoadingButton>
@@ -74,9 +79,7 @@ const DrawBoard = (props: DrawBoardProps & GridProps) => {
                     </Button>
                     <Button
                         variant="outlined"
-                        onClick={() => {
-                            canvasRef.current?.undo();
-                        }}
+                        onClick={() => canvasRef.current?.undo()}
                         endIcon={<UndoIcon color="primary" />}
                     >
                         Undo
@@ -85,7 +88,10 @@ const DrawBoard = (props: DrawBoardProps & GridProps) => {
                         control={
                             <Switch
                                 checked={eraseMode}
-                                onClick={() => setEraseMode(!eraseMode)}
+                                onClick={() => {
+                                    canvasRef.current?.eraseMode(!eraseMode);
+                                    setEraseMode(!eraseMode);
+                                }}
                             />
                         }
                         label={eraseMode ? "Eraser" : "Pen"}

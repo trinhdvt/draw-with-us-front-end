@@ -5,9 +5,9 @@ import SocketProvider from "./context/SocketContext";
 import UserProvider from "./context/UserContext";
 
 const NormalLayout = React.lazy(() => import("./layout/NormalLayout"));
-const Game = React.lazy(() => import("./components/game-play"));
+const Game = React.lazy(() => import("./components/game-play/Game"));
 const HomePage = React.lazy(() => import("./components/home/HomePage"));
-const Room = React.lazy(() => import("./components/room"));
+const Room = React.lazy(() => import("./components/room/RoomHome"));
 const Gallery = React.lazy(() => import("./components/gallery/Gallery"));
 const CreateRoom = React.lazy(
     () => import("./components/room/create-room/CreateRoom")
