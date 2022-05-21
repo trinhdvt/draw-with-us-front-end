@@ -8,6 +8,7 @@ import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
 import RoomServices from "../../services/RoomServices";
 import SearchField from "../commons/SearchField";
+import {useSocket} from "../../context/SocketContext";
 
 const RoomHome = () => {
     const navigate = useNavigate();
@@ -24,12 +25,26 @@ const RoomHome = () => {
     const onRoomSelect = (roomId: string) => {
         setSelectedRoom(roomId != selectedRoom ? roomId : "");
     };
-
     React.useEffect(() => {
         RoomServices.getAll().then(data => {
             setRooms([...data, ...defaultRooms]);
         });
     }, [defaultRooms]);
+    const socket = useSocket();
+    const onJoinRoom = async () => {
+        socket?.emit(
+            "room:join",
+            selectedRoom,
+            (response: Record<string, unknown>) => {
+                if (response.roomId) {
+                    return navigate(`/play/${response.roomId}`);
+                }
+                if (response.message) {
+                    alert(response.message);
+                }
+            }
+        );
+    };
 
     return (
         <RoomLayout
@@ -65,6 +80,7 @@ const RoomHome = () => {
                         variant="contained"
                         disabled={selectedRoom == ""}
                         className="w-[135px]"
+                        onClick={onJoinRoom}
                     >
                         Play
                     </Button>

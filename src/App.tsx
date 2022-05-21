@@ -24,7 +24,6 @@ const App = () => (
                     <Routes>
                         <Route element={<NormalLayout />}>
                             <Route path="/" element={<HomePage />} />
-                            <Route path="/play" element={<Game />} />
                             <Route path="/room" element={<Room />} />
                             <Route path="/create" element={<CreateRoom />} />
                             <Route path="/gallery" element={<Gallery />} />
@@ -32,6 +31,9 @@ const App = () => (
                                 path="/collection"
                                 element={<CreateCollection />}
                             />
+                            <Route path="/play" element={<Game />}>
+                                <Route path=":roomId" element={<Game />} />
+                            </Route>
                         </Route>
                     </Routes>
                 </Suspense>

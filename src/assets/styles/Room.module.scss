@@ -48,6 +48,7 @@ $max-height: 350px;
   @extend .gameRoom;
   padding: 0;
   margin: 0 4px 8px 4px;
+  max-height: 118px;
 }
 
 .selected {
