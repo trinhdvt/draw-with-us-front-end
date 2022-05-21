@@ -18,7 +18,7 @@ const Game = () => {
     };
 
     React.useEffect(() => {
-        timerRef.current?.startCountdown();
+        // timerRef.current?.startCountdown();
     }, []);
 
     return (
