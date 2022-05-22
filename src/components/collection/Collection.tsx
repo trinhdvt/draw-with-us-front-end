@@ -14,7 +14,7 @@ import Topic from "../../@types/Topic";
 import Tag from "../commons/Tag";
 import styles from "../../assets/styles/Collection.module.scss";
 import clsx from "clsx";
-import {allTopics} from "../../services/TopicServices";
+import {allTopics} from "../../api/services/TopicServices";
 import CssTextField from "../commons/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../commons/SearchField";

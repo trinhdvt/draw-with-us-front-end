@@ -6,11 +6,11 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import styles from "../../../assets/styles/Room.module.scss";
-import {allCollections} from "../../../services/CollectionServices";
+import {allCollections} from "../../../api/services/CollectionServices";
 import {Collection, CollectionType} from "../../../@types/Collection";
 import CollectionCard from "./CollectionCard";
 import {useUser} from "../../../context/UserContext";
-import RoomServices from "../../../services/RoomServices";
+import RoomServices from "../../../api/services/RoomServices";
 import RoomLayout from "../../../layout/RoomLayout";
 import {Action, NewRoomReducer} from "./RoomReducer";
 
@@ -36,6 +36,7 @@ const CreateRoom = () => {
         filtered: [],
     });
     const [filterType, setFilter] = React.useState(CollectionType.ALL);
+    const [, startTransition] = React.useTransition();
 
     const {filtered, origin} = filterState;
 
@@ -59,10 +60,12 @@ const CreateRoom = () => {
                 filterRs = origin.filter(c => c.type == filterType);
         }
 
-        setFilterState(prev => ({
-            ...prev,
-            filtered: filterRs,
-        }));
+        startTransition(() => {
+            setFilterState(prev => ({
+                ...prev,
+                filtered: filterRs,
+            }));
+        });
     }, [filterType, origin]);
 
     const isLogin = true;
