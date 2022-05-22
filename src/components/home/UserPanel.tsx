@@ -35,7 +35,7 @@ const UserPanel = () => {
             </Grid>
             <Grid item>
                 <RandomAvatar
-                    size="100"
+                    size={100}
                     value={user.sid}
                     className="w-[100px] h-[100px] bg-white"
                 />

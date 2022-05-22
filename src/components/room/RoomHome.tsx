@@ -6,7 +6,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
-import RoomServices from "../../services/RoomServices";
+import RoomServices from "../../api/services/RoomServices";
 import SearchField from "../commons/SearchField";
 import {useSocket} from "../../context/SocketContext";
 

@@ -1,6 +1,6 @@
-import {BackendAPI} from "../api/HttpClient";
+import {BackendAPI} from "../HttpClient";
 
-import {Collection} from "../@types/Collection";
+import {Collection} from "../../@types/Collection";
 
 const allCollections = async () => {
     const response = await BackendAPI.get<Collection[]>("/api/collections");

@@ -34,7 +34,7 @@ const RoomCard = (props: RoomProps & GridProps) => {
         >
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <RandomAvatar value={host.id} size="45" />
+                    <RandomAvatar value={host.id} size={45} />
                 </Grid>
                 <Grid item md>
                     <Typography>{host?.name}</Typography>

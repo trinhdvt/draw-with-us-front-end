@@ -1,5 +1,5 @@
-import {BackendAPI} from "../api/HttpClient";
-import {RoomResponse} from "../@types/Room";
+import {BackendAPI} from "../HttpClient";
+import {RoomResponse} from "../../@types/Room";
 
 export default class RoomServices {
     static async create(data: Partial<RoomResponse>) {
