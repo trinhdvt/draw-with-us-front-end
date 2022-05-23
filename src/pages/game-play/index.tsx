@@ -6,8 +6,15 @@ import styles from "../../assets/styles/Game.module.scss";
 import DrawBoard from "./components/DrawBoard";
 import CountdownTimer, {TimerRef} from "./components/CountdownTimer";
 import {timeUp} from "./utils/GameNotify";
+import {useParams} from "react-router-dom";
+import useRoom from "../../hook/UseRoom";
+import {RoomStatus} from "../../@types/Room";
+import {useUser} from "../../context/UserContext";
+import {WaitingHost, WaitingOthersPlayers} from "./components/WaitingScreen";
 
 const Game = () => {
+    const {roomId} = useParams();
+
     const [target] = React.useState(() => randomTarget());
     const MAX_TIME = 15;
     const timerRef = React.useRef<TimerRef>(null);
@@ -16,10 +23,20 @@ const Game = () => {
         console.log(image);
         timerRef.current?.stopCountdown();
     };
-
-    React.useEffect(() => {
-        // timerRef.current?.startCountdown();
-    }, []);
+    const {data} = useRoom(roomId);
+    if (data) {
+        console.log(data);
+    }
+    const {user} = useUser();
+    const isWaiting = data?.status == RoomStatus.WAITING;
+    const isHost = data?.host.sid == user.sid;
+    const WaitingScreen = () => {
+        if (isWaiting && isHost) {
+            return <WaitingOthersPlayers />;
+        } else {
+            return <WaitingHost />;
+        }
+    };
 
     return (
         <Grid container>
@@ -32,17 +49,21 @@ const Game = () => {
                 <RoomPlayers />
             </Grid>
             <Grid item container md={8} direction="column" className="ml-auto">
-                <DrawBoard
-                    predictCallback={onPredict}
-                    className="max-h-[320px]"
-                />
-                <Grid item width="340px">
-                    <CountdownTimer
-                        ref={timerRef}
-                        maxTime={MAX_TIME}
-                        onDone={timeUp}
-                    />
-                </Grid>
+                {WaitingScreen() ?? (
+                    <>
+                        <DrawBoard
+                            predictCallback={onPredict}
+                            className="max-h-[320px]"
+                        />
+                        <Grid item width="340px">
+                            <CountdownTimer
+                                ref={timerRef}
+                                maxTime={MAX_TIME}
+                                onDone={timeUp}
+                            />
+                        </Grid>
+                    </>
+                )}
             </Grid>
         </Grid>
     );

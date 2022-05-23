@@ -27,6 +27,14 @@ const UserProvider = ({children}: {children: React.ReactNode}) => {
         return {user, setUser};
     }, [user]);
 
+    React.useEffect(() => {
+        sessionStorage.setItem("user", JSON.stringify(user));
+
+        return () => {
+            sessionStorage.removeItem("user");
+        };
+    }, [user]);
+
     return (
         <UserContext.Provider value={contextValue}>
             {children}

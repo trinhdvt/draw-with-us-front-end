@@ -10,6 +10,15 @@ interface IRoomResponse {
     collectionName: string;
 }
 
+enum RoomStatus {
+    WAITING = "waiting",
+    PLAYING = "playing",
+}
+
+interface IRoomConfig extends IRoomResponse {
+    status: RoomStatus;
+}
+
 interface RoomRequest {
     sid: string;
     timeOut: number;
@@ -17,4 +26,5 @@ interface RoomRequest {
     collectionId: string;
 }
 
-export type {IRoomResponse, RoomRequest};
+export type {IRoomResponse, RoomRequest, IRoomConfig};
+export {RoomStatus};

@@ -28,6 +28,7 @@ const LoginPanel = () => {
                 container
                 columnSpacing={2}
                 justifyContent="space-evenly"
+                component="form"
             >
                 <Grid
                     item

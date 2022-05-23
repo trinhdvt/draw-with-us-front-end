@@ -9,6 +9,7 @@ import RoomLayout from "../../layout/RoomLayout";
 import RoomServices from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../context/SocketContext";
+import {GenericResponse} from "../../@types/SocketReponse";
 
 const RoomHome = () => {
     const navigate = useNavigate();
@@ -28,18 +29,14 @@ const RoomHome = () => {
     }, [defaultRooms]);
     const socket = useSocket();
     const onJoinRoom = async () => {
-        socket?.emit(
-            "room:join",
-            selectedRoom,
-            (response: Record<string, unknown>) => {
-                if (response.roomId) {
-                    return navigate(`/play/${response.roomId}`);
-                }
-                if (response.message) {
-                    alert(response.message);
-                }
+        socket?.emit("room:join", selectedRoom, (response: GenericResponse) => {
+            if (response.roomId) {
+                return navigate(`/play/${response.roomId}`);
             }
-        );
+            if (response.message) {
+                alert(response.message);
+            }
+        });
     };
 
     return (
