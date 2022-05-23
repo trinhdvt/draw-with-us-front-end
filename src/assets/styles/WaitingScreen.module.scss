@@ -1,0 +1,17 @@
+@import "Common";
+
+.rotateAnimate {
+  //animation: rotateAnimate_1929378484 3s linear infinite;
+}
+
+@keyframes rotateAnimate_1929378484 {
+  0% {
+    transform: perspective(100px) rotate(0deg)
+  }
+  66.667% {
+    transform: perspective(100px) rotate(360deg);
+  }
+  100% {
+    transform: perspective(100px) rotate(360deg);
+  }
+}
