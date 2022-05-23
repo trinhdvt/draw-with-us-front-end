@@ -54,9 +54,9 @@ const RoomHome = () => {
                     <RoomCard
                         md={2.85}
                         {...room}
-                        key={room.id}
-                        selected={room.id == selectedRoom}
-                        onClick={() => onRoomSelect(room.id)}
+                        key={room.eid}
+                        selected={room.eid == selectedRoom}
+                        onClick={() => onRoomSelect(room.eid)}
                     />
                 ))}
             </Grid>

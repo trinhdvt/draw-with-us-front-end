@@ -4,15 +4,15 @@ import PersonIcon from "@mui/icons-material/Person";
 import TimerIcon from "@mui/icons-material/Timer";
 import clsx from "clsx";
 import styles from "../../../assets/styles/Room.module.scss";
-import {RoomResponse} from "../../../@types/Room";
+import {IRoomResponse} from "../../../@types/Room";
 import RandomAvatar from "../../../components/RandomAvatar";
 
-interface RoomProps extends RoomResponse {
+interface RoomProps extends IRoomResponse {
     selected?: boolean;
 }
 
 const RoomCard = (props: RoomProps & GridProps) => {
-    const FIRST_COL_SIZE = 5;
+    const FIRST_COL_SIZE = 6;
     const {
         currentUsers,
         maxUsers,
@@ -36,8 +36,8 @@ const RoomCard = (props: RoomProps & GridProps) => {
                 <Grid item md={FIRST_COL_SIZE}>
                     <RandomAvatar value={host.id} size={45} />
                 </Grid>
-                <Grid item md>
-                    <Typography>{host?.name}</Typography>
+                <Grid item md={12 - FIRST_COL_SIZE}>
+                    <Typography noWrap={true}>{host.name}</Typography>
                 </Grid>
             </Grid>
             <Grid item container>
@@ -45,17 +45,15 @@ const RoomCard = (props: RoomProps & GridProps) => {
                     <Typography className="pl-1">ID</Typography>
                 </Grid>
                 <Grid item md={12 - FIRST_COL_SIZE}>
-                    <Typography className="overflow-hidden">
-                        #{id.slice(-5)}
-                    </Typography>
+                    <Typography className="overflow-hidden">#{id}</Typography>
                 </Grid>
             </Grid>
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <Typography className="pl-1">Topic</Typography>
+                    <Typography className="pl-1">Collection</Typography>
                 </Grid>
                 <Grid item md={12 - FIRST_COL_SIZE}>
-                    <Typography className="overflow-hidden">
+                    <Typography className="overflow-hidden" noWrap={true}>
                         {collectionName}
                     </Typography>
                 </Grid>
@@ -86,7 +84,8 @@ const RoomDefault = () => ({
     maxUsers: 20,
     timeOut: 20,
     currentUsers: 10,
-    id: Math.random().toString(18),
+    id: Math.random().toString(18).slice(-5),
+    eid: Math.random().toString(18).slice(-5),
     host: {
         name: "trinhdvt",
         id: "123456",

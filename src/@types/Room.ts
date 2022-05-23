@@ -1,7 +1,8 @@
 import {IUser} from "../context/UserContext";
 
-interface RoomResponse {
+interface IRoomResponse {
     id: string;
+    eid: string;
     timeOut: number;
     maxUsers: number;
     currentUsers: number;
@@ -16,4 +17,4 @@ interface RoomRequest {
     collectionId: string;
 }
 
-export type {RoomResponse, RoomRequest};
+export type {IRoomResponse, RoomRequest};
