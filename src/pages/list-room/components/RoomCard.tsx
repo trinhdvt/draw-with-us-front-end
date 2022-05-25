@@ -21,15 +21,23 @@ const RoomCard = (props: RoomProps & GridProps) => {
         collectionName,
         timeOut,
         selected,
+        onClick,
         ...others
     } = props;
+
+    const isFull = maxUsers === currentUsers;
 
     return (
         <Grid
             item
             container
             direction="column"
-            className={clsx(styles.gameRoom, selected && styles.selected)}
+            className={clsx(
+                styles.gameRoom,
+                selected && styles.selected,
+                isFull && "hover:cursor-not-allowed"
+            )}
+            onClick={isFull ? undefined : onClick}
             {...others}
         >
             <Grid item container>
