@@ -1,18 +1,13 @@
 import React from "react";
-import {Avatar, Chip, Grid, GridProps, Stack, Typography} from "@mui/material";
+import {Chip, Grid, GridProps, Stack, Typography} from "@mui/material";
+import {IPlayer} from "../../../@types/User";
+import RandomAvatar from "../../../components/RandomAvatar";
 
-interface PlayerProps {
-    name: string;
-    avatar?: string;
-    point: number;
-    topk?: number;
-}
-
-const Player = (props: PlayerProps & GridProps) => {
-    const {name, avatar, point, topk, ...others} = props;
+const Player = (props: IPlayer & GridProps) => {
+    const {name, eid, point, topk, ...others} = props;
 
     return (
-        <Grid container direction="row" alignItems="center" {...others}>
+        <Grid container alignItems="center" {...others}>
             <Grid
                 item
                 container
@@ -21,9 +16,7 @@ const Player = (props: PlayerProps & GridProps) => {
                 className="pr-[10px]"
                 alignItems="center"
             >
-                <Avatar
-                    src={avatar ?? "https://cdn.trinhdvt.tech/avatar.png"}
-                />
+                <RandomAvatar value={eid} size={45} />
                 {topk && (
                     <Chip
                         variant="filled"
@@ -50,4 +43,4 @@ const Player = (props: PlayerProps & GridProps) => {
 };
 
 export default Player;
-export type {PlayerProps};
+export type {IPlayer};

@@ -9,7 +9,6 @@ import styles from "../../assets/styles/Room.module.scss";
 import {allCollections} from "../../api/services/CollectionServices";
 import {Collection, CollectionType} from "../../@types/Collection";
 import CollectionCard from "./components/CollectionCard";
-import {useUser} from "../../context/UserContext";
 import RoomServices from "../../api/services/RoomServices";
 import RoomLayout from "../../layout/RoomLayout";
 import {Action, NewRoomReducer} from "./reducers/RoomReducer";
@@ -24,12 +23,10 @@ const CreateRoom = () => {
     const timeOutList = [30, 45, 60, 90, 120];
 
     const navigate = useNavigate();
-    const {user} = useUser();
     const [state, dispatch] = React.useReducer(NewRoomReducer, {
         maxUsers: maxUserList[0],
         timeOut: timeOutList[0],
         collectionId: "",
-        sid: user.sid,
     });
     const [filterState, setFilterState] = React.useState<CollectionState>({
         origin: [],
@@ -65,8 +62,7 @@ const CreateRoom = () => {
 
     const isLogin = true;
     const onCreateRoom = async () => {
-        const data = await RoomServices.create(state);
-        console.log(data);
+        await RoomServices.create(state);
         return navigate("/room");
     };
 

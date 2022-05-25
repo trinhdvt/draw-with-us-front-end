@@ -1,15 +1,9 @@
 import React from "react";
-
-interface IUser {
-    sid: string;
-    avatar?: string;
-    name: string;
-    id: string;
-}
+import {IUser} from "../@types/User";
 
 const DefaultUser: IUser = {
     name: "",
-    id: "",
+    eid: "",
     sid: "",
     avatar: "https://cdn.trinhdvt.tech/avatar.png",
 };

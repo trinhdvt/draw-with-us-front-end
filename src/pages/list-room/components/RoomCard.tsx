@@ -14,10 +14,11 @@ interface RoomProps extends IRoomResponse {
 const RoomCard = (props: RoomProps & GridProps) => {
     const FIRST_COL_SIZE = 6;
     const {
-        currentUsers,
-        maxUsers,
-        host,
         id,
+        name,
+        hostEId,
+        maxUsers,
+        currentUsers,
         collectionName,
         timeOut,
         selected,
@@ -34,10 +35,10 @@ const RoomCard = (props: RoomProps & GridProps) => {
         >
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <RandomAvatar value={host.id} size={45} />
+                    <RandomAvatar value={hostEId} size={45} />
                 </Grid>
                 <Grid item md={12 - FIRST_COL_SIZE}>
-                    <Typography noWrap={true}>{host.name}</Typography>
+                    <Typography noWrap={true}>{name}</Typography>
                 </Grid>
             </Grid>
             <Grid item container>
@@ -80,18 +81,14 @@ const RoomCard = (props: RoomProps & GridProps) => {
     );
 };
 
-const RoomDefault = () => ({
+const RoomDefault = (): RoomProps => ({
     maxUsers: 20,
     timeOut: 20,
     currentUsers: 10,
     id: Math.random().toString(18).slice(-5),
     eid: Math.random().toString(18).slice(-5),
-    host: {
-        name: "trinhdvt",
-        id: "123456",
-        sid: "12345678",
-        avatar: "https://cdn.trinhdvt.tech/avatar.png",
-    },
+    hostEId: Math.random().toString(18).slice(-5),
+    name: "fake-room",
     collectionName: "jonh doue",
     selected: false,
 });
