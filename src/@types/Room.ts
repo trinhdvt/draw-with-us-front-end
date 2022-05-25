@@ -6,7 +6,6 @@ interface IRoomResponse {
     maxUsers: number;
     currentUsers: number;
     collectionName: string;
-    hostEId: string;
 }
 
 enum RoomStatus {
@@ -16,6 +15,7 @@ enum RoomStatus {
 
 interface IRoomConfig extends IRoomResponse {
     status: RoomStatus;
+    isHost: boolean;
 }
 
 interface RoomRequest {

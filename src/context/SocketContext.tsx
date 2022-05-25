@@ -2,6 +2,7 @@ import React from "react";
 import {io, Socket, ManagerOptions, SocketOptions} from "socket.io-client";
 import {BackendUrl} from "../api/HttpClient";
 import {IUser, useUser} from "./UserContext";
+import {SocketType} from "../@types/SocketEvent";
 
 const SocketContext = React.createContext<Socket | null>(null);
 
@@ -19,7 +20,7 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
 
     React.useEffect(() => {
         try {
-            const socketCnn = io(BackendUrl, options);
+            const socketCnn: SocketType = io(BackendUrl, options);
             setConnection(socketCnn);
 
             socketCnn.on("connect", () => {

@@ -62,8 +62,8 @@ const CreateRoom = () => {
 
     const isLogin = true;
     const onCreateRoom = async () => {
-        await RoomServices.create(state);
-        return navigate("/room");
+        const {id} = await RoomServices.create(state);
+        return navigate(`/play/${id}`);
     };
 
     return (

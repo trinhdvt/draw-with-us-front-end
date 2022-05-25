@@ -16,7 +16,6 @@ const RoomCard = (props: RoomProps & GridProps) => {
     const {
         id,
         name,
-        hostEId,
         maxUsers,
         currentUsers,
         collectionName,
@@ -35,7 +34,7 @@ const RoomCard = (props: RoomProps & GridProps) => {
         >
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <RandomAvatar value={hostEId} size={45} />
+                    <RandomAvatar value={id} size={45} />
                 </Grid>
                 <Grid item md={12 - FIRST_COL_SIZE}>
                     <Typography noWrap={true}>{name}</Typography>
@@ -87,7 +86,6 @@ const RoomDefault = (): RoomProps => ({
     currentUsers: 10,
     id: Math.random().toString(18).slice(-5),
     eid: Math.random().toString(18).slice(-5),
-    hostEId: Math.random().toString(18).slice(-5),
     name: "fake-room",
     collectionName: "jonh doue",
     selected: false,

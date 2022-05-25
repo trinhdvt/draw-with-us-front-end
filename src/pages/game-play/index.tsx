@@ -8,7 +8,6 @@ import CountdownTimer, {TimerRef} from "./components/CountdownTimer";
 import {timeUp} from "./utils/GameNotify";
 import {useParams} from "react-router-dom";
 import {RoomStatus} from "../../@types/Room";
-import {useUser} from "../../context/UserContext";
 import {
     WaitingForGameStart,
     WaitingHost,
@@ -22,9 +21,8 @@ const Game = () => {
     const {roomId} = useParams();
     const [target] = React.useState(() => randomTarget());
     const timerRef = React.useRef<TimerRef>(null);
-    const {user} = useUser();
-
     const socket = useSocket();
+
     React.useEffect(() => {
         return () => {
             socket?.emit("room:exit", roomId);
@@ -37,7 +35,7 @@ const Game = () => {
     const WaitingScreen = () => {
         if (isPlaying) return;
 
-        const isHost = data?.hostEId == user.eid;
+        const isHost = data?.isHost;
         const isReadyForGame = (data?.currentUsers ?? 0) > 1;
 
         if (!isHost) return <WaitingHost />;
