@@ -4,15 +4,17 @@ import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
 import {Container} from "@mui/material";
 
-const AppLayout = () => {
+const AppLayout = ({children}: {children?: React.ReactNode}) => {
     return (
-        <main className="bg-blue-300">
-            <Container maxWidth="md" className="my-[30px] mx-auto">
-                <AppHeader />
-                <Outlet />
-                <AppFooter />
-            </Container>
-        </main>
+        <Container
+            component="main"
+            maxWidth="md"
+            className="my-[30px] mx-auto bg-blue-300"
+        >
+            <AppHeader />
+            {children ?? <Outlet />}
+            <AppFooter />
+        </Container>
     );
 };
 

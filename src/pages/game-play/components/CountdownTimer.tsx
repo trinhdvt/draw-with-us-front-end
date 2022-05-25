@@ -84,5 +84,5 @@ const Timer = React.forwardRef<TimerRef, TimerProps>((props, ref) => {
 });
 Timer.displayName = "Timer";
 
-export default Timer;
+export default React.memo(Timer);
 export type {TimerProps, TimerRef};

@@ -1,5 +1,7 @@
 import {BackendAPI} from "../HttpClient";
 import {IRoomConfig, IRoomResponse} from "../../@types/Room";
+import {useQuery} from "react-query";
+import {IPlayer} from "../../@types/User";
 
 export default class RoomServices {
     static async create(data: Partial<IRoomResponse>) {
@@ -15,9 +17,33 @@ export default class RoomServices {
         const response = await BackendAPI.get<IRoomResponse[]>("/api/rooms");
         return response.data;
     }
-
-    static async getConfig(roomId?: string): Promise<IRoomConfig> {
-        const resp = await BackendAPI.get<IRoomConfig>(`/api/room/${roomId}`);
-        return resp.data;
-    }
 }
+
+const fetchRoom = async (roomId?: string): Promise<IRoomConfig> => {
+    if (!roomId) {
+        throw new Error("Room id is required");
+    }
+    const {data} = await BackendAPI.get<IRoomConfig>(`/api/room/${roomId}`);
+    return data;
+};
+
+const fetchPlayers = async (roomId?: string): Promise<IPlayer[]> => {
+    if (!roomId) {
+        throw new Error("Room id is required");
+    }
+
+    const {data} = await BackendAPI.get<IPlayer[]>(
+        `/api/room/${roomId}/players`
+    );
+    return data.sort((a, b) => (a.point > b.point ? -1 : 1));
+};
+
+const useRoom = (roomId?: string) => {
+    return useQuery(["room-config", roomId], () => fetchRoom(roomId));
+};
+
+const usePlayers = (roomId?: string) => {
+    return useQuery(["room-players", roomId], () => fetchPlayers(roomId));
+};
+
+export {useRoom, fetchRoom, usePlayers, fetchPlayers};

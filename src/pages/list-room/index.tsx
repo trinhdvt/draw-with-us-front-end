@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Grid} from "@mui/material";
-import RoomCard, {RoomDefault, RoomProps} from "./components/RoomCard";
+import RoomCard, {RoomDefault} from "./components/RoomCard";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
@@ -15,7 +15,7 @@ const RoomHome = () => {
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
     const defaultRooms = React.useMemo(() => {
-        return Array.from<unknown, RoomProps>({length: 6}, () => RoomDefault());
+        return Array.from({length: 6}, () => RoomDefault());
     }, []);
     const [rooms, setRooms] = React.useState(defaultRooms);
 
@@ -31,7 +31,8 @@ const RoomHome = () => {
     const onJoinRoom = async () => {
         socket?.emit("room:join", selectedRoom, (response: GenericResponse) => {
             if (response.roomId) {
-                return navigate(`/play/${response.roomId}`);
+                const {roomId} = response;
+                return navigate(`/play/${roomId}`);
             }
             if (response.message) {
                 alert(response.message);

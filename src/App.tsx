@@ -12,6 +12,7 @@ const CreateRoom = React.lazy(() => import("./pages/create-room"));
 const CreateCollection = React.lazy(() => import("./pages/create-collection"));
 const Game = React.lazy(() => import("./pages/game-play"));
 const Gallery = React.lazy(() => import("./pages/gallery"));
+const NotFound = React.lazy(() => import("./components/NotFound"));
 
 const queryClient = new QueryClient();
 
@@ -34,10 +35,9 @@ const App = () => (
                                     path="/collection"
                                     element={<CreateCollection />}
                                 />
-                                <Route path="/play" element={<Game />}>
-                                    <Route path=":roomId" element={<Game />} />
-                                </Route>
                             </Route>
+                            <Route path="/play/:roomId" element={<Game />} />
+                            <Route path="*" element={<NotFound />} />
                         </Routes>
                     </Suspense>
                 </BrowserRouter>

@@ -1,13 +1,12 @@
-import {IUser} from "../context/UserContext";
-
 interface IRoomResponse {
-    id: string;
     eid: string;
+    id: string;
+    name: string;
     timeOut: number;
     maxUsers: number;
     currentUsers: number;
-    host: Partial<IUser>;
     collectionName: string;
+    hostEId: string;
 }
 
 enum RoomStatus {
@@ -20,7 +19,6 @@ interface IRoomConfig extends IRoomResponse {
 }
 
 interface RoomRequest {
-    sid: string;
     timeOut: number;
     maxUsers: number;
     collectionId: string;

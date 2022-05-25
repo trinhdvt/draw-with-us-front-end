@@ -20,7 +20,7 @@ const WaitingScreen = (props: WaitingScreenProps & GridProps) => {
             alignItems="center"
             justifyContent="center"
             direction="column"
-            className="bg-white rounded-xl"
+            className="bg-white rounded-xl min-h-[350px]"
         >
             <Typography variant="h3">{title}</Typography>
             <HourglassEmptyIcon
@@ -52,5 +52,4 @@ const WaitingForGameStart = () => (
     </WaitingScreen>
 );
 
-export default WaitingScreen;
 export {WaitingOthersPlayers, WaitingForGameStart, WaitingHost};
