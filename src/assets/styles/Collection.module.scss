@@ -3,12 +3,11 @@
 .topicPanel {
   @extend .scrollableContainer;
   background-color: $blue-light;
-  border-radius: 10px;
   border: 1px $blue-sky solid;
-  padding: 3px;
+  @apply p-[3px] rounded-[10px];
 }
 
 .searchBar {
   @extend .white-rounded;
-  margin-left: auto;
+  @apply ml-auto;
 }

@@ -59,7 +59,11 @@ const LoginPanel = () => {
                 >
                     <Stack
                         direction="column"
-                        divider={<DividerWithText>OR</DividerWithText>}
+                        divider={
+                            <DividerWithText>
+                                <Typography>OR</Typography>
+                            </DividerWithText>
+                        }
                         spacing={2}
                     >
                         <Button
@@ -82,7 +86,7 @@ const LoginPanel = () => {
                 flexItem
                 sx={{"&::before": {top: "0%"}, "&::after": {top: "0%"}}}
             >
-                Login With
+                <Typography>Login With</Typography>
             </Divider>
             <Grid item justifyContent="space-evenly">
                 <Stack direction="row" spacing={2}>

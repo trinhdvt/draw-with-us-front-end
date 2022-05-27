@@ -17,23 +17,20 @@ $max-height: 350px;
   border-bottom: 10px solid $blue-light;
   border-top: 10px solid $blue-light;
   max-height: $max-height;
-  overflow: auto;
-  border-radius: 10px;
+  @apply rounded-[10px] overflow-y-scroll;
 }
 
 .header {
-  margin-bottom: 10px;
+  @apply mb-[10px];
 }
 
 .backBtn {
   @extend .btn-border;
-  margin-right: 10px;
+  @apply mr-[10px];
 }
 
 .selectBox {
-  width: 100%;
-  max-height: 40px;
-  text-align: center;
+  @apply text-center w-full max-h-[40px];
 }
 
 .collectionPanel {
@@ -46,9 +43,7 @@ $max-height: 350px;
 
 .gameCollection {
   @extend .gameRoom;
-  padding: 0;
-  margin: 0 4px 8px 4px;
-  max-height: 118px;
+  @apply p-0 mx-[4px] mt-0 mb-[8px] max-h-[118px];
 }
 
 .selected {
