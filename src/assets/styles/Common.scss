@@ -5,8 +5,7 @@ $max-height: 350px;
 $scroll-container-height: 250px;
 
 .container-border {
-  border-radius: 10px;
-  padding: 10px;
+  @apply rounded-[10px] p-[10px];
 }
 
 .white-rounded {
@@ -23,27 +22,22 @@ $scroll-container-height: 250px;
 .scrollableContainer {
   height: $scroll-container-height;
   max-height: $scroll-container-height;
-  overflow: auto;
-  margin-top: 10px;
-
+  @apply overflow-y-scroll mt-[10px];
 }
 
 .sidePanel {
   @extend .white-rounded;
-  max-height: 330px;
+  @apply max-h-[330px];
 }
 
 .btn-border {
-  border-radius: 10px;
+  @apply rounded-[10px];
   border: 2px solid $blue-light;
 }
 
 .card {
+  @apply rounded-[5px] p-[5px] mb-[8px] ml-[8px] cursor-pointer;
   border: 7px solid $white;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 0 0 8px 8px;
-  cursor: pointer;
   background-color: $white;
 
   &:hover {
