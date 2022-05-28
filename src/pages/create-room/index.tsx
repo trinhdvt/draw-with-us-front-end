@@ -1,7 +1,5 @@
 import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import TimerIcon from "@mui/icons-material/Timer";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
@@ -12,6 +10,8 @@ import CollectionCard from "./components/CollectionCard";
 import RoomServices from "../../api/services/RoomServices";
 import RoomLayout from "../../layout/RoomLayout";
 import {Action, NewRoomReducer} from "./reducers/RoomReducer";
+import {IoHourglassOutline} from "react-icons/io5";
+import {FaRegUser} from "react-icons/fa";
 
 interface CollectionState {
     origin: Collection[];
@@ -63,7 +63,9 @@ const CreateRoom = () => {
     const isLogin = true;
     const onCreateRoom = async () => {
         const {id} = await RoomServices.create(state);
-        return navigate(`/play/${id}`);
+        if (id) {
+            return navigate(`/play/${id}`);
+        }
     };
 
     return (
@@ -83,7 +85,7 @@ const CreateRoom = () => {
                         className="mb-[10px]"
                     >
                         <Grid item md={2}>
-                            <AccountCircleIcon color="primary" />
+                            <FaRegUser className="primary-icon" />
                         </Grid>
                         <Grid item md>
                             <Typography>Max User</Typography>
@@ -109,7 +111,7 @@ const CreateRoom = () => {
                     </Grid>
                     <Grid item container alignItems="center">
                         <Grid item md={2}>
-                            <TimerIcon color="primary" />
+                            <IoHourglassOutline className="primary-icon" />
                         </Grid>
                         <Grid item md>
                             <Typography>Timeout (sec)</Typography>

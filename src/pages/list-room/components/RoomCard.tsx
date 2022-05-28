@@ -1,11 +1,11 @@
 import React from "react";
 import {Grid, GridProps, Typography} from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
-import TimerIcon from "@mui/icons-material/Timer";
 import clsx from "clsx";
 import styles from "../../../assets/styles/Room.module.scss";
 import {IRoomResponse} from "../../../@types/Room";
 import RandomAvatar from "../../../components/RandomAvatar";
+import {IoHourglassOutline} from "react-icons/io5";
+import {FaRegUser} from "react-icons/fa";
 
 interface RoomProps extends IRoomResponse {
     selected?: boolean;
@@ -45,7 +45,7 @@ const RoomCard = (props: RoomProps & GridProps) => {
                     <RandomAvatar value={id} size={45} />
                 </Grid>
                 <Grid item md={12 - FIRST_COL_SIZE}>
-                    <Typography noWrap={true}>{name}</Typography>
+                    <Typography noWrap={false}>{name}</Typography>
                 </Grid>
             </Grid>
             <Grid item container>
@@ -68,7 +68,12 @@ const RoomCard = (props: RoomProps & GridProps) => {
             </Grid>
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <PersonIcon color="error" />
+                    <FaRegUser
+                        className={clsx(
+                            "primary-icon",
+                            isFull && "text-red-500"
+                        )}
+                    />
                 </Grid>
                 <Grid item md>
                     <Typography>
@@ -78,7 +83,7 @@ const RoomCard = (props: RoomProps & GridProps) => {
             </Grid>
             <Grid item container>
                 <Grid item md={FIRST_COL_SIZE}>
-                    <TimerIcon color="primary" />
+                    <IoHourglassOutline className="primary-icon" />
                 </Grid>
                 <Grid item md>
                     <Typography>{timeOut}s</Typography>

@@ -1,13 +1,13 @@
 import React from "react";
-import {io, Socket, ManagerOptions, SocketOptions} from "socket.io-client";
+import {io, ManagerOptions, SocketOptions} from "socket.io-client";
 import {BackendUrl} from "../api/HttpClient";
 import {IUser, useUser} from "./UserContext";
 import {SocketType} from "../@types/SocketEvent";
 
-const SocketContext = React.createContext<Socket | null>(null);
+const SocketContext = React.createContext<SocketType | null>(null);
 
 const SocketProvider = ({children}: {children: React.ReactNode}) => {
-    const [connection, setConnection] = React.useState<Socket | null>(null);
+    const [connection, setConnection] = React.useState<SocketType | null>(null);
     const options: Partial<ManagerOptions & SocketOptions> =
         React.useMemo(() => {
             return {
@@ -21,6 +21,8 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
     React.useEffect(() => {
         try {
             const socketCnn: SocketType = io(BackendUrl, options);
+            console.log("Socket connected");
+
             setConnection(socketCnn);
 
             socketCnn.on("connect", () => {
@@ -35,8 +37,10 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
         }
     }, [options]);
 
+    const contextValue = React.useMemo(() => connection, [connection]);
+
     return (
-        <SocketContext.Provider value={connection}>
+        <SocketContext.Provider value={contextValue}>
             {children}
         </SocketContext.Provider>
     );
