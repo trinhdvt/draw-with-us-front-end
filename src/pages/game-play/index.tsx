@@ -16,20 +16,25 @@ import {
 import {useRoom} from "../../api/services/RoomServices";
 import AppLayout from "../../layout/AppLayout";
 import {useSocket} from "../../context/SocketContext";
+import {useQueryClient} from "react-query";
 
 const Game = () => {
     const {roomId} = useParams();
     const [target] = React.useState(() => randomTarget());
     const timerRef = React.useRef<TimerRef>(null);
     const socket = useSocket();
+    const {data} = useRoom(roomId);
+    const queryClient = useQueryClient();
 
     React.useEffect(() => {
+        socket?.on("room:update", async () => {
+            await queryClient.invalidateQueries(["room-config", roomId]);
+        });
         return () => {
-            socket?.emit("room:exit", roomId);
+            socket?.off("room:update");
+            console.log(`Exiting from room ${roomId}`);
         };
-    }, [roomId, socket]);
-
-    const {data} = useRoom(roomId);
+    }, [queryClient, roomId, socket]);
 
     const isPlaying = data?.status == RoomStatus.PLAYING;
     const WaitingScreen = () => {

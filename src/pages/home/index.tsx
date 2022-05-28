@@ -1,5 +1,5 @@
 import React from "react";
-import {Divider, Grid} from "@mui/material";
+import {Divider, Grid, Typography} from "@mui/material";
 import UserPanel from "./components/UserPanel";
 import LoginPanel from "./components/LoginPanel";
 
@@ -11,7 +11,7 @@ const HomePage = () => (
     >
         <UserPanel />
         <Divider orientation="vertical" flexItem variant="middle">
-            OR
+            <Typography>OR</Typography>
         </Divider>
         <LoginPanel />
     </Grid>

@@ -4,7 +4,30 @@ import {IPlayer} from "../../../@types/User";
 import RandomAvatar from "../../../components/RandomAvatar";
 
 const Player = (props: IPlayer & GridProps) => {
-    const {name, eid, point, topk, ...others} = props;
+    const {name, eid, point, topk, isHost, ...others} = props;
+
+    const Badge = () => {
+        if (topk) {
+            return (
+                <Chip
+                    variant="filled"
+                    size="small"
+                    label={`Top${topk}`}
+                    className="bg-yellow-300"
+                />
+            );
+        }
+        if (isHost) {
+            return (
+                <Chip
+                    variant="filled"
+                    size="small"
+                    label="Host"
+                    className="bg-cyan-500"
+                />
+            );
+        }
+    };
 
     return (
         <Grid container alignItems="center" {...others}>
@@ -17,14 +40,7 @@ const Player = (props: IPlayer & GridProps) => {
                 alignItems="center"
             >
                 <RandomAvatar value={eid} size={45} />
-                {topk && (
-                    <Chip
-                        variant="filled"
-                        size="small"
-                        label={`Top${topk}`}
-                        className="bg-yellow-300"
-                    />
-                )}
+                {Badge()}
             </Grid>
 
             <Grid item md={9}>
@@ -43,4 +59,3 @@ const Player = (props: IPlayer & GridProps) => {
 };
 
 export default Player;
-export type {IPlayer};

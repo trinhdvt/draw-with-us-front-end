@@ -36,7 +36,7 @@ const fetchPlayers = async (roomId?: string): Promise<IPlayer[]> => {
     const {data} = await BackendAPI.get<IPlayer[]>(
         `/api/room/${roomId}/players`
     );
-    return data.sort((a, b) => (a.point > b.point ? -1 : 1));
+    return data;
 };
 
 const useRoom = (roomId?: string) => {

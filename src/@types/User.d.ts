@@ -8,6 +8,7 @@ interface IUser {
 interface IPlayer extends IUser {
     point: number;
     topk?: number;
+    isHost: boolean;
 }
 
 export type {IUser, IPlayer};

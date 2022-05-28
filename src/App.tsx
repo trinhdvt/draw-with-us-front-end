@@ -14,7 +14,13 @@ const Game = React.lazy(() => import("./pages/game-play"));
 const Gallery = React.lazy(() => import("./pages/gallery"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+});
 
 const App = () => (
     <QueryClientProvider client={queryClient}>

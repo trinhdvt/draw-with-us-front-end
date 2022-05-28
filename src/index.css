@@ -1,2 +1,6 @@
 @tailwind components;
 @tailwind utilities;
+
+.primary-icon {
+    @apply text-[#1565c0] text-2xl;
+}
