@@ -18,11 +18,11 @@ interface IRoomConfig extends IRoomResponse {
     isHost: boolean;
 }
 
-interface RoomRequest {
+interface IRoomRequest {
     timeOut: number;
     maxUsers: number;
     collectionId: string;
 }
 
-export type {IRoomResponse, RoomRequest, IRoomConfig};
+export type {IRoomResponse, IRoomRequest, IRoomConfig};
 export {RoomStatus};

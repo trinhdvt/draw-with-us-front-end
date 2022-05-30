@@ -10,7 +10,7 @@ import {
 import ConstructionIcon from "@mui/icons-material/Construction";
 import MyCheckbox from "../../components/Checkbox";
 import AddIcon from "@mui/icons-material/Add";
-import Topic from "../../@types/Topic";
+import ITopic from "../../@types/Topic";
 import Tag from "../../components/Tag";
 import styles from "../../assets/styles/Collection.module.scss";
 import clsx from "clsx";
@@ -20,13 +20,13 @@ import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
 
 const CreateCollection = () => {
-    const [topics, setTopics] = React.useState<Topic[]>([]);
+    const [topics, setTopics] = React.useState<ITopic[]>([]);
     const [open, setOpen] = React.useState(false);
     const loading = open && topics.length == 0;
     const [collectionName, setCollectionName] = React.useState("");
     const [isPublic, setPublic] = React.useState(true);
-    const [currentTopic, setCurrentTopic] = React.useState<Topic | null>(null);
-    const [addTopics, setAddTopic] = React.useState<Topic[]>([]);
+    const [currentTopic, setCurrentTopic] = React.useState<ITopic | null>(null);
+    const [addTopics, setAddTopic] = React.useState<ITopic[]>([]);
     const isEmpty = addTopics.length == 0;
 
     React.useEffect(() => {
@@ -36,7 +36,7 @@ const CreateCollection = () => {
     }, [loading]);
 
     const onTopicSelect = (_: React.SyntheticEvent, value: unknown) => {
-        setCurrentTopic(value as Topic);
+        setCurrentTopic(value as ITopic);
     };
 
     const onTopicAdd = () => {
@@ -51,7 +51,7 @@ const CreateCollection = () => {
         });
     };
 
-    const removeTopic = (topic: Topic) => {
+    const removeTopic = (topic: ITopic) => {
         setAddTopic(prev => prev.filter(t => t.id !== topic.id));
         setTopics(prev =>
             [...prev, topic].sort((a, b) => a.name.localeCompare(b.name))
@@ -74,8 +74,8 @@ const CreateCollection = () => {
                         direction="column"
                         className="mb-[10px]"
                     >
-                        <Typography className="mb-[5px] capitalize">
-                            1. Collection name*
+                        <Typography className={styles.requiredInput}>
+                            1. Collection name <span>*</span>
                         </Typography>
                         <CssTextField
                             variant="outlined"
@@ -101,70 +101,70 @@ const CreateCollection = () => {
                             onClick={() => setPublic(!isPublic)}
                         />
                     </Grid>
-                    <Grid item container>
-                        <Typography className="mb-[10px] capitalize">
-                            3. Select topic below*
-                        </Typography>
-                        <Grid item container>
-                            <Grid
-                                item
-                                container
-                                md
-                                justifyContent="space-between"
-                                alignItems="center"
-                            >
-                                <Grid item md={8}>
-                                    <Autocomplete
-                                        open={open}
-                                        value={null}
-                                        onOpen={() => setOpen(true)}
-                                        onClose={() => setOpen(false)}
-                                        onChange={onTopicSelect}
-                                        options={topics}
-                                        loading={loading}
-                                        isOptionEqualToValue={(option, value) =>
-                                            option.id == value.id
-                                        }
-                                        getOptionLabel={option => option.name}
-                                        sx={{"& input": {maxWidth: "80%"}}}
-                                        renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                size="small"
-                                                label="Topic"
-                                                InputProps={{
-                                                    ...params.InputProps,
-                                                    endAdornment: (
-                                                        <React.Fragment>
-                                                            {loading ? (
-                                                                <CircularProgress
-                                                                    color="inherit"
-                                                                    size={20}
-                                                                />
-                                                            ) : null}
-                                                            {
-                                                                params
-                                                                    .InputProps
-                                                                    .endAdornment
-                                                            }
-                                                        </React.Fragment>
-                                                    ),
-                                                }}
-                                            />
-                                        )}
-                                    />
-                                </Grid>
-                                <Grid item md={3.5}>
-                                    <Button
-                                        startIcon={<AddIcon />}
-                                        variant="contained"
-                                        className="w-[90%]"
-                                        disabled={!currentTopic}
-                                        onClick={onTopicAdd}
-                                    >
-                                        Add
-                                    </Button>
-                                </Grid>
+                    <Grid item container direction="column">
+                        <Grid item>
+                            <Typography className={styles.requiredInput}>
+                                3. Select topic below <span>*</span>
+                            </Typography>
+                        </Grid>
+
+                        <Grid
+                            item
+                            container
+                            md
+                            justifyContent="space-between"
+                            alignItems="center"
+                        >
+                            <Grid item md={8}>
+                                <Autocomplete
+                                    open={open}
+                                    value={null}
+                                    onOpen={() => setOpen(true)}
+                                    onClose={() => setOpen(false)}
+                                    onChange={onTopicSelect}
+                                    options={topics}
+                                    loading={loading}
+                                    isOptionEqualToValue={(option, value) =>
+                                        option.id == value.id
+                                    }
+                                    getOptionLabel={option => option.name}
+                                    sx={{"& input": {maxWidth: "80%"}}}
+                                    renderInput={params => (
+                                        <TextField
+                                            {...params}
+                                            size="small"
+                                            label="Topic"
+                                            InputProps={{
+                                                ...params.InputProps,
+                                                endAdornment: (
+                                                    <React.Fragment>
+                                                        {loading ? (
+                                                            <CircularProgress
+                                                                color="inherit"
+                                                                size={20}
+                                                            />
+                                                        ) : null}
+                                                        {
+                                                            params.InputProps
+                                                                .endAdornment
+                                                        }
+                                                    </React.Fragment>
+                                                ),
+                                            }}
+                                        />
+                                    )}
+                                />
+                            </Grid>
+                            <Grid item md={3.5}>
+                                <Button
+                                    startIcon={<AddIcon />}
+                                    variant="contained"
+                                    className="w-[90%]"
+                                    disabled={!currentTopic}
+                                    onClick={onTopicAdd}
+                                >
+                                    Add
+                                </Button>
                             </Grid>
                         </Grid>
                     </Grid>

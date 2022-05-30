@@ -5,7 +5,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import PublicIcon from "@mui/icons-material/Public";
 import styles from "../../../assets/styles/Room.module.scss";
 import clsx from "clsx";
-import {Collection, CollectionType} from "../../../@types/Collection";
+import {ICollection, CollectionType} from "../../../@types/Collection";
 import StyledAvatar from "../../../components/StyledAvatar";
 
 const CollectionIcon = {
@@ -15,8 +15,8 @@ const CollectionIcon = {
     [CollectionType.OFFICIAL]: CheckCircleIcon,
 };
 
-const CollectionCard = (props: Collection & GridProps) => {
-    const {name, thumbnail, type, selected, hidden, ...others} = props;
+const CollectionCard = (props: ICollection & GridProps) => {
+    const {name, thumbnail, type, selected, ...others} = props;
     const Icon = CollectionIcon[type];
 
     return (
@@ -26,11 +26,7 @@ const CollectionCard = (props: Collection & GridProps) => {
             container
             direction="column"
             alignItems="center"
-            className={clsx(
-                styles.gameCollection,
-                selected && styles.selected,
-                hidden && "invisible"
-            )}
+            className={clsx(styles.gameCollection, selected && styles.selected)}
         >
             <StyledAvatar src={thumbnail} alt="topic_avatar" />
             <Typography variant="h5" className="mb-[5px] mt-[5px] capitalize">

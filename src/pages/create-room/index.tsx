@@ -1,68 +1,32 @@
 import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
-import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
-import {allCollections} from "../../api/services/CollectionServices";
-import {Collection, CollectionType} from "../../@types/Collection";
-import CollectionCard from "./components/CollectionCard";
 import RoomServices from "../../api/services/RoomServices";
 import RoomLayout from "../../layout/RoomLayout";
-import {Action, NewRoomReducer} from "./reducers/RoomReducer";
 import {IoHourglassOutline} from "react-icons/io5";
 import {FaRegUser} from "react-icons/fa";
-
-interface CollectionState {
-    origin: Collection[];
-    filtered: Collection[];
-}
+import ListCollection from "./components/ListCollection";
+import {IRoomRequest} from "../../@types/Room";
 
 const CreateRoom = () => {
     const maxUserList = [10, 15, 30, 50];
     const timeOutList = [30, 45, 60, 90, 120];
 
     const navigate = useNavigate();
-    const [state, dispatch] = React.useReducer(NewRoomReducer, {
+    const [payload, setPayload] = React.useState<IRoomRequest>({
         maxUsers: maxUserList[0],
         timeOut: timeOutList[0],
         collectionId: "",
     });
-    const [filterState, setFilterState] = React.useState<CollectionState>({
-        origin: [],
-        filtered: [],
-    });
-    const [filterType, setFilter] = React.useState(CollectionType.ALL);
-    const [, startTransition] = React.useTransition();
 
-    const {filtered, origin} = filterState;
+    const onSelect = (collectionId: string) => {
+        setPayload({...payload, collectionId});
+    };
 
-    React.useEffect(() => {
-        allCollections().then(data => {
-            setFilterState({
-                origin: data,
-                filtered: data,
-            });
-        });
-    }, []);
-
-    React.useEffect(() => {
-        const filterRs =
-            filterType === CollectionType.ALL
-                ? origin
-                : origin.filter(c => c.type == filterType);
-
-        startTransition(() => {
-            setFilterState(prev => ({
-                ...prev,
-                filtered: filterRs,
-            }));
-        });
-    }, [filterType, origin]);
-
-    const isLogin = true;
     const onCreateRoom = async () => {
-        const {id} = await RoomServices.create(state);
+        const {id} = await RoomServices.create(payload);
         if (id) {
             return navigate(`/play/${id}`);
         }
@@ -92,14 +56,12 @@ const CreateRoom = () => {
                         </Grid>
                         <Grid item md={4}>
                             <Select
-                                value={state.maxUsers}
+                                value={payload.maxUsers}
                                 className={styles.selectBox}
-                                onChange={e =>
-                                    dispatch({
-                                        type: Action.SET_MAX_USER,
-                                        payload: e.target.value,
-                                    })
-                                }
+                                onChange={e => {
+                                    const value = Number(e.target.value);
+                                    setPayload({...payload, maxUsers: value});
+                                }}
                             >
                                 {maxUserList.map(m => (
                                     <MenuItem key={m} value={m}>
@@ -118,14 +80,12 @@ const CreateRoom = () => {
                         </Grid>
                         <Grid item md={4}>
                             <Select
-                                value={state.timeOut}
+                                value={payload.timeOut}
                                 className={styles.selectBox}
-                                onChange={e =>
-                                    dispatch({
-                                        type: Action.SET_TIME_OUT,
-                                        payload: e.target.value,
-                                    })
-                                }
+                                onChange={e => {
+                                    const value = Number(e.target.value);
+                                    setPayload({...payload, timeOut: value});
+                                }}
                             >
                                 {timeOutList.map(time => (
                                     <MenuItem value={time} key={time}>
@@ -144,7 +104,7 @@ const CreateRoom = () => {
                         <Button
                             startIcon={<ConstructionIcon />}
                             variant="contained"
-                            disabled={state.collectionId === ""}
+                            disabled={payload.collectionId === ""}
                             onClick={onCreateRoom}
                         >
                             Create
@@ -158,83 +118,7 @@ const CreateRoom = () => {
                     direction="column"
                     className="ml-auto"
                 >
-                    <Grid
-                        item
-                        container={isLogin}
-                        alignItems="center"
-                        className={styles.collectionOption}
-                    >
-                        {!isLogin ? (
-                            <Typography>
-                                Select any topic collection or <b>Sign in</b> to
-                                create your own.
-                            </Typography>
-                        ) : (
-                            <>
-                                <Grid item md={5}>
-                                    <Typography>Select one topic</Typography>
-                                </Grid>
-                                <Grid
-                                    item
-                                    container
-                                    md
-                                    justifyContent="space-evenly"
-                                >
-                                    <Grid item md={5}>
-                                        <Select
-                                            className={styles.selectBox}
-                                            value={filterType}
-                                            onChange={e =>
-                                                setFilter(
-                                                    e.target
-                                                        .value as CollectionType
-                                                )
-                                            }
-                                        >
-                                            {Object.keys(CollectionType)
-                                                .filter(k => !isNaN(Number(k)))
-                                                .map(Number)
-                                                .map(k => (
-                                                    <MenuItem value={k} key={k}>
-                                                        {CollectionType[k]}
-                                                    </MenuItem>
-                                                ))}
-                                        </Select>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button
-                                            startIcon={<AddIcon />}
-                                            variant="contained"
-                                            onClick={() =>
-                                                navigate("/collection")
-                                            }
-                                        >
-                                            Create
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </>
-                        )}
-                    </Grid>
-                    <Grid item container className={styles.collectionPanel}>
-                        {filtered.map((p, idx) => (
-                            <CollectionCard
-                                {...p}
-                                key={idx}
-                                md={2.75}
-                                selected={state.collectionId === p.id}
-                                onClick={() => {
-                                    dispatch({
-                                        type: Action.SET_COLLECTION,
-                                        payload:
-                                            state.collectionId == p.id
-                                                ? ""
-                                                : p.id,
-                                    });
-                                }}
-                            />
-                        ))}
-                    </Grid>
+                    <ListCollection onSelect={onSelect} />
                 </Grid>
             </Grid>
         </RoomLayout>

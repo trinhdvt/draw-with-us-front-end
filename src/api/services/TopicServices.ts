@@ -1,8 +1,9 @@
 import {BackendAPI} from "../HttpClient";
-import Topic from "../../@types/Topic";
+import ITopic from "../../@types/Topic";
 
-const allTopics = async () => {
-    const response = await BackendAPI.get<Topic[]>("/api/topics");
+const allTopics = async (): Promise<ITopic[]> => {
+    const response = await BackendAPI.get<ITopic[]>("/api/topics");
     return response.data;
 };
+
 export {allTopics};
