@@ -5,8 +5,7 @@ enum CollectionType {
     OFFICIAL,
 }
 
-interface Collection {
-    hidden?: boolean;
+interface ICollection {
     selected?: boolean;
     thumbnail: string;
     name: string;
@@ -14,14 +13,5 @@ interface Collection {
     id: string;
 }
 
-const CollectionDefault: Collection = {
-    thumbnail: "",
-    name: "Easy",
-    type: CollectionType.ALL,
-    hidden: false,
-    selected: false,
-    id: "",
-};
-
-export {CollectionType, CollectionDefault};
-export type {Collection};
+export {CollectionType};
+export type {ICollection};

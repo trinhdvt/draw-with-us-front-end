@@ -22,7 +22,7 @@ $scroll-container-height: 250px;
 .scrollableContainer {
   height: $scroll-container-height;
   max-height: $scroll-container-height;
-  @apply overflow-y-scroll mt-[10px];
+  @apply overflow-y-auto mt-[10px];
 }
 
 .sidePanel {

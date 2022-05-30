@@ -1,6 +1,6 @@
-interface Topic {
+interface ITopic {
     id: string;
     name: string;
 }
 
-export default Topic;
+export default ITopic;

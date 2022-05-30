@@ -1,15 +1,15 @@
 import {BackendAPI} from "../HttpClient";
-import {IRoomConfig, IRoomResponse, RoomRequest} from "../../@types/Room";
+import {IRoomConfig, IRoomResponse, IRoomRequest} from "../../@types/Room";
 import {useQuery} from "react-query";
 import {IPlayer} from "../../@types/User";
 
 export default class RoomServices {
-    static async create(data: RoomRequest) {
+    static async create(payload: IRoomRequest) {
         type ResponseType = Partial<IRoomResponse>;
 
         const response = await BackendAPI.post<ResponseType>(
             "/api/rooms",
-            data
+            payload
         );
         return response.data;
     }

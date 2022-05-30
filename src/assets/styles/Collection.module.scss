@@ -11,3 +11,11 @@
   @extend .white-rounded;
   @apply ml-auto;
 }
+
+.requiredInput {
+  @apply mb-[10px] capitalize;
+
+  span {
+    @apply text-red-600;
+  }
+}
