@@ -3,6 +3,7 @@ import {Button, Grid, GridProps, Typography} from "@mui/material";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 import styles from "../../../assets/styles/WaitingScreen.module.scss";
 import clsx from "clsx";
+import {useSocket} from "../../../context/SocketContext";
 
 interface WaitingScreenProps {
     title: string;
@@ -40,16 +41,26 @@ const WaitingHost = () => (
     <WaitingScreen title="Waiting for host to start the game" />
 );
 
-const WaitingForGameStart = () => (
-    <WaitingScreen title="Other players is waiting ...">
-        <span className="relative inline-flex">
-            <Button variant="outlined">Start the game</Button>
-            <span className="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+const WaitingForGameStart = () => {
+    const socket = useSocket();
+
+    const onGameStart = () => {
+        socket?.emit("game:start");
+    };
+
+    return (
+        <WaitingScreen title="Other players is waiting ...">
+            <span className="relative inline-flex">
+                <Button variant="outlined" onClick={onGameStart}>
+                    Start the game
+                </Button>
+                <span className="flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+                </span>
             </span>
-        </span>
-    </WaitingScreen>
-);
+        </WaitingScreen>
+    );
+};
 
 export {WaitingOthersPlayers, WaitingForGameStart, WaitingHost};

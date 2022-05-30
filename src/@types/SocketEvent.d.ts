@@ -13,6 +13,7 @@ interface ClientToServerEvents {
         callback: (response: Record<string, string>) => void
     ) => void;
     "room:exit": (roomId: string) => void;
+    "game:start": () => void;
 }
 
 type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
