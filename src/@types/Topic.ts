@@ -1,6 +1,6 @@
 interface ITopic {
     id: string;
-    name: string;
+    nameVi: string;
 }
 
 export default ITopic;

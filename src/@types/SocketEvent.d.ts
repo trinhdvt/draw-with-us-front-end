@@ -1,8 +1,10 @@
 import {Socket} from "socket.io-client";
+import ITopic from "./Topic";
 import {IUser} from "./User";
 
 interface ServerToClientEvents {
     "room:update": () => void;
+    "game:nextTurn": (topic: ITopic) => void;
 }
 
 interface ClientToServerEvents {

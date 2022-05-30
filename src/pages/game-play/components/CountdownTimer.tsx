@@ -51,12 +51,13 @@ const Timer = React.forwardRef<TimerRef, TimerProps>((props, ref) => {
         return () => clearInterval(timer);
     }, [defaultProgress, maxTime, onDone, timeout]);
 
-    const startCountdown = () => {
+    const startCountdown = React.useCallback(() => {
         setTimeout(new Date().getTime() + maxTime * 1000);
-    };
-    const stopCountdown = () => {
+    }, [maxTime]);
+
+    const stopCountdown = React.useCallback(() => {
         clearTimeout(timerId);
-    };
+    }, [timerId]);
 
     React.useImperativeHandle(ref, () => ({
         startCountdown,

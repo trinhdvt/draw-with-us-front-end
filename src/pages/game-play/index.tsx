@@ -1,6 +1,5 @@
 import React from "react";
 import {Grid, Typography} from "@mui/material";
-import randomTarget from "../../utils/RandomTarget";
 import RoomPlayers from "./components/RoomPlayers";
 import styles from "../../assets/styles/Game.module.scss";
 import DrawBoard from "./components/DrawBoard";
@@ -17,11 +16,12 @@ import {useRoom} from "../../api/services/RoomServices";
 import AppLayout from "../../layout/AppLayout";
 import {useSocket} from "../../context/SocketContext";
 import {useQueryClient} from "react-query";
+import ITopic from "../../@types/Topic";
 
 const Game = () => {
     const {roomId} = useParams();
-    const [target] = React.useState(() => randomTarget());
-    const timerRef = React.useRef<TimerRef>(null);
+    const [target, setTarget] = React.useState<ITopic>();
+    const timerRef = React.createRef<TimerRef>();
     const socket = useSocket();
     const {data} = useRoom(roomId);
     const queryClient = useQueryClient();
@@ -30,8 +30,13 @@ const Game = () => {
         socket?.on("room:update", async () => {
             await queryClient.invalidateQueries(["room-config", roomId]);
         });
+        socket?.on("game:nextTurn", (topic: ITopic) => {
+            setTarget(topic);
+        });
+
         return () => {
             socket?.off("room:update");
+            socket?.off("game:nextTurn");
             console.log(`Exiting from room ${roomId}`);
         };
     }, [queryClient, roomId, socket]);
@@ -39,7 +44,6 @@ const Game = () => {
     const isPlaying = data?.status == RoomStatus.PLAYING;
     const WaitingScreen = () => {
         if (isPlaying) return;
-
         const isHost = data?.isHost;
         const isReadyForGame = (data?.currentUsers ?? 0) > 1;
 
@@ -50,10 +54,14 @@ const Game = () => {
         return <WaitingOthersPlayers />;
     };
 
+    React.useEffect(() => {
+        if (target && timerRef.current) {
+            timerRef.current.startCountdown();
+        }
+    }, [target, timerRef]);
+
     const onPredict = async (image?: string) => {
         console.log(image);
-        timerRef.current?.startCountdown();
-        // timerRef.current?.stopCountdown();
     };
 
     return (
@@ -67,7 +75,7 @@ const Game = () => {
                 >
                     {isPlaying && (
                         <Typography variant="h4">
-                            Let&apos;s draw: <b>{target["vi"]}</b>
+                            Let&apos;s draw: <b>{target?.nameVi}</b>
                         </Typography>
                     )}
                 </Grid>

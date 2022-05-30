@@ -54,7 +54,7 @@ const CreateCollection = () => {
     const removeTopic = (topic: ITopic) => {
         setAddTopic(prev => prev.filter(t => t.id !== topic.id));
         setTopics(prev =>
-            [...prev, topic].sort((a, b) => a.name.localeCompare(b.name))
+            [...prev, topic].sort((a, b) => a.nameVi.localeCompare(b.nameVi))
         );
     };
 
@@ -127,7 +127,7 @@ const CreateCollection = () => {
                                     isOptionEqualToValue={(option, value) =>
                                         option.id == value.id
                                     }
-                                    getOptionLabel={option => option.name}
+                                    getOptionLabel={option => option.nameVi}
                                     sx={{"& input": {maxWidth: "80%"}}}
                                     renderInput={params => (
                                         <TextField
@@ -216,7 +216,7 @@ const CreateCollection = () => {
                         ) : (
                             addTopics.map((topic, index) => (
                                 <Tag
-                                    label={topic.name}
+                                    label={topic.nameVi}
                                     key={index}
                                     onDelete={() => {
                                         removeTopic(topic);
