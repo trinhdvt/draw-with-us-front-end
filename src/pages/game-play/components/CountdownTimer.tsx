@@ -1,43 +1,39 @@
 import React from "react";
 import {LinearProgress, LinearProgressProps, Typography} from "@mui/material";
+import {useGame} from "../context/GameContext";
 
 interface TimerProps extends LinearProgressProps {
-    remainingTime?: number;
     maxTime: number;
-    onDone?: () => Promise<unknown>;
 }
 
-interface TimerRef {
-    startCountdown: () => void;
-    stopCountdown: () => void;
-}
-
-interface Progress {
-    remainingTime: number;
-    remainPercent: number;
-}
-
-const Timer = React.forwardRef<TimerRef, TimerProps>((props, ref) => {
-    const {maxTime, onDone, ...others} = props;
-    const defaultProgress = React.useMemo<Progress>(() => {
+const Timer = (props: TimerProps) => {
+    const {maxTime, ...others} = props;
+    const defaultProgress = React.useMemo(() => {
         return {
             remainPercent: 100,
             remainingTime: maxTime,
         };
     }, [maxTime]);
-    const [progress, setProgress] = React.useState<Progress>(defaultProgress);
-
-    const [timeout, setTimeout] = React.useState(0);
+    const [progress, setProgress] = React.useState(defaultProgress);
+    const [timeOut, setTimeOut] = React.useState(-1);
     const [timerId, setTimer] = React.useState<number>();
+    const {state} = useGame();
 
     React.useEffect(() => {
+        if (state.isDone) {
+            clearInterval(timerId);
+        }
+    }, [state.isDone, timerId]);
+
+    React.useEffect(() => {
+        if (timeOut == -1) return;
+
         const timer = setInterval(() => {
             const now = new Date().getTime();
-            let remaining = Math.ceil((timeout - now) / 1000);
+            let remaining = Math.ceil((timeOut - now) / 1e3);
             if (remaining <= 0) {
+                setProgress(defaultProgress);
                 clearInterval(timer);
-                if (timeout == 0) return;
-                onDone?.().then(() => setProgress(defaultProgress));
             }
 
             remaining = Math.max(0, remaining);
@@ -45,24 +41,18 @@ const Timer = React.forwardRef<TimerRef, TimerProps>((props, ref) => {
                 remainPercent: (remaining / maxTime) * 100,
                 remainingTime: remaining,
             });
-        }, 1000);
+        }, 1e3);
+
         setTimer(Number(timer));
-
         return () => clearInterval(timer);
-    }, [defaultProgress, maxTime, onDone, timeout]);
+    }, [defaultProgress, maxTime, timeOut]);
 
-    const startCountdown = React.useCallback(() => {
-        setTimeout(new Date().getTime() + maxTime * 1000);
-    }, [maxTime]);
-
-    const stopCountdown = React.useCallback(() => {
-        clearTimeout(timerId);
-    }, [timerId]);
-
-    React.useImperativeHandle(ref, () => ({
-        startCountdown,
-        stopCountdown,
-    }));
+    React.useEffect(() => {
+        if (state.target) {
+            setProgress(defaultProgress);
+            setTimeOut(new Date().getTime() + maxTime * 1e3);
+        }
+    }, [defaultProgress, maxTime, state.target]);
 
     return (
         <div className="flex items-center">
@@ -76,14 +66,13 @@ const Timer = React.forwardRef<TimerRef, TimerProps>((props, ref) => {
                 />
             </div>
             <div className="min-w-[35px]">
-                <Typography variant="body2">
+                <Typography variant="body2" className="font-medium">
                     {`${progress.remainingTime} S`}
                 </Typography>
             </div>
         </div>
     );
-});
-Timer.displayName = "Timer";
+};
 
 export default React.memo(Timer);
-export type {TimerProps, TimerRef};
+export type {TimerProps};

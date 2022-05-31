@@ -12,7 +12,7 @@ import {IRoomRequest} from "../../@types/Room";
 
 const CreateRoom = () => {
     const maxUserList = [10, 15, 30, 50];
-    const timeOutList = [30, 45, 60, 90, 120];
+    const timeOutList = [15, 45, 60, 90, 120];
 
     const navigate = useNavigate();
     const [payload, setPayload] = React.useState<IRoomRequest>({

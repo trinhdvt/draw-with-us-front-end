@@ -15,22 +15,22 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import UndoIcon from "@mui/icons-material/Undo";
 import clsx from "clsx";
 import LoadingButton from "../../../components/LoadingButton";
+import {GameActionType, useGame} from "../context/GameContext";
 
-interface DrawBoardProps {
-    predictCallback: (image?: string) => Promise<void>;
-}
-
-const DrawBoard = (props: DrawBoardProps & GridProps) => {
-    const {predictCallback, ...others} = props;
+const DrawBoard = (props: GridProps) => {
+    const {...others} = props;
     const canvasRef = React.useRef<ReactSketchCanvasRef>(null);
     const [eraseMode, setEraseMode] = React.useState(false);
     const [isLoading, setLoading] = React.useState(false);
+    const {dispatch} = useGame();
 
     const onPrediction = async () => {
         setLoading(true);
         const imageData = await canvasRef.current?.exportImage("png");
-        await predictCallback(imageData);
-        setLoading(false);
+        if (imageData) {
+            dispatch({type: GameActionType.DONE, payload: imageData});
+            setLoading(false);
+        }
     };
 
     return (

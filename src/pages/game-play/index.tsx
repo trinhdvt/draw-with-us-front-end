@@ -3,8 +3,7 @@ import {Grid, Typography} from "@mui/material";
 import RoomPlayers from "./components/RoomPlayers";
 import styles from "../../assets/styles/Game.module.scss";
 import DrawBoard from "./components/DrawBoard";
-import CountdownTimer, {TimerRef} from "./components/CountdownTimer";
-import {timeUp} from "./utils/GameNotify";
+import CountdownTimer from "./components/CountdownTimer";
 import {useParams} from "react-router-dom";
 import {RoomStatus} from "../../@types/Room";
 import {
@@ -15,31 +14,29 @@ import {
 import {useRoom} from "../../api/services/RoomServices";
 import AppLayout from "../../layout/AppLayout";
 import {useSocket} from "../../context/SocketContext";
-import {useQueryClient} from "react-query";
 import ITopic from "../../@types/Topic";
+import GameProvider, {GameActionType, useGame} from "./context/GameContext";
 
 const Game = () => {
     const {roomId} = useParams();
-    const [target, setTarget] = React.useState<ITopic>();
-    const timerRef = React.createRef<TimerRef>();
-    const socket = useSocket();
     const {data} = useRoom(roomId);
-    const queryClient = useQueryClient();
+    const socket = useSocket();
+    const {state, dispatch} = useGame();
 
     React.useEffect(() => {
-        socket?.on("room:update", async () => {
-            await queryClient.invalidateQueries(["room-config", roomId]);
-        });
         socket?.on("game:nextTurn", (topic: ITopic) => {
-            setTarget(topic);
+            dispatch({type: GameActionType.NEXT, payload: topic});
         });
 
+        socket?.on("game:endTurn", () => {
+            if (state.isDone) console.log("game:endTurn", "Done");
+            else console.log("game:endTurn", "Not-yet");
+        });
         return () => {
-            socket?.off("room:update");
             socket?.off("game:nextTurn");
-            console.log(`Exiting from room ${roomId}`);
+            socket?.off("game:endTurn");
         };
-    }, [queryClient, roomId, socket]);
+    }, [state.isDone, socket, dispatch]);
 
     const isPlaying = data?.status == RoomStatus.PLAYING;
     const WaitingScreen = () => {
@@ -54,16 +51,6 @@ const Game = () => {
         return <WaitingOthersPlayers />;
     };
 
-    React.useEffect(() => {
-        if (target && timerRef.current) {
-            timerRef.current.startCountdown();
-        }
-    }, [target, timerRef]);
-
-    const onPredict = async (image?: string) => {
-        console.log(image);
-    };
-
     return (
         <AppLayout>
             <Grid container>
@@ -75,7 +62,7 @@ const Game = () => {
                 >
                     {isPlaying && (
                         <Typography variant="h4">
-                            Let&apos;s draw: <b>{target?.nameVi}</b>
+                            Let&apos;s draw: <b>{state.target?.nameVi}</b>
                         </Typography>
                     )}
                 </Grid>
@@ -91,17 +78,10 @@ const Game = () => {
                 >
                     {WaitingScreen() ?? (
                         <>
-                            <DrawBoard
-                                predictCallback={onPredict}
-                                className="max-h-[320px]"
-                            />
+                            <DrawBoard className="max-h-[320px]" />
                             {data && (
                                 <Grid item width="340px">
-                                    <CountdownTimer
-                                        ref={timerRef}
-                                        maxTime={data.timeOut}
-                                        onDone={timeUp}
-                                    />
+                                    <CountdownTimer maxTime={data.timeOut} />
                                 </Grid>
                             )}
                         </>
@@ -112,4 +92,10 @@ const Game = () => {
     );
 };
 
-export default Game;
+const GameWrapper = () => (
+    <GameProvider>
+        <Game />
+    </GameProvider>
+);
+
+export default GameWrapper;
