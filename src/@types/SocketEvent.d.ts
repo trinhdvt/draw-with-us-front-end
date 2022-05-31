@@ -5,6 +5,7 @@ import {IUser} from "./User";
 interface ServerToClientEvents {
     "room:update": () => void;
     "game:nextTurn": (topic: ITopic) => void;
+    "game:endTurn": () => void;
 }
 
 interface ClientToServerEvents {
@@ -16,6 +17,10 @@ interface ClientToServerEvents {
     ) => void;
     "room:exit": (roomId: string) => void;
     "game:start": () => void;
+    "game:predict": (
+        image: string,
+        callback: (response: Record<string, string>) => void
+    ) => void;
 }
 
 type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
