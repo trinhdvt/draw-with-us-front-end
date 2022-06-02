@@ -1,13 +1,13 @@
 import notify from "../../../utils/Notify";
 
-const success = () => {
+const alertSuccess = () => {
     return notify({
         title: "Yay!",
         text: "You got it right!",
     });
 };
 
-const wrong = () => {
+const alertWrong = () => {
     return notify({
         title: "Oops!",
         text: "You got it wrong!",
@@ -19,8 +19,9 @@ const wrong = () => {
 const timeUp = () => {
     return notify({
         title: "Time's up!",
-        text: "You have no more time to draw!",
+        text: "You have no more time to draw! Let's try in the next round!",
         icon: "error",
+        timer: 2500,
     });
 };
 
@@ -32,7 +33,8 @@ const nextTurn = (html?: string | HTMLElement) => {
         timer: 3000,
     });
 };
-const welcome = () => {
+
+const alertWelcome = () => {
     return notify({
         title: "Welcome!",
         text: "Draw an image about the word below to get the points!",
@@ -41,4 +43,5 @@ const welcome = () => {
         showConfirmButton: true,
     });
 };
-export {success, wrong, timeUp, nextTurn, welcome};
+
+export {alertSuccess, alertWrong, timeUp, nextTurn, alertWelcome};

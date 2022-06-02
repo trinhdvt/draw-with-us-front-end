@@ -8,6 +8,7 @@ import {
 import {useSocket} from "../../../context/SocketContext";
 import {useParams} from "react-router-dom";
 import {useQueryClient} from "react-query";
+import {alertWelcome} from "../utils/GameNotify";
 
 const initState: IGameState = {
     isDone: false,
@@ -34,7 +35,8 @@ function GameProvider({children}: {children: React.ReactNode}) {
 
     React.useEffect(() => {
         dispatch({type: GameActionType.SET_ROOM, payload: roomId});
-
+        alertWelcome();
+        
         socket?.on("room:update", async () => {
             await queryClient.invalidateQueries(["room-config", roomId]);
             await queryClient.invalidateQueries(["room-players", roomId]);

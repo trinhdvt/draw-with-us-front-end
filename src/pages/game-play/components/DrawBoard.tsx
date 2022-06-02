@@ -17,7 +17,7 @@ import clsx from "clsx";
 import LoadingButton from "../../../components/LoadingButton";
 import {GameActionType, useGame} from "../context/GameContext";
 import {useSocket} from "../../../context/SocketContext";
-import {success} from "../utils/GameNotify";
+import {alertSuccess, alertWrong} from "../utils/GameNotify";
 
 const DrawBoard = (props: GridProps) => {
     const {...others} = props;
@@ -38,6 +38,8 @@ const DrawBoard = (props: GridProps) => {
 
                 if (response.isCorrect) {
                     onCorrectDraw();
+                } else {
+                    alertWrong();
                 }
             });
         }
@@ -45,7 +47,7 @@ const DrawBoard = (props: GridProps) => {
 
     const onCorrectDraw = () => {
         dispatch({type: GameActionType.DONE, payload: true});
-        success().then(clearCanvas);
+        alertSuccess().then(clearCanvas);
     };
 
     const clearCanvas = () => {
