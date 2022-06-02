@@ -4,7 +4,6 @@ import RoomPlayers from "./components/RoomPlayers";
 import styles from "../../assets/styles/Game.module.scss";
 import DrawBoard from "./components/DrawBoard";
 import CountdownTimer from "./components/CountdownTimer";
-import {useParams} from "react-router-dom";
 import {RoomStatus} from "../../@types/Room";
 import {
     WaitingForGameStart,
@@ -16,12 +15,12 @@ import AppLayout from "../../layout/AppLayout";
 import {useSocket} from "../../context/SocketContext";
 import ITopic from "../../@types/Topic";
 import GameProvider, {GameActionType, useGame} from "./context/GameContext";
+import {timeUp} from "./utils/GameNotify";
 
 const Game = () => {
-    const {roomId} = useParams();
-    const {data} = useRoom(roomId);
     const socket = useSocket();
     const {state, dispatch} = useGame();
+    const {data} = useRoom(state.roomId);
 
     React.useEffect(() => {
         socket?.on("game:nextTurn", (topic: ITopic) => {
@@ -29,8 +28,9 @@ const Game = () => {
         });
 
         socket?.on("game:endTurn", () => {
-            if (state.isDone) console.log("game:endTurn", "Done");
-            else console.log("game:endTurn", "Not-yet");
+            if (!state.isDone) {
+                timeUp();
+            }
         });
         return () => {
             socket?.off("game:nextTurn");
@@ -52,49 +52,38 @@ const Game = () => {
     };
 
     return (
-        <AppLayout>
-            <Grid container>
-                <Grid
-                    item
-                    container
-                    justifyContent="center"
-                    className="mb-[10px]"
-                >
-                    {isPlaying && (
-                        <Typography variant="h4">
-                            Let&apos;s draw: <b>{state.target?.nameVi}</b>
-                        </Typography>
-                    )}
-                </Grid>
-                <Grid item md={3.5} className={styles.playerList}>
-                    <RoomPlayers />
-                </Grid>
-                <Grid
-                    item
-                    container
-                    md={8}
-                    direction="column"
-                    className="ml-auto"
-                >
-                    {WaitingScreen() ?? (
-                        <>
-                            <DrawBoard className="max-h-[320px]" />
-                            {data && (
-                                <Grid item width="340px">
-                                    <CountdownTimer maxTime={data.timeOut} />
-                                </Grid>
-                            )}
-                        </>
-                    )}
-                </Grid>
+        <Grid container>
+            <Grid item container justifyContent="center" className="mb-[10px]">
+                {isPlaying && (
+                    <Typography variant="h4">
+                        Let&apos;s draw: <b>{state.target?.nameVi}</b>
+                    </Typography>
+                )}
             </Grid>
-        </AppLayout>
+            <Grid item md={3.5} className={styles.playerList}>
+                <RoomPlayers />
+            </Grid>
+            <Grid item container md={8} direction="column" className="ml-auto">
+                {WaitingScreen() ?? (
+                    <>
+                        <DrawBoard className="max-h-[320px]" />
+                        {data && (
+                            <Grid item width="340px">
+                                <CountdownTimer maxTime={data.timeOut} />
+                            </Grid>
+                        )}
+                    </>
+                )}
+            </Grid>
+        </Grid>
     );
 };
 
 const GameWrapper = () => (
     <GameProvider>
-        <Game />
+        <AppLayout>
+            <Game />
+        </AppLayout>
     </GameProvider>
 );
 

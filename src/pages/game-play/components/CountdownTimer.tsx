@@ -16,14 +16,7 @@ const Timer = (props: TimerProps) => {
     }, [maxTime]);
     const [progress, setProgress] = React.useState(defaultProgress);
     const [timeOut, setTimeOut] = React.useState(-1);
-    const [timerId, setTimer] = React.useState<number>();
     const {state} = useGame();
-
-    React.useEffect(() => {
-        if (state.isDone) {
-            clearInterval(timerId);
-        }
-    }, [state.isDone, timerId]);
 
     React.useEffect(() => {
         if (timeOut == -1) return;
@@ -43,7 +36,6 @@ const Timer = (props: TimerProps) => {
             });
         }, 1e3);
 
-        setTimer(Number(timer));
         return () => clearInterval(timer);
     }, [defaultProgress, maxTime, timeOut]);
 

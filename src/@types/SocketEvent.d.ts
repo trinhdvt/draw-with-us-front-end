@@ -18,8 +18,9 @@ interface ClientToServerEvents {
     "room:exit": (roomId: string) => void;
     "game:start": () => void;
     "game:predict": (
+        roomId: string,
         image: string,
-        callback: (response: Record<string, string>) => void
+        callback: (response: {isCorrect: boolean}) => void
     ) => void;
 }
 

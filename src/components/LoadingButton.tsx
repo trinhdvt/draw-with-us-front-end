@@ -8,7 +8,7 @@ interface LoadingButtonProps extends ButtonProps {
 }
 
 const LoadingButton = (props: LoadingButtonProps) => {
-    const {isLoading, endIcon, loadingIcon, ...others} = props;
+    const {isLoading, disabled, endIcon, loadingIcon, ...others} = props;
 
     return (
         <Button
@@ -18,7 +18,7 @@ const LoadingButton = (props: LoadingButtonProps) => {
                     ? loadingIcon ?? <CircularProgress size={16.67} />
                     : endIcon
             }
-            disabled={isLoading}
+            disabled={disabled || isLoading}
             {...others}
         />
     );

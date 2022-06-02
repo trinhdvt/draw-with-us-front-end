@@ -3,6 +3,7 @@ import ITopic from "../../../@types/Topic";
 enum GameActionType {
     DONE,
     NEXT,
+    SET_ROOM,
 }
 
 interface IGameAction {
@@ -13,19 +14,22 @@ interface IGameAction {
 interface IGameState {
     isDone: boolean;
     target?: ITopic;
+    roomId?: string;
 }
 
-const gameReducer = (state: IGameState, action: IGameAction) => {
+const GameReducer = (state: IGameState, action: IGameAction) => {
     const {type, payload} = action;
     switch (type) {
         case GameActionType.DONE:
             return {...state, isDone: payload as boolean};
         case GameActionType.NEXT:
             return {...state, isDone: false, target: payload as ITopic};
+        case GameActionType.SET_ROOM:
+            return {...state, roomId: payload as string};
         default:
             return state;
     }
 };
 
-export {gameReducer, GameActionType};
+export {GameReducer, GameActionType};
 export type {IGameState, IGameAction};
