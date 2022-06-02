@@ -2,6 +2,7 @@ import React from "react";
 import {Chip, Grid, GridProps, Stack, Typography} from "@mui/material";
 import {IPlayer} from "../../../@types/User";
 import RandomAvatar from "../../../components/RandomAvatar";
+import StyledAvatar from "../../../components/StyledAvatar";
 
 const Player = (props: IPlayer & GridProps) => {
     const {name, eid, point, topk, isHost, ...others} = props;
@@ -58,4 +59,26 @@ const Player = (props: IPlayer & GridProps) => {
     );
 };
 
+const PlayerSkeleton = () => (
+    <Grid container alignItems="center">
+        <Grid
+            item
+            container
+            md={3}
+            direction="column"
+            className="pr-[10px]"
+            alignItems="center"
+        >
+            <StyledAvatar />
+        </Grid>
+
+        <Grid item md={9}>
+            <Stack direction="column">
+                <Typography className="font-thin">Waiting...</Typography>
+            </Stack>
+        </Grid>
+    </Grid>
+);
+
 export default Player;
+export {PlayerSkeleton};
