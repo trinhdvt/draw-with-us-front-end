@@ -16,21 +16,41 @@ import UndoIcon from "@mui/icons-material/Undo";
 import clsx from "clsx";
 import LoadingButton from "../../../components/LoadingButton";
 import {GameActionType, useGame} from "../context/GameContext";
+import {useSocket} from "../../../context/SocketContext";
+import {success} from "../utils/GameNotify";
 
 const DrawBoard = (props: GridProps) => {
     const {...others} = props;
     const canvasRef = React.useRef<ReactSketchCanvasRef>(null);
     const [eraseMode, setEraseMode] = React.useState(false);
-    const [isLoading, setLoading] = React.useState(false);
-    const {dispatch} = useGame();
+    const [isPredicting, setPredicting] = React.useState(false);
+    const socket = useSocket();
+    const {state, dispatch} = useGame();
+    const {roomId} = state;
 
-    const onPrediction = async () => {
-        setLoading(true);
+    const onPredict = async () => {
+        setPredicting(true);
         const imageData = await canvasRef.current?.exportImage("png");
-        if (imageData) {
-            dispatch({type: GameActionType.DONE, payload: imageData});
-            setLoading(false);
+        if (imageData && roomId) {
+            socket?.emit("game:predict", roomId, imageData, response => {
+                dispatch({type: GameActionType.DONE, payload: imageData});
+                setPredicting(false);
+
+                if (response.isCorrect) {
+                    onCorrectDraw();
+                }
+            });
         }
+    };
+
+    const onCorrectDraw = () => {
+        dispatch({type: GameActionType.DONE, payload: true});
+        success().then(clearCanvas);
+    };
+
+    const clearCanvas = () => {
+        canvasRef.current?.clearCanvas();
+        canvasRef.current?.resetCanvas();
     };
 
     return (
@@ -59,18 +79,16 @@ const DrawBoard = (props: GridProps) => {
                     alignItems="center"
                 >
                     <LoadingButton
-                        isLoading={isLoading}
+                        isLoading={isPredicting}
                         variant="contained"
                         endIcon={<ArrowForwardIcon />}
-                        onClick={onPrediction}
+                        onClick={onPredict}
+                        disabled={state.isDone}
                     >
                         Check
                     </LoadingButton>
                     <Button
-                        onClick={() => {
-                            canvasRef.current?.clearCanvas();
-                            canvasRef.current?.resetCanvas();
-                        }}
+                        onClick={clearCanvas}
                         variant="outlined"
                         color="error"
                         endIcon={<HighlightOffIcon color="error" />}
@@ -94,7 +112,7 @@ const DrawBoard = (props: GridProps) => {
                                 }}
                             />
                         }
-                        label={eraseMode ? "Eraser" : "Pen"}
+                        label={eraseMode ? "Eraser" : "Pencil"}
                         labelPlacement="end"
                     />
                 </Stack>

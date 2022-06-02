@@ -1,7 +1,7 @@
 import React from "react";
 import {
     IGameAction,
-    gameReducer,
+    GameReducer,
     IGameState,
     GameActionType,
 } from "./GameReducer";
@@ -12,6 +12,7 @@ import {useQueryClient} from "react-query";
 const initState: IGameState = {
     isDone: false,
     target: undefined,
+    roomId: undefined,
 };
 
 interface GameContextProps {
@@ -22,7 +23,7 @@ interface GameContextProps {
 const GameContext = React.createContext<GameContextProps | null>(null);
 
 function GameProvider({children}: {children: React.ReactNode}) {
-    const [state, dispatch] = React.useReducer(gameReducer, initState);
+    const [state, dispatch] = React.useReducer(GameReducer, initState);
     const contextValue = React.useMemo(() => {
         return {state, dispatch};
     }, [state]);
@@ -32,6 +33,8 @@ function GameProvider({children}: {children: React.ReactNode}) {
     const queryClient = useQueryClient();
 
     React.useEffect(() => {
+        dispatch({type: GameActionType.SET_ROOM, payload: roomId});
+
         socket?.on("room:update", async () => {
             await queryClient.invalidateQueries(["room-config", roomId]);
             await queryClient.invalidateQueries(["room-players", roomId]);
