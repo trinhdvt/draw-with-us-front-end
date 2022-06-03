@@ -6,7 +6,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
-import RoomServices from "../../api/services/RoomServices";
+import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../context/SocketContext";
 import {SocketResponse} from "../../@types/SocketEvent";
@@ -17,27 +17,22 @@ const RoomHome = () => {
     const defaultRooms = React.useMemo(() => {
         return Array.from({length: 6}, () => RoomDefault());
     }, []);
-    const [rooms, setRooms] = React.useState(defaultRooms);
+    const socket = useSocket();
+    const {data} = useRooms();
 
     const onRoomSelect = (roomId: string) => {
         setSelectedRoom(roomId != selectedRoom ? roomId : "");
     };
-    React.useEffect(() => {
-        RoomServices.getAll().then(data => {
-            setRooms([...data, ...defaultRooms]);
-        });
-    }, [defaultRooms]);
-    const socket = useSocket();
+
     const onJoinRoom = async () => {
-        socket?.emit("room:join", selectedRoom, (response: SocketResponse) => {
-            if (response.roomId) {
-                const {roomId} = response;
-                return navigate(`/play/${roomId}`);
+        socket?.emit(
+            "room:join",
+            selectedRoom,
+            ({message, roomId}: SocketResponse) => {
+                if (roomId) return navigate(`/play/${roomId}`);
+                if (message) alert(message);
             }
-            if (response.message) {
-                alert(response.message);
-            }
-        });
+        );
     };
 
     return (
@@ -48,7 +43,7 @@ const RoomHome = () => {
             }
         >
             <Grid item container className={styles.mainPanel}>
-                {rooms.map(room => (
+                {[...(data ?? []), ...defaultRooms].map(room => (
                     <RoomCard
                         md={2.85}
                         {...room}

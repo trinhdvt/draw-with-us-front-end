@@ -3,12 +3,13 @@ import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
-import RoomServices from "../../api/services/RoomServices";
+import {createRoom} from "../../api/services/RoomServices";
 import RoomLayout from "../../layout/RoomLayout";
 import {IoHourglassOutline} from "react-icons/io5";
 import {FaRegUser} from "react-icons/fa";
 import ListCollection from "./components/ListCollection";
 import {IRoomRequest} from "../../@types/Room";
+import {useMutation} from "react-query";
 
 const CreateRoom = () => {
     const maxUserList = [10, 15, 30, 50];
@@ -21,15 +22,14 @@ const CreateRoom = () => {
         collectionId: "",
     });
 
+    const useCreateRoom = useMutation(createRoom, {
+        onSuccess: data => navigate(`/play/${data.id}`),
+    });
+
+    const onCreateRoom = () => useCreateRoom.mutate(payload);
+
     const onSelect = (collectionId: string) => {
         setPayload({...payload, collectionId});
-    };
-
-    const onCreateRoom = async () => {
-        const {id} = await RoomServices.create(payload);
-        if (id) {
-            return navigate(`/play/${id}`);
-        }
     };
 
     return (

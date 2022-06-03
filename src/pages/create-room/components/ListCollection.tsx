@@ -14,10 +14,9 @@ interface Props {
 const ListCollection = ({onSelect}: Props) => {
     const navigate = useNavigate();
     const [filterType, setFilter] = React.useState(CollectionType.ALL);
-    const [, startTransition] = React.useTransition();
     const [filteredData, setFilteredData] = React.useState<ICollection[]>();
     const {data} = useCollections();
-    const [selected, setSelected] = React.useState<string>("");
+    const [selected, setSelected] = React.useState("");
 
     React.useEffect(() => {
         setFilteredData(data);
@@ -29,9 +28,7 @@ const ListCollection = ({onSelect}: Props) => {
                 ? data
                 : data?.filter(item => item.type == filterType);
 
-        startTransition(() => {
-            setFilteredData(filterRs);
-        });
+        setFilteredData(filterRs);
     }, [filterType, data]);
 
     const isLogin = true;
