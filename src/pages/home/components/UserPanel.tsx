@@ -8,14 +8,43 @@ import CssTextField from "../../../components/CssTextField";
 import {useUser} from "../../../context/UserContext";
 import {useSocket} from "../../../context/SocketContext";
 import RandomAvatar from "../../../components/RandomAvatar";
+import notify from "../../../utils/Notify";
+import {SocketResponse} from "../../../@types/SocketEvent";
+import {CircularProgress} from "@mui/material";
+import {fetchRandom} from "../../../api/services/RoomServices";
 
 const UserPanel = () => {
     const navigate = useNavigate();
     const {user, setUser} = useUser();
     const socket = useSocket();
+    const [isFinding, setFinding] = React.useState(false);
 
-    const playGame = () => {
-        navigate(`/play`);
+    const playGame = async () => {
+        try {
+            setFinding(true);
+            const {roomEId} = await fetchRandom();
+            socket?.emit("room:join", roomEId, (response: SocketResponse) => {
+                if (response.roomId) {
+                    setFinding(false);
+                    const {roomId} = response;
+                    notify({
+                        title: "Yay!",
+                        text: "We found the room! Going in few seconds...",
+                        icon: "info",
+                    }).then(() => navigate(`/play/${roomId}`));
+                }
+                if (response.message) {
+                    alert(response.message);
+                }
+            });
+        } catch (error) {
+            setFinding(false);
+            await notify({
+                title: "Oops!",
+                text: "There is no room available! Let's create one!",
+                icon: "warning",
+            });
+        }
     };
 
     return (
@@ -88,6 +117,18 @@ const UserPanel = () => {
                     Play
                 </Button>
             </Grid>
+            {isFinding && (
+                <div className="flex flex-col justify-center items-center top-0 left-0 w-full h-full z-50 absolute bg-white opacity-75 ">
+                    <CircularProgress
+                        size={100}
+                        thickness={1}
+                        className="mb-10"
+                    />
+                    <Typography variant="h3" className="animate-bounce">
+                        Finding ...
+                    </Typography>
+                </div>
+            )}
         </Grid>
     );
 };
