@@ -40,12 +40,4 @@ const useRoom = (roomId?: string) =>
 const usePlayers = (roomId?: string) =>
     useQuery(["room-players", roomId], () => fetchPlayers(roomId));
 
-export {
-    useRoom,
-    fetchRoom,
-    usePlayers,
-    fetchPlayers,
-    fetchRandom,
-    useRooms,
-    createRoom,
-};
+export {useRoom, usePlayers, fetchRandom, useRooms, createRoom};

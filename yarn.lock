@@ -1885,6 +1885,7 @@ __metadata:
     prettier: 2.6.2
     react: ^18.0.0
     react-dom: ^18.0.0
+    react-flip-move: ^3.0.4
     react-icons: ^4.3.1
     react-query: ^3.39.0
     react-router-dom: 6
@@ -3894,6 +3895,16 @@ __metadata:
   peerDependencies:
     react: ^18.1.0
   checksum: bb0d48eeb0b297c79c2a03978baa29f5b3ff7ba3d070b21e34c9af1a6e7fdf0ca8b8d73e41f9214d91ad40eeb6d1f3559f884cbbc338713374a51320637c23df
+  languageName: node
+  linkType: hard
+
+"react-flip-move@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "react-flip-move@npm:3.0.4"
+  peerDependencies:
+    react: ">=16.3.x"
+    react-dom: ">=16.3.x"
+  checksum: 048295a674b3c044539250aa1f2a5e9d60dea2f8fd859bd9ad2785b7b0676a8b2caebe9c1510ff3584b882316d76d6573dc28fdfc0cca5ddcc58c89fcd2da466
   languageName: node
   linkType: hard
 

@@ -64,7 +64,7 @@ const LoginPanel = () => {
                                 <Typography>OR</Typography>
                             </DividerWithText>
                         }
-                        spacing={2}
+                        spacing={1}
                     >
                         <Button
                             startIcon={<MeetingRoomIcon />}
@@ -88,15 +88,18 @@ const LoginPanel = () => {
             >
                 <Typography>Login With</Typography>
             </Divider>
-            <Grid item justifyContent="space-evenly">
-                <Stack direction="row" spacing={2}>
-                    <Button startIcon={<FacebookIcon />} variant="outlined">
-                        Facebook
-                    </Button>
-                    <Button startIcon={<GoogleIcon />} variant="outlined">
-                        Google
-                    </Button>
-                </Stack>
+            <Grid
+                item
+                container
+                justifyContent="space-evenly"
+                className="pt-[23px]"
+            >
+                <Button startIcon={<FacebookIcon />} variant="outlined">
+                    Facebook
+                </Button>
+                <Button startIcon={<GoogleIcon />} variant="outlined">
+                    Google
+                </Button>
             </Grid>
         </Grid>
     );

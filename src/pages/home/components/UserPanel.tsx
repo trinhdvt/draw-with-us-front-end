@@ -43,6 +43,8 @@ const UserPanel = () => {
                 title: "Oops!",
                 text: "There is no room available! Let's create one!",
                 icon: "warning",
+                showConfirmButton: true,
+                timer: undefined,
             });
         }
     };
@@ -76,28 +78,21 @@ const UserPanel = () => {
                 alignItems="center"
                 sx={{paddingBottom: "6px"}}
             >
-                <Grid
-                    item
-                    container
-                    alignItems="center"
-                    justifyContent="center"
-                >
-                    <CssTextField
-                        size="small"
-                        label="Nickname"
-                        value={user.name}
-                        onChange={e => setUser({...user, name: e.target.value})}
-                        onBlur={() => socket?.emit("user:update", user)}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <AccountCircleIcon color="primary" />
-                                </InputAdornment>
-                            ),
-                        }}
-                        required
-                    />
-                </Grid>
+                <CssTextField
+                    size="small"
+                    label="Nickname"
+                    value={user.name}
+                    onChange={e => setUser({...user, name: e.target.value})}
+                    onBlur={() => socket?.emit("user:update", user)}
+                    InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                                <AccountCircleIcon color="primary" />
+                            </InputAdornment>
+                        ),
+                    }}
+                    required
+                />
             </Grid>
             <Grid item container justifyContent="space-evenly">
                 <Button

@@ -16,16 +16,12 @@ const AppHeader = () => {
 
     return (
         <Grid container justifyContent="center" className="mb-[10px]">
-            <Grid item container xs={6} direction="column" alignItems="center">
-                <Grid item className="">
-                    <Logo
-                        src={logoUrl}
-                        alt="logo"
-                        loading="lazy"
-                        onClick={() => navigate("/")}
-                    />
-                </Grid>
-            </Grid>
+            <Logo
+                src={logoUrl}
+                alt="logo"
+                loading="lazy"
+                onClick={() => navigate("/")}
+            />
         </Grid>
     );
 };
