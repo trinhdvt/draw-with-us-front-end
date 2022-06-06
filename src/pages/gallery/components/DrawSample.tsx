@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "../../../assets/styles/Gallery.module.scss";
 
 const drawSample = [
     [
@@ -15,63 +16,38 @@ const drawSample = [
     ],
 ];
 
-const Sample = () => {
-    const CANVAS_SIZE = 128;
+type Props = {
+    strokes: number[][][];
+};
+
+const SvgSample = ({strokes}: Props) => {
+    const lines: React.ReactNode[] = [];
+    const SAMPLE_SIZE = 128;
     const BASE_SIZE = 256;
-    const RATIO = CANVAS_SIZE / BASE_SIZE;
-    const canvasRef = React.useRef<HTMLCanvasElement>(null);
+    const RATIO = SAMPLE_SIZE / BASE_SIZE;
 
-    const draw = React.useCallback(() => {
-        const ctx = canvasRef.current?.getContext("2d");
-        if (!ctx) return;
-        ctx.strokeStyle = "black";
-        const drawLine = (
-            startX: number,
-            startY: number,
-            endX: number,
-            endY: number
-        ) => {
-            [startX, startY, endX, endY] = [startX, startY, endX, endY].map(
-                x => x * RATIO
-            );
-            let amount = 0.0;
-            setInterval(() => {
-                amount += 0.1;
-                amount = Math.min(amount, 1);
-                ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
-                ctx.moveTo(startX, startY);
-                ctx.lineTo(
-                    startX + (endX - startX) * amount,
-                    startY + (endY - startY) * amount
-                );
-                ctx.stroke();
-            }, 30);
-        };
-        ctx.beginPath();
-        for (const stroke of drawSample) {
-            for (let i = 0; i < stroke[0].length - 1; i++) {
-                drawLine(
-                    stroke[0][i],
-                    stroke[1][i],
-                    stroke[0][i + 1],
-                    stroke[1][i + 1]
-                );
-            }
+    for (let i = 0; i < strokes.length; i++) {
+        const points: string[] = [];
+        const stroke = strokes[i];
+        for (let j = 0; j < stroke[0].length; j++) {
+            points.push(`${stroke[0][j] * RATIO},${stroke[1][j] * RATIO}`);
         }
-    }, [RATIO]);
-
-    React.useEffect(() => {
-        draw();
-    }, [draw]);
+        lines.push(
+            <path
+                className={styles.path}
+                key={i}
+                d={`M${points.join(" ")}`}
+                pathLength={1}
+            />
+        );
+    }
 
     return (
-        <canvas
-            width={CANVAS_SIZE}
-            height={CANVAS_SIZE}
-            className="bg-white"
-            ref={canvasRef}
-        />
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+            {lines}
+        </svg>
     );
 };
 
-export default Sample;
+export default SvgSample;
+export {drawSample};

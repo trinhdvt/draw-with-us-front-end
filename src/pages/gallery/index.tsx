@@ -1,61 +1,66 @@
 import React from "react";
-import {Box, Button, Divider, Grid, Stack, TextField} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import Sample from "./components/DrawSample";
+import {Button, Divider, Grid, Stack} from "@mui/material";
+import SvgSample, {drawSample} from "./components/DrawSample";
 import styles from "../../assets/styles/Gallery.module.scss";
 import clsx from "clsx";
+import RoomLayout from "../../layout/RoomLayout";
+import SearchField from "../../components/SearchField";
+import {useTopics} from "../../api/services/TopicServices";
 
 const Gallery = () => {
-    const SAMPLE_SIZE = 3;
-    const topics = ["flower", "john doe", "faker faker faker"];
-    const [selectedId, setSelectId] = React.useState(-1);
+    const {data} = useTopics();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, startTransition] = React.useTransition();
+    const [selectedId, setSelectId] = React.useState("");
     const [sampleData, setSample] = React.useState<number[]>([]);
-    React.useEffect(() => {
-        if (selectedId != -1) {
-            setSample(Array((selectedId + 1) * 4).fill(Math.random()));
-        }
-    }, [selectedId]);
+
+    const onTopicSelect = (topicId: string) => {
+        setSelectId(topicId);
+        const randomNumber = Math.floor(Math.random() * 10);
+        startTransition(() => {
+            setSample(Array(randomNumber).fill(Math.random()));
+        });
+    };
 
     return (
-        <Grid container justifyContent="space-around">
-            <Grid item container md={2} direction="column">
-                <Grid item className="bg-white mb-[10px]">
-                    <Box className="flex items-end">
-                        <SearchIcon
-                            sx={{color: "action.active", mr: 1, my: 0.5}}
-                        />
-                        <TextField variant="standard" />
-                    </Box>
-                </Grid>
-                <Grid item className="bg-white">
-                    <Stack
-                        divider={<Divider orientation="horizontal" flexItem />}
-                    >
-                        {topics.map((topic, index) => (
-                            <Button
-                                key={index}
-                                className={clsx(
-                                    selectedId == index && styles.selected
-                                )}
-                                onClick={() => setSelectId(index)}
-                            >
-                                {topic}
-                            </Button>
-                        ))}
-                    </Stack>
-                </Grid>
-            </Grid>
+        <Grid item container>
             <Grid
                 item
                 container
-                justifyContent="space-evenly"
-                md={9}
-                spacing={2}
-                className={styles.samplePanel}
+                md={2.8}
+                direction="column"
+                className={styles.topicSelectPanel}
             >
+                <Stack
+                    divider={<Divider orientation="horizontal" flexItem />}
+                    spacing={1}
+                >
+                    {data?.map(({id, nameVi}) => (
+                        <Button
+                            key={id}
+                            className={clsx(
+                                selectedId == id && styles.selected,
+                                "mx-[5px]"
+                            )}
+                            onClick={() => onTopicSelect(id)}
+                            variant="outlined"
+                        >
+                            {nameVi}
+                        </Button>
+                    ))}
+                </Stack>
+            </Grid>
+            <Grid item container md={9} className={styles.samplePanel}>
                 {sampleData.map((_, i) => (
-                    <Grid item md={SAMPLE_SIZE} key={i}>
-                        <Sample />
+                    <Grid
+                        item
+                        md={2.8}
+                        key={i}
+                        width={128}
+                        height={128}
+                        className={styles.sampleCard}
+                    >
+                        <SvgSample strokes={drawSample} />
                     </Grid>
                 ))}
             </Grid>
@@ -63,4 +68,15 @@ const Gallery = () => {
     );
 };
 
-export default Gallery;
+const GalleryWrapper = () => (
+    <RoomLayout
+        title="Gallery"
+        headerChildren={
+            <SearchField className="w-[130px]" placeholder="Topic" />
+        }
+    >
+        <Gallery />
+    </RoomLayout>
+);
+
+export default GalleryWrapper;

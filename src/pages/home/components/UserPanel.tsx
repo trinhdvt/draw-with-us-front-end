@@ -109,7 +109,7 @@ const UserPanel = () => {
                     variant="contained"
                     onClick={playGame}
                 >
-                    Play
+                    Play Now
                 </Button>
             </Grid>
             {isFinding && (

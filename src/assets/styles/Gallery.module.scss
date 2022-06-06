@@ -1,7 +1,44 @@
+@import "Common";
+
 .samplePanel {
-  @apply rounded-[10px] overflow-y-scroll h-[400px] max-h-[400px] bg-[#9fbdca];
+  @extend .scrollableContainer;
+  background-color: $blue-light;
+  border: 2px $blue-sky solid;
+  @apply p-[3px] rounded-[10px] ml-auto rounded-[10px] h-[350px] max-h-[350px] content-start pt-[10px];
 }
 
+.sampleCard {
+  @apply mb-[8px] ml-[8px] ;
+}
+
+.topicSelectPanel {
+  @extend .scrollableContainer;
+  @apply h-[350px] max-h-[350px] py-[10px];
+  border: 2px $blue-sky solid;
+  border-radius: 10px;
+}
+
+
 .selected {
-  @apply border-[1px] border-solid border-[black];
+  @apply border-[2px] border-solid border-[red];
+}
+
+.path {
+  stroke-width: 2;
+  stroke: black;
+  fill: none;
+
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: dash 1.5s ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }
