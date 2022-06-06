@@ -33,14 +33,12 @@ const DrawBoard = (props: GridProps) => {
         const imageData = await canvasRef.current?.exportImage("png");
         if (imageData && roomId) {
             socket?.emit("game:predict", roomId, imageData, response => {
-                dispatch({type: GameActionType.DONE, payload: imageData});
-                setPredicting(false);
-
                 if (response.isCorrect) {
                     onCorrectDraw();
                 } else {
                     alertWrong();
                 }
+                setPredicting(false);
             });
         }
     };
