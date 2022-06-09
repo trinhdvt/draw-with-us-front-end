@@ -6,8 +6,28 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
 import DividerWithText from "../../../components/DividerWithText";
 import CssTextField from "../../../components/CssTextField";
+import queryString from "query-string";
 
 const LoginPanel = () => {
+    const fbLoginUrl = () => {
+        let clientId = "406293024760126";
+        let redirectUri = "https://draw-with.trinhdvt.tech/login/fb/callback";
+        if (import.meta.env.DEV) {
+            clientId = "438978628228056";
+            redirectUri = "http://localhost:3000/login/fb/callback";
+        }
+
+        const params = queryString.stringify({
+            client_id: clientId,
+            redirect_uri: redirectUri,
+            scope: ["email", "public_profile"].join(","),
+            response_type: "code",
+            display: "popup",
+        });
+
+        return `https://www.facebook.com/v14.0/dialog/oauth?${params}`;
+    };
+
     return (
         <Grid
             item
@@ -94,9 +114,11 @@ const LoginPanel = () => {
                 justifyContent="space-evenly"
                 className="pt-[23px]"
             >
-                <Button startIcon={<FacebookIcon />} variant="outlined">
-                    Facebook
-                </Button>
+                <a href={fbLoginUrl()}>
+                    <Button startIcon={<FacebookIcon />} variant="outlined">
+                        Facebook
+                    </Button>
+                </a>
                 <Button startIcon={<GoogleIcon />} variant="outlined">
                     Google
                 </Button>

@@ -43,6 +43,10 @@ const App = () => (
                                 />
                             </Route>
                             <Route path="/play/:roomId" element={<Game />} />
+                            <Route
+                                path="/login/fb/callback"
+                                element={<HomePage />}
+                            />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
                     </Suspense>
