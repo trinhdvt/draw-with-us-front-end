@@ -41,6 +41,10 @@ const App = () => (
                                     path="/collection"
                                     element={<CreateCollection />}
                                 />
+                                <Route
+                                    path="/login/fb/callback"
+                                    element={<HomePage />}
+                                />
                             </Route>
                             <Route path="/play/:roomId" element={<Game />} />
                             <Route
