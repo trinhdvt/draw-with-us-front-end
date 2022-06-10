@@ -2,6 +2,7 @@ import {BackendAPI} from "../HttpClient";
 import {IRoomConfig, IRoomRequest, IRoomResponse} from "../../@types/Room";
 import {useQuery} from "react-query";
 import {IPlayer} from "../../@types/User";
+import {AxiosError} from "axios";
 
 const createRoom = async (payload: IRoomRequest): Promise<IRoomResponse> => {
     const response = await BackendAPI.post("/api/rooms", payload);
@@ -34,10 +35,43 @@ const fetchPlayers = async (roomId?: string): Promise<IPlayer[]> => {
 
 const useRooms = () => useQuery(["rooms"], fetchAllRooms);
 
-const useRoom = (roomId?: string) =>
-    useQuery(["room-config", roomId], () => fetchRoom(roomId));
+const useValidPlayer = (roomId?: string) => {
+    return useQuery(
+        ["valid-player", roomId],
+        async () => {
+            await BackendAPI.head(`/api/room/${roomId}/player`);
+        },
+        {
+            enabled: !!roomId,
+            retry: false,
+        }
+    );
+};
 
-const usePlayers = (roomId?: string) =>
-    useQuery(["room-players", roomId], () => fetchPlayers(roomId));
+const useRoom = (roomId?: string) => {
+    return useQuery<IRoomConfig, AxiosError>(
+        ["room-config", roomId],
+        async () => {
+            const {data} = await BackendAPI.get(`/api/room/${roomId}`);
+            return data;
+        },
+        {
+            enabled: !!roomId,
+        }
+    );
+};
 
-export {useRoom, usePlayers, fetchRandom, useRooms, createRoom};
+const usePlayers = (roomId?: string) => {
+    return useQuery<IPlayer[], AxiosError>(
+        ["room-players", roomId],
+        async () => {
+            const {data} = await BackendAPI.get(`/api/room/${roomId}/players`);
+            return data;
+        },
+        {
+            enabled: !!roomId,
+        }
+    );
+};
+
+export {useRoom, usePlayers, fetchRandom, useRooms, createRoom, useValidPlayer};

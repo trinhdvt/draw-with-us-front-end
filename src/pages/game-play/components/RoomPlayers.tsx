@@ -1,13 +1,13 @@
 import React from "react";
 import FlipMove from "react-flip-move";
 import Player, {PlayerSkeleton} from "./Player";
-import {useParams} from "react-router-dom";
 import {usePlayers} from "../../../api/services/RoomServices";
 import {useUser} from "../../../context/UserContext";
+import {useGame} from "../context/GameContext";
 
 const RoomPlayers = () => {
-    const {roomId} = useParams();
-    const {data} = usePlayers(roomId);
+    const {state} = useGame();
+    const {data} = usePlayers(state.roomId);
     const {user} = useUser();
 
     const GenerateSkeleton = (amount: number) => {

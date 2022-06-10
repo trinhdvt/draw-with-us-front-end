@@ -27,9 +27,9 @@ const Game = () => {
             dispatch({type: GameActionType.NEXT, payload: topic});
         });
 
-        socket?.on("game:endTurn", () => {
+        socket?.on("game:endTurn", async () => {
             if (!state.isDone) {
-                timeUp();
+                await timeUp();
             }
         });
         return () => {

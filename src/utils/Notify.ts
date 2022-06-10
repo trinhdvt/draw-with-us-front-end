@@ -28,7 +28,7 @@ const noRoomNotify = async () => {
 
 const confirmJoinRoomNotify = async () => {
     return await notify({
-        title: "Yay!",
+        title: "Join now!",
         text: "We found the room! Do you want to join now?",
         icon: "question",
         showConfirmButton: true,

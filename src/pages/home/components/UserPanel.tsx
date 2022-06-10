@@ -9,9 +9,9 @@ import {useUser} from "../../../context/UserContext";
 import {useSocket} from "../../../context/SocketContext";
 import RandomAvatar from "../../../components/RandomAvatar";
 import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
-import {CircularProgress} from "@mui/material";
 import {fetchRandom} from "../../../api/services/RoomServices";
 import {useMutation} from "react-query";
+import {AnimatedLoading} from "../../../components/LoadingScreen";
 
 const UserPanel = () => {
     const navigate = useNavigate();
@@ -100,18 +100,7 @@ const UserPanel = () => {
                     Play Now
                 </Button>
             </Grid>
-            {isFinding && (
-                <div className="flex flex-col justify-center items-center top-0 left-0 w-full h-full z-50 absolute bg-white opacity-75 ">
-                    <CircularProgress
-                        size={100}
-                        thickness={1}
-                        className="mb-10"
-                    />
-                    <Typography variant="h3" className="animate-bounce">
-                        Finding ...
-                    </Typography>
-                </div>
-            )}
+            {isFinding && <AnimatedLoading size={100} text="Finding" />}
         </Grid>
     );
 };

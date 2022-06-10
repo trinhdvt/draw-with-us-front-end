@@ -1,16 +1,16 @@
 import React, {Suspense} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import LoadingProgress from "./components/LoadingProgress";
+import {AnimatedLoading} from "./components/LoadingScreen";
 import SocketProvider from "./context/SocketContext";
 import UserProvider from "./context/UserContext";
 import {QueryClient, QueryClientProvider} from "react-query";
+import GameWrapper from "./pages/game-play";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
 const HomePage = React.lazy(() => import("./pages/home"));
 const ListRoom = React.lazy(() => import("./pages/list-room"));
 const CreateRoom = React.lazy(() => import("./pages/create-room"));
 const CreateCollection = React.lazy(() => import("./pages/create-collection"));
-const Game = React.lazy(() => import("./pages/game-play"));
 const Gallery = React.lazy(() => import("./pages/gallery"));
 const NotFound = React.lazy(() => import("./components/NotFound"));
 
@@ -27,7 +27,7 @@ const App = () => (
         <UserProvider>
             <SocketProvider>
                 <BrowserRouter>
-                    <Suspense fallback={<LoadingProgress />}>
+                    <Suspense fallback={<AnimatedLoading />}>
                         <Routes>
                             <Route element={<AppLayout />}>
                                 <Route path="/" element={<HomePage />} />
@@ -46,10 +46,9 @@ const App = () => (
                                     element={<HomePage />}
                                 />
                             </Route>
-                            <Route path="/play/:roomId" element={<Game />} />
                             <Route
-                                path="/login/fb/callback"
-                                element={<HomePage />}
+                                path="/play/:roomId"
+                                element={<GameWrapper />}
                             />
                             <Route path="*" element={<NotFound />} />
                         </Routes>
