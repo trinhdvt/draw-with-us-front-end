@@ -28,6 +28,8 @@ const LoginPanel = () => {
         return `https://www.facebook.com/v14.0/dialog/oauth?${params}`;
     };
 
+    const loginFb = () => (window.location.href = fbLoginUrl());
+
     return (
         <Grid
             item
@@ -114,11 +116,14 @@ const LoginPanel = () => {
                 justifyContent="space-evenly"
                 className="pt-[23px]"
             >
-                <a href={fbLoginUrl()}>
-                    <Button startIcon={<FacebookIcon />} variant="outlined">
-                        Facebook
-                    </Button>
-                </a>
+                <Button
+                    startIcon={<FacebookIcon />}
+                    variant="outlined"
+                    onClick={loginFb}
+                >
+                    Facebook
+                </Button>
+
                 <Button startIcon={<GoogleIcon />} variant="outlined">
                     Google
                 </Button>

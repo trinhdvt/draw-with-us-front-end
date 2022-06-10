@@ -8,10 +8,10 @@ import CssTextField from "../../../components/CssTextField";
 import {useUser} from "../../../context/UserContext";
 import {useSocket} from "../../../context/SocketContext";
 import RandomAvatar from "../../../components/RandomAvatar";
-import notify from "../../../utils/Notify";
-import {SocketResponse} from "../../../@types/SocketEvent";
+import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 import {CircularProgress} from "@mui/material";
 import {fetchRandom} from "../../../api/services/RoomServices";
+import {useMutation} from "react-query";
 
 const UserPanel = () => {
     const navigate = useNavigate();
@@ -19,34 +19,24 @@ const UserPanel = () => {
     const socket = useSocket();
     const [isFinding, setFinding] = React.useState(false);
 
-    const playGame = async () => {
-        try {
-            setFinding(true);
-            const {roomEId} = await fetchRandom();
-            socket?.emit("room:join", roomEId, (response: SocketResponse) => {
-                if (response.roomId) {
-                    setFinding(false);
-                    const {roomId} = response;
-                    notify({
-                        title: "Yay!",
-                        text: "We found the room! Going in few seconds...",
-                        icon: "info",
-                    }).then(() => navigate(`/play/${roomId}`));
-                }
-                if (response.message) {
-                    alert(response.message);
-                }
-            });
-        } catch (error) {
-            setFinding(false);
-            await notify({
-                title: "Oops!",
-                text: "There is no room available! Let's create one!",
-                icon: "warning",
-                showConfirmButton: true,
-                timer: undefined,
-            });
-        }
+    const useRandomRoom = useMutation(fetchRandom, {
+        onMutate: () => setFinding(true),
+        onSettled: () => setFinding(false),
+    });
+
+    const playGame = () => {
+        useRandomRoom.mutate(undefined, {
+            onSuccess: async ({roomEId}) => {
+                const {isConfirmed} = await confirmJoinRoomNotify();
+                if (!isConfirmed) return;
+
+                socket?.emit("room:join", roomEId, ({message, roomId}) => {
+                    if (roomId) return navigate(`/play/${roomId}`);
+                    if (message) return alert(message);
+                });
+            },
+            onError: async () => await noRoomNotify(),
+        });
     };
 
     return (
@@ -98,11 +88,9 @@ const UserPanel = () => {
                 <Button
                     startIcon={<MeetingRoomIcon />}
                     variant="contained"
-                    onClick={() => {
-                        navigate("/room");
-                    }}
+                    onClick={() => navigate("/room")}
                 >
-                    Rooms
+                    Find Room
                 </Button>
                 <Button
                     startIcon={<SportsEsportsIcon />}
