@@ -3,49 +3,29 @@ import ITopic from "../../@types/Topic";
 import {useInfiniteQuery, useQuery} from "react-query";
 import ISample from "../../@types/Sample";
 
-const allTopics = async (): Promise<ITopic[]> => {
-    const response = await BackendAPI.get<ITopic[]>("/api/topics");
-    return response.data;
+const fetchAllTopics = async (): Promise<ITopic[]> => {
+    const {data} = await BackendAPI.get("/api/topics");
+    return data;
 };
 
 const useTopics = () => {
-    return useQuery("topics", allTopics, {
+    return useQuery("topics", fetchAllTopics, {
         staleTime: Infinity,
     });
 };
 
-interface ISampleRequest {
-    topicId?: string;
-    pageParam?: number;
-}
-
-interface ISampleResponse {
-    data: ISample[];
-    nextPage: number;
-}
-
-const fetchSample = async ({
-    topicId,
-    pageParam = 0,
-}: ISampleRequest): Promise<ISampleResponse> => {
-    if (!topicId) {
-        throw new Error("Topic id is required");
-    }
-
-    const {data} = await BackendAPI.get(`/api/topic/${topicId}/samples`, {
-        params: {
-            page: pageParam,
-            size: 20,
-        },
-    });
-    return {data, nextPage: pageParam + 1};
-};
-
-const useTopic = (topicId?: string) => {
+const useSamples = (topicId?: string) => {
     return useInfiniteQuery(
         ["samples", topicId],
-        ({pageParam = 0}: ISampleRequest) => fetchSample({topicId, pageParam}),
+        async ({pageParam = 0}) => {
+            const {data} = await BackendAPI.get<ISample[]>(
+                `/api/topic/${topicId}/samples`,
+                {params: {page: pageParam, size: 20}}
+            );
+            return {data, nextPage: pageParam + 1};
+        },
         {
+            enabled: !!topicId,
             getNextPageParam: lastPage => {
                 return lastPage.data.length === 0
                     ? undefined
@@ -55,4 +35,4 @@ const useTopic = (topicId?: string) => {
     );
 };
 
-export {allTopics, useTopics, fetchSample, useTopic};
+export {fetchAllTopics, useTopics, useSamples};

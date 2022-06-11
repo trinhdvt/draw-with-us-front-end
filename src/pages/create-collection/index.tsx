@@ -14,7 +14,7 @@ import ITopic from "../../@types/Topic";
 import Tag from "../../components/Tag";
 import styles from "../../assets/styles/Collection.module.scss";
 import clsx from "clsx";
-import {allTopics} from "../../api/services/TopicServices";
+import {fetchAllTopics} from "../../api/services/TopicServices";
 import CssTextField from "../../components/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
@@ -31,7 +31,7 @@ const CreateCollection = () => {
 
     React.useEffect(() => {
         if (loading) {
-            allTopics().then(data => setTopics(data));
+            fetchAllTopics().then(data => setTopics(data));
         }
     }, [loading]);
 

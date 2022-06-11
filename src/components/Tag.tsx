@@ -8,15 +8,11 @@ interface TagProps {
     onDelete: () => void;
 }
 
-const Tag = (props: TagProps) => {
-    const {label, onDelete} = props;
-    return (
-        <div className={styles.tag}>
-            <Typography component="span">{label}</Typography>
-            <CloseIcon onClick={onDelete} />
-        </div>
-    );
-};
+const Tag = ({label, onDelete}: TagProps) => (
+    <div className={styles.tag}>
+        <Typography component="span">{label}</Typography>
+        <CloseIcon onClick={onDelete} />
+    </div>
+);
 
-export type {TagProps};
 export default Tag;

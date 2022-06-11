@@ -1,4 +1,4 @@
-import axios, {AxiosRequestConfig} from "axios";
+import axios, {AxiosError, AxiosRequestConfig} from "axios";
 import {IUser} from "../@types/User";
 
 const BackendUrl = "https://backend.draw-with.trinhdvt.tech/";
@@ -20,4 +20,12 @@ const BackendAPI = axios.create({
 });
 BackendAPI.interceptors.request.use(onRequest);
 
+interface ErrorResponse {
+    httpCode: number;
+    message: string;
+}
+
+type HttpError = AxiosError<ErrorResponse>;
+
 export {BackendAPI, BackendUrl};
+export type {HttpError, ErrorResponse};

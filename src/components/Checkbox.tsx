@@ -43,19 +43,17 @@ const BpCheckedIcon = styled(BpIcon)({
     },
 });
 
-const MyCheckbox = (props: CheckboxProps) => {
-    return (
-        <Checkbox
-            sx={{
-                "&:hover": {backgroundColor: "transparent"},
-            }}
-            disableRipple
-            color="default"
-            checkedIcon={<BpCheckedIcon />}
-            icon={<BpIcon />}
-            {...props}
-        />
-    );
-};
+const MyCheckbox = (props: CheckboxProps) => (
+    <Checkbox
+        sx={{
+            "&:hover": {backgroundColor: "transparent"},
+        }}
+        disableRipple
+        color="default"
+        checkedIcon={<BpCheckedIcon />}
+        icon={<BpIcon />}
+        {...props}
+    />
+);
 
 export default MyCheckbox;

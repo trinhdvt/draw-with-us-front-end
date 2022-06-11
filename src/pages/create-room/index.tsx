@@ -3,13 +3,13 @@ import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import {useNavigate} from "react-router-dom";
 import styles from "../../assets/styles/Room.module.scss";
-import {createRoom} from "../../api/services/RoomServices";
+import {useCreateRoom} from "../../api/services/RoomServices";
 import RoomLayout from "../../layout/RoomLayout";
 import {IoHourglassOutline} from "react-icons/io5";
 import {FaRegUser} from "react-icons/fa";
 import ListCollection from "./components/ListCollection";
 import {IRoomRequest} from "../../@types/Room";
-import {useMutation} from "react-query";
+import {notifyError} from "../../utils/Notify";
 
 const CreateRoom = () => {
     const maxUserList = [10, 15, 30, 50];
@@ -21,17 +21,19 @@ const CreateRoom = () => {
         timeOut: timeOutList[0],
         collectionId: "",
     });
+    const [isDisable, setDisableCreate] = React.useState(true);
+    const {mutate} = useCreateRoom();
 
-    const useCreateRoom = useMutation("create-room", createRoom);
-
-    const onCreateRoom = () => {
-        useCreateRoom.mutate(payload, {
+    const createRoom = () => {
+        mutate(payload, {
             onSuccess: data => navigate(`/play/${data.id}`, {replace: true}),
+            onError: async err => await notifyError(err.response?.data.message),
         });
     };
 
     const onSelect = (collectionId: string) => {
         setPayload({...payload, collectionId});
+        setDisableCreate(false);
     };
 
     return (
@@ -106,8 +108,8 @@ const CreateRoom = () => {
                         <Button
                             startIcon={<ConstructionIcon />}
                             variant="contained"
-                            disabled={payload.collectionId === ""}
-                            onClick={onCreateRoom}
+                            disabled={isDisable}
+                            onClick={createRoom}
                         >
                             Create
                         </Button>

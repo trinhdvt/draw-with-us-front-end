@@ -17,7 +17,11 @@ const AppFooter = () => {
                         alignItems="center"
                     >
                         {footerText.map((item, index) => (
-                            <Link to={footerLink[index]} key={index}>
+                            <Link
+                                to={footerLink[index]}
+                                key={index}
+                                className="no-underline"
+                            >
                                 <Typography
                                     key={index}
                                     variant="body2"

@@ -1,14 +1,14 @@
 import React from "react";
 import {Grid, GridProps} from "@mui/material";
 import DrawSample from "./DrawSample";
-import {useTopic} from "../../../api/services/TopicServices";
+import {useSamples} from "../../../api/services/TopicServices";
 
 type Props = {
     topicId?: string;
 };
 
 const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
-    const {data, fetchNextPage} = useTopic(topicId);
+    const {data, fetchNextPage} = useSamples(topicId);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
     React.useEffect(() => {

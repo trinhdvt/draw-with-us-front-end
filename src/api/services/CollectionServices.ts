@@ -3,7 +3,7 @@ import {ICollection} from "../../@types/Collection";
 import {useQuery} from "react-query";
 
 const fetchCollections = async (): Promise<ICollection[]> => {
-    const {data} = await BackendAPI.get<ICollection[]>("/api/collections");
+    const {data} = await BackendAPI.get("/api/collections");
     return data;
 };
 

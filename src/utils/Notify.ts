@@ -37,5 +37,14 @@ const confirmJoinRoomNotify = async () => {
     });
 };
 
+const notifyError = (message?: string) => {
+    return notify({
+        icon: "error",
+        title: "Error!",
+        text: message ?? "Something went wrong!",
+        timer: 3000,
+    });
+};
+
 export default notify;
-export {noRoomNotify, confirmJoinRoomNotify};
+export {noRoomNotify, confirmJoinRoomNotify, notifyError};
