@@ -2,7 +2,7 @@ import ITopic from "../../../@types/Topic";
 
 enum GameActionType {
     DONE,
-    NEXT,
+    NEXT_TURN,
     SET_ROOM_ID,
 }
 
@@ -22,7 +22,7 @@ const GameReducer = (state: IGameState, action: IGameAction) => {
     switch (type) {
         case GameActionType.DONE:
             return {...state, isDone: payload as boolean};
-        case GameActionType.NEXT:
+        case GameActionType.NEXT_TURN:
             return {...state, isDone: false, target: payload as ITopic};
         case GameActionType.SET_ROOM_ID:
             return {...state, roomId: payload as string};

@@ -26,7 +26,7 @@ const CreateRoom = () => {
 
     const onCreateRoom = () => {
         useCreateRoom.mutate(payload, {
-            onSuccess: data => navigate(`/play/${data.id}`),
+            onSuccess: data => navigate(`/play/${data.id}`, {replace: true}),
         });
     };
 

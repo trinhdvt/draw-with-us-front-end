@@ -5,12 +5,6 @@ import {
     IGameState,
     GameActionType,
 } from "./GameReducer";
-import {useSocket} from "../../../context/SocketContext";
-import {Navigate, useParams} from "react-router-dom";
-import {useQueryClient} from "react-query";
-import {alertWelcome} from "../utils/GameNotify";
-import {useValidPlayer} from "../../../api/services/RoomServices";
-import {AnimatedLoading} from "../../../components/LoadingScreen";
 
 const initState: IGameState = {
     isDone: false,
@@ -30,34 +24,6 @@ function GameProvider({children}: {children: React.ReactNode}) {
     const contextValue = React.useMemo(() => {
         return {state, dispatch};
     }, [state]);
-
-    const {roomId} = useParams();
-    const socket = useSocket();
-    const queryClient = useQueryClient();
-    const {isError, isFetching, isSuccess} = useValidPlayer(roomId);
-
-    React.useEffect(() => {
-        socket?.on("room:update", async () => {
-            await queryClient.invalidateQueries(["room-config", roomId]);
-            await queryClient.invalidateQueries(["room-players", roomId]);
-        });
-
-        return () => {
-            socket?.off("room:update");
-            console.log(`Exiting from room ${roomId}`);
-        };
-    }, [queryClient, roomId, socket]);
-
-    React.useEffect(() => {
-        if (isSuccess) {
-            dispatch({type: GameActionType.SET_ROOM_ID, payload: roomId});
-            alertWelcome();
-        }
-    }, [isSuccess, roomId]);
-
-    if (isError) return <Navigate to="/" replace />;
-
-    if (isFetching) return <AnimatedLoading />;
 
     return (
         <GameContext.Provider value={contextValue}>

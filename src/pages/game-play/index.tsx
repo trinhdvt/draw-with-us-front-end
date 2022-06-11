@@ -11,11 +11,11 @@ import {
     WaitingOthersPlayers,
 } from "./components/WaitingScreen";
 import {useRoom} from "../../api/services/RoomServices";
-import AppLayout from "../../layout/AppLayout";
 import {useSocket} from "../../context/SocketContext";
 import ITopic from "../../@types/Topic";
 import GameProvider, {GameActionType, useGame} from "./context/GameContext";
 import {timeUp} from "./utils/GameNotify";
+import Wrapper from "./Wrapper";
 
 const Game = () => {
     const socket = useSocket();
@@ -24,7 +24,7 @@ const Game = () => {
 
     React.useEffect(() => {
         socket?.on("game:nextTurn", (topic: ITopic) => {
-            dispatch({type: GameActionType.NEXT, payload: topic});
+            dispatch({type: GameActionType.NEXT_TURN, payload: topic});
         });
 
         socket?.on("game:endTurn", async () => {
@@ -38,7 +38,7 @@ const Game = () => {
         };
     }, [state.isDone, socket, dispatch]);
 
-    const isPlaying = data?.status == RoomStatus.PLAYING;
+    const isPlaying = data?.status === RoomStatus.PLAYING;
     const WaitingScreen = () => {
         if (isPlaying) return;
         const isHost = data?.isHost;
@@ -81,9 +81,9 @@ const Game = () => {
 
 const GameWrapper = () => (
     <GameProvider>
-        <AppLayout>
+        <Wrapper>
             <Game />
-        </AppLayout>
+        </Wrapper>
     </GameProvider>
 );
 

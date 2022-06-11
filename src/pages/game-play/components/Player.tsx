@@ -5,6 +5,7 @@ import RandomAvatar from "../../../components/RandomAvatar";
 import StyledAvatar from "../../../components/StyledAvatar";
 import styles from "../../../assets/styles/Player.module.scss";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
+import {useGame} from "../context/GameContext";
 
 class Player extends React.Component<IPlayer & GridProps> {
     render() {
@@ -53,7 +54,10 @@ class Player extends React.Component<IPlayer & GridProps> {
                 <Grid item container md={9} direction="column">
                     <div className="flex items-center">
                         {isMe && <HowToRegIcon color="primary" />}
-                        <Typography className="font-bold" noWrap={true}>
+                        <Typography
+                            className="font-bold max-w-[140px]"
+                            noWrap={true}
+                        >
                             {name}
                         </Typography>
                     </div>
@@ -67,24 +71,24 @@ class Player extends React.Component<IPlayer & GridProps> {
     }
 }
 
-const PlayerSkeleton = () => (
-    <Grid container alignItems="center" className={styles.playerCard}>
-        <Grid
-            item
-            container
-            md={3}
-            direction="column"
-            className="pr-[10px]"
-            alignItems="center"
-        >
-            <StyledAvatar />
-        </Grid>
+const PlayerSkeleton = () => {
+    const {state} = useGame();
+    const isPlaying = !state.target;
 
-        <Grid item md={9}>
-            <Typography className="font-thin">Waiting...</Typography>
+    return (
+        <Grid container alignItems="center" className={styles.playerCard}>
+            <Grid item md={3} className="pr-[10px]">
+                <StyledAvatar />
+            </Grid>
+
+            <Grid item md={9}>
+                {isPlaying && (
+                    <Typography className="font-thin">Waiting...</Typography>
+                )}
+            </Grid>
         </Grid>
-    </Grid>
-);
+    );
+};
 
 export default Player;
 export {PlayerSkeleton};
