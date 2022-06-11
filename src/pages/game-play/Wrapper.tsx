@@ -23,7 +23,9 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
 
         return () => {
             socket?.off("room:update");
-            socket?.emit("room:exit", roomId);
+            if (roomId) {
+                socket?.emit("room:exit", roomId);
+            }
         };
     }, [queryClient, roomId, socket]);
 
