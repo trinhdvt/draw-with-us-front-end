@@ -6,9 +6,11 @@ import DrawBoard from "./components/DrawBoard";
 import CountdownTimer from "./components/CountdownTimer";
 import {RoomStatus} from "../../@types/Room";
 import {
-    WaitingForGameStart,
-    WaitingHost,
-    WaitingOthersPlayers,
+    WaitEndTurn,
+    ReadyToStartGame,
+    WaitNextTurn,
+    WaitHost,
+    WaitOtherPlayer,
 } from "./components/WaitingScreen";
 import {useRoom} from "../../api/services/RoomServices";
 import {useSocket} from "../../context/SocketContext";
@@ -28,6 +30,7 @@ const Game = () => {
         });
 
         socket?.on("game:endTurn", async () => {
+            dispatch({type: GameActionType.END_TURN});
             if (!state.isDone) {
                 await timeUp();
             }
@@ -39,41 +42,57 @@ const Game = () => {
     }, [state.isDone, socket, dispatch]);
 
     const isPlaying = data?.status === RoomStatus.PLAYING;
-    const WaitingScreen = () => {
+    const GameWaitingScreen = () => {
         if (isPlaying) return;
         const isHost = data?.isHost;
         const isReadyForGame = (data?.currentUsers ?? 0) > 1;
 
-        if (!isHost) return <WaitingHost />;
+        if (!isHost) return <WaitHost />;
+        if (isReadyForGame) return <ReadyToStartGame />;
+        return <WaitOtherPlayer />;
+    };
 
-        if (isReadyForGame) return <WaitingForGameStart />;
-
-        return <WaitingOthersPlayers />;
+    const EndTurnWaitingScreen = () => {
+        if (!isPlaying) return;
+        if (state.isEndTurn) return <WaitNextTurn />;
+        if (state.isDone) return <WaitEndTurn />;
+        return;
     };
 
     return (
         <Grid container>
-            <Grid item container justifyContent="center" className="mb-[10px]">
-                {isPlaying && (
+            <Grid item md={3.5} />
+            <Grid item md={6} className="mb-[10px] mx-auto">
+                {isPlaying && !state.isEndTurn && !state.isDone && (
                     <Typography variant="h4">
                         Let&apos;s draw: <b>{state.target?.nameVi}</b>
                     </Typography>
                 )}
             </Grid>
-            <Grid item md={3.5} className={styles.playerList}>
-                <RoomPlayers />
-            </Grid>
-            <Grid item container md={8} direction="column" className="ml-auto">
-                {WaitingScreen() ?? (
-                    <>
-                        <DrawBoard className="max-h-[320px]" />
-                        {data && (
-                            <Grid item width="340px">
-                                <CountdownTimer maxTime={data.timeOut} />
-                            </Grid>
-                        )}
-                    </>
-                )}
+            <Grid item container>
+                <Grid item md={3.5} className={styles.playerList}>
+                    <RoomPlayers />
+                </Grid>
+                <Grid
+                    item
+                    container
+                    md={6}
+                    direction="column"
+                    className="mx-auto"
+                >
+                    {GameWaitingScreen() ?? (
+                        <React.Fragment>
+                            {EndTurnWaitingScreen() ?? (
+                                <DrawBoard className="max-h-[320px]" />
+                            )}
+                            {data && (
+                                <Grid item md className="mt-5">
+                                    <CountdownTimer maxTime={data.timeOut} />
+                                </Grid>
+                            )}
+                        </React.Fragment>
+                    )}
+                </Grid>
             </Grid>
         </Grid>
     );

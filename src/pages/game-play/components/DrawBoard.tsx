@@ -19,14 +19,13 @@ import {GameActionType, useGame} from "../context/GameContext";
 import {useSocket} from "../../../context/SocketContext";
 import {alertSuccess, alertWrong} from "../utils/GameNotify";
 
-const DrawBoard = (props: GridProps) => {
-    const {...others} = props;
-    const canvasRef = React.useRef<ReactSketchCanvasRef>(null);
-    const [eraseMode, setEraseMode] = React.useState(false);
-    const [isPredicting, setPredicting] = React.useState(false);
+const DrawBoard = ({...others}: GridProps) => {
     const socket = useSocket();
     const {state, dispatch} = useGame();
     const {roomId} = state;
+    const canvasRef = React.useRef<ReactSketchCanvasRef>(null);
+    const [eraseMode, setEraseMode] = React.useState(false);
+    const [isPredicting, setPredicting] = React.useState(false);
 
     const onPredict = async () => {
         setPredicting(true);
@@ -44,8 +43,10 @@ const DrawBoard = (props: GridProps) => {
     };
 
     const onCorrectDraw = () => {
-        dispatch({type: GameActionType.DONE, payload: true});
-        alertSuccess().then(clearCanvas);
+        alertSuccess().then(() => {
+            dispatch({type: GameActionType.DONE, payload: true});
+            clearCanvas();
+        });
     };
 
     const clearCanvas = () => {
@@ -55,7 +56,7 @@ const DrawBoard = (props: GridProps) => {
 
     return (
         <Grid container item md {...others}>
-            <Grid item md={7.2}>
+            <Grid item md={8.5}>
                 <ReactSketchCanvas
                     ref={canvasRef}
                     height="300px"
@@ -70,53 +71,52 @@ const DrawBoard = (props: GridProps) => {
                     )}
                 />
             </Grid>
-            <Grid item md={2}>
-                <Stack
-                    direction="column"
-                    spacing={3}
-                    divider={<Divider orientation="horizontal" flexItem />}
-                    justifyContent="flex-start"
-                    alignItems="center"
+            <Stack
+                direction="column"
+                spacing={3}
+                divider={<Divider orientation="horizontal" flexItem />}
+                justifyContent="flex-start"
+                alignItems="center"
+                className="ml-auto my-auto"
+            >
+                <LoadingButton
+                    isLoading={isPredicting}
+                    variant="contained"
+                    endIcon={<ArrowForwardIcon />}
+                    onClick={onPredict}
+                    disabled={state.isDone}
                 >
-                    <LoadingButton
-                        isLoading={isPredicting}
-                        variant="contained"
-                        endIcon={<ArrowForwardIcon />}
-                        onClick={onPredict}
-                        disabled={state.isDone}
-                    >
-                        Check
-                    </LoadingButton>
-                    <Button
-                        onClick={clearCanvas}
-                        variant="outlined"
-                        color="error"
-                        endIcon={<HighlightOffIcon color="error" />}
-                    >
-                        Clear
-                    </Button>
-                    <Button
-                        variant="outlined"
-                        onClick={() => canvasRef.current?.undo()}
-                        endIcon={<UndoIcon color="primary" />}
-                    >
-                        Undo
-                    </Button>
-                    <FormControlLabel
-                        control={
-                            <Switch
-                                checked={eraseMode}
-                                onClick={() => {
-                                    canvasRef.current?.eraseMode(!eraseMode);
-                                    setEraseMode(!eraseMode);
-                                }}
-                            />
-                        }
-                        label={eraseMode ? "Eraser" : "Pencil"}
-                        labelPlacement="end"
-                    />
-                </Stack>
-            </Grid>
+                    Check
+                </LoadingButton>
+                <Button
+                    onClick={clearCanvas}
+                    variant="outlined"
+                    color="error"
+                    endIcon={<HighlightOffIcon color="error" />}
+                >
+                    Clear
+                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={() => canvasRef.current?.undo()}
+                    endIcon={<UndoIcon color="primary" />}
+                >
+                    Undo
+                </Button>
+                <FormControlLabel
+                    control={
+                        <Switch
+                            checked={eraseMode}
+                            onClick={() => {
+                                canvasRef.current?.eraseMode(!eraseMode);
+                                setEraseMode(!eraseMode);
+                            }}
+                        />
+                    }
+                    label={eraseMode ? "Eraser" : "Pencil"}
+                    labelPlacement="end"
+                />
+            </Stack>
         </Grid>
     );
 };

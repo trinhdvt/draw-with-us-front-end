@@ -10,18 +10,21 @@ interface WaitingScreenProps {
     children?: React.ReactNode;
 }
 
-const WaitingScreen = (props: WaitingScreenProps & GridProps) => {
-    const {title, children, ...others} = props;
+const WaitingScreen = ({
+    children,
+    title,
+    ...others
+}: WaitingScreenProps & GridProps) => {
     return (
         <Grid
-            {...others}
             item
             container
             md={8}
             alignItems="center"
             justifyContent="center"
             direction="column"
-            className="bg-white rounded-xl min-h-[350px]"
+            className="bg-white rounded-xl h-[350px]"
+            {...others}
         >
             <Typography variant="h3">{title}</Typography>
             <HourglassEmptyIcon
@@ -33,15 +36,21 @@ const WaitingScreen = (props: WaitingScreenProps & GridProps) => {
     );
 };
 
-const WaitingOthersPlayers = () => (
+const WaitOtherPlayer = () => (
     <WaitingScreen title="Waiting for other players" />
 );
 
-const WaitingHost = () => (
+const WaitHost = () => (
     <WaitingScreen title="Waiting for host to start the game" />
 );
 
-const WaitingForGameStart = () => {
+const WaitEndTurn = () => (
+    <WaitingScreen title="Waiting for other players to finish" />
+);
+
+const WaitNextTurn = () => <WaitingScreen title="Let's take a rest" />;
+
+const ReadyToStartGame = () => {
     const socket = useSocket();
 
     const onGameStart = () => {
@@ -63,4 +72,4 @@ const WaitingForGameStart = () => {
     );
 };
 
-export {WaitingOthersPlayers, WaitingForGameStart, WaitingHost};
+export {WaitOtherPlayer, ReadyToStartGame, WaitHost, WaitEndTurn, WaitNextTurn};

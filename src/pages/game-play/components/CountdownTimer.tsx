@@ -17,27 +17,26 @@ const Timer = (props: TimerProps) => {
     const [progress, setProgress] = React.useState(defaultProgress);
     const [timeOut, setTimeOut] = React.useState(-1);
     const {state} = useGame();
+    const BREAK_TIME = 3;
 
     React.useEffect(() => {
         if (timeOut == -1) return;
 
         const timer = setInterval(() => {
             const now = new Date().getTime();
-            let remaining = Math.ceil((timeOut - now) / 1e3);
-            if (remaining <= 0) {
-                setProgress(defaultProgress);
+            let remainingTime = Math.ceil((timeOut - now) / 1e3);
+            if (remainingTime <= 0) {
                 clearInterval(timer);
             }
 
-            remaining = Math.max(0, remaining);
-            setProgress({
-                remainPercent: (remaining / maxTime) * 100,
-                remainingTime: remaining,
-            });
+            remainingTime = Math.max(0, remainingTime);
+            const factor = state.isEndTurn ? BREAK_TIME : maxTime;
+            const remainPercent = (remainingTime / factor) * 100;
+            setProgress({remainPercent, remainingTime});
         }, 1e3);
 
         return () => clearInterval(timer);
-    }, [defaultProgress, maxTime, timeOut]);
+    }, [maxTime, state.isEndTurn, timeOut]);
 
     React.useEffect(() => {
         if (state.target) {
@@ -46,19 +45,26 @@ const Timer = (props: TimerProps) => {
         }
     }, [defaultProgress, maxTime, state.target]);
 
+    React.useEffect(() => {
+        if (state.isEndTurn) {
+            setProgress({remainPercent: 100, remainingTime: BREAK_TIME});
+            setTimeOut(new Date().getTime() + BREAK_TIME * 1e3);
+        }
+    }, [state.isEndTurn]);
+
     return (
         <div className="flex items-center">
-            <div className="w-full mr-1">
+            <div className="flex-1 mr-1">
                 <LinearProgress
                     variant="determinate"
                     value={progress.remainPercent}
                     className="h-[10px] rounded-[5px]"
-                    color="info"
+                    color="warning"
                     {...others}
                 />
             </div>
-            <div className="min-w-[35px]">
-                <Typography variant="body2" className="font-medium">
+            <div className="max-w-fit">
+                <Typography variant="body2" className="font-bold text-lg">
                     {`${progress.remainingTime} S`}
                 </Typography>
             </div>
