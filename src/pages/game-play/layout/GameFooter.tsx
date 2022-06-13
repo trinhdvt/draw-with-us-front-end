@@ -8,7 +8,6 @@ import {
     Grid,
     IconButton,
     InputAdornment,
-    Tooltip,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ShareIcon from "@mui/icons-material/Share";
@@ -16,6 +15,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import CssTextField from "../../../components/CssTextField";
 import {useGame} from "../context/GameContext";
 import {useNavigate} from "react-router-dom";
+import TopTooltip from "../../../components/TopTooltip";
 
 const SmallOutlineBtn = ({
     children,
@@ -46,16 +46,13 @@ const GameFooter = () => {
         setTimeout(handleClose, 1500);
     };
 
-    const CopyBtn = () => {
-        const shareDialogTitle = isCopied ? "Copied!" : "Click to copy";
-        return (
-            <Tooltip title={shareDialogTitle} placement="top" arrow>
-                <IconButton onClick={onCopy}>
-                    <ContentCopyIcon color="primary" />
-                </IconButton>
-            </Tooltip>
-        );
-    };
+    const CopyBtn = () => (
+        <TopTooltip title={isCopied ? "Copied!" : "Click to copy"}>
+            <IconButton onClick={onCopy}>
+                <ContentCopyIcon color="primary" />
+            </IconButton>
+        </TopTooltip>
+    );
 
     return (
         <Grid component="footer" container className="mt-7">

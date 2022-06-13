@@ -18,6 +18,7 @@ import {fetchAllTopics} from "../../api/services/TopicServices";
 import CssTextField from "../../components/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
+import TopTooltip from "../../components/TopTooltip";
 
 const CreateCollection = () => {
     const [topics, setTopics] = React.useState<ITopic[]>([]);
@@ -27,7 +28,7 @@ const CreateCollection = () => {
     const [isPublic, setPublic] = React.useState(true);
     const [currentTopic, setCurrentTopic] = React.useState<ITopic | null>(null);
     const [addTopics, setAddTopic] = React.useState<ITopic[]>([]);
-    const isEmpty = addTopics.length == 0;
+    const isTopicArrEmpty = addTopics.length == 0;
 
     React.useEffect(() => {
         if (loading) {
@@ -57,6 +58,13 @@ const CreateCollection = () => {
             [...prev, topic].sort((a, b) => a.nameVi.localeCompare(b.nameVi))
         );
     };
+
+    const isDisable = isTopicArrEmpty || collectionName.trim() === "";
+    const tooltipText = !isDisable
+        ? ""
+        : isTopicArrEmpty
+        ? "Please add at least one topic"
+        : "Please enter collection name";
 
     return (
         <RoomLayout title="Create Collection">
@@ -174,13 +182,17 @@ const CreateCollection = () => {
                         justifyContent="center"
                         className="mt-auto"
                     >
-                        <Button
-                            startIcon={<ConstructionIcon />}
-                            variant="contained"
-                            disabled={isEmpty || collectionName.trim() == ""}
-                        >
-                            Create
-                        </Button>
+                        <TopTooltip title={tooltipText}>
+                            <span>
+                                <Button
+                                    startIcon={<ConstructionIcon />}
+                                    variant="contained"
+                                    disabled={isDisable}
+                                >
+                                    Create
+                                </Button>
+                            </span>
+                        </TopTooltip>
                     </Grid>
                 </Grid>
                 <Grid
@@ -204,12 +216,12 @@ const CreateCollection = () => {
                         container
                         className={clsx(
                             styles.topicPanel,
-                            isEmpty &&
+                            isTopicArrEmpty &&
                                 "items-center justify-center content-center",
-                            !isEmpty && "content-start"
+                            !isTopicArrEmpty && "content-start"
                         )}
                     >
-                        {isEmpty ? (
+                        {isTopicArrEmpty ? (
                             <Typography>
                                 You haven&apos;t select any topics yet
                             </Typography>

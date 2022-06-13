@@ -10,6 +10,7 @@ import {FaRegUser} from "react-icons/fa";
 import ListCollection from "./components/ListCollection";
 import {IRoomRequest} from "../../@types/Room";
 import {notifyError} from "../../utils/Notify";
+import TopTooltip from "../../components/TopTooltip";
 
 const CreateRoom = () => {
     const maxUserList = [10, 15, 30, 50];
@@ -35,6 +36,7 @@ const CreateRoom = () => {
         setPayload({...payload, collectionId});
         setDisableCreate(false);
     };
+    const tooltipText = isDisable ? "Please select a collection" : "";
 
     return (
         <RoomLayout title="Create Room">
@@ -105,14 +107,18 @@ const CreateRoom = () => {
                         justifyContent="center"
                         className="mt-auto"
                     >
-                        <Button
-                            startIcon={<ConstructionIcon />}
-                            variant="contained"
-                            disabled={isDisable}
-                            onClick={createRoom}
-                        >
-                            Create
-                        </Button>
+                        <TopTooltip title={tooltipText}>
+                            <span>
+                                <Button
+                                    startIcon={<ConstructionIcon />}
+                                    variant="contained"
+                                    disabled={isDisable}
+                                    onClick={createRoom}
+                                >
+                                    Create
+                                </Button>
+                            </span>
+                        </TopTooltip>
                     </Grid>
                 </Grid>
                 <Grid

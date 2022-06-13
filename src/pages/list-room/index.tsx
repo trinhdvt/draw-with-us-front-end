@@ -10,6 +10,7 @@ import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../context/SocketContext";
 import {SocketResponse} from "../../@types/SocketEvent";
+import TopTooltip from "../../components/TopTooltip";
 
 const RoomHome = () => {
     const navigate = useNavigate();
@@ -34,6 +35,8 @@ const RoomHome = () => {
             }
         );
     };
+    const isDisable = selectedRoom === "";
+    const tooltipText = isDisable ? "Please select a room" : "Join now";
 
     return (
         <RoomLayout
@@ -64,15 +67,19 @@ const RoomHome = () => {
                     >
                         New Room
                     </Button>
-                    <Button
-                        startIcon={<SportsEsportsIcon />}
-                        variant="contained"
-                        disabled={selectedRoom == ""}
-                        className="w-[135px]"
-                        onClick={onJoinRoom}
-                    >
-                        Play
-                    </Button>
+                    <TopTooltip title={tooltipText}>
+                        <span>
+                            <Button
+                                startIcon={<SportsEsportsIcon />}
+                                variant="contained"
+                                disabled={isDisable}
+                                className="w-[135px]"
+                                onClick={onJoinRoom}
+                            >
+                                Play
+                            </Button>
+                        </span>
+                    </TopTooltip>
                 </Grid>
             </Grid>
         </RoomLayout>
