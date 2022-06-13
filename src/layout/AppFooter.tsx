@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 const AppFooter = () => {
     const footerText = ["Gallery", "About Us", "Contact Us"];
-    const footerLink = ["gallery", "#", "#"];
+    const footerLink = ["/gallery", "#", "#"];
 
     return (
         <footer className="mt-[5px] ml-[5px]">

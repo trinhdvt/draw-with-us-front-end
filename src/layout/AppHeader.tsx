@@ -15,12 +15,12 @@ const AppHeader = () => {
     const logoUrl = "https://cdn.trinhdvt.tech/logo.svg";
 
     return (
-        <Grid container justifyContent="center" className="mb-[10px]">
+        <Grid container justifyContent="center" className="mb-[15px]">
             <Logo
                 src={logoUrl}
                 alt="logo"
                 loading="lazy"
-                onClick={() => navigate("/")}
+                onClick={() => navigate("/", {replace: true})}
             />
         </Grid>
     );

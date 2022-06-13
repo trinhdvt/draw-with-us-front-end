@@ -6,7 +6,7 @@ import {useQueryClient} from "react-query";
 import {useValidPlayer} from "../../api/services/RoomServices";
 import {alertWelcome} from "./utils/GameNotify";
 import {AnimatedLoading} from "../../components/LoadingScreen";
-import AppLayout from "../../layout/AppLayout";
+import GameLayout from "./layout/GameLayout";
 
 const Wrapper = ({children}: {children: React.ReactNode}) => {
     const {roomId} = useParams();
@@ -47,6 +47,7 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
         if (isSuccess) {
             dispatch({type: GameActionType.SET_ROOM_ID, payload: roomId});
             alertWelcome().then(() => ({}));
+            document.title = `Playing - Draw With Us`;
         }
     }, [dispatch, isSuccess, roomId]);
 
@@ -54,7 +55,7 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
 
     if (isFetching) return <AnimatedLoading />;
 
-    return <AppLayout>{children}</AppLayout>;
+    return <GameLayout>{children}</GameLayout>;
 };
 
 export default Wrapper;
