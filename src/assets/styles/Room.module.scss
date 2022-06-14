@@ -38,7 +38,12 @@ $max-height: 350px;
 }
 
 .gameRoom {
-  @extend .card;
+  border: 7px solid $white;
+  background-color: $white;
+
+  &:hover {
+    border-color: $blue-sky;
+  }
 }
 
 .gameCollection {

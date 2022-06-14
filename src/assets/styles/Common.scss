@@ -33,13 +33,3 @@ $scroll-container-height: 250px;
   @apply rounded-[10px];
   border: 2px solid $blue-light;
 }
-
-.card {
-  @apply rounded-[5px] p-[5px] mb-[8px] ml-[8px] cursor-pointer;
-  border: 7px solid $white;
-  background-color: $white;
-
-  &:hover {
-    border-color: $blue-sky;
-  }
-}

@@ -9,15 +9,14 @@ import RoomLayout from "../../layout/RoomLayout";
 import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../context/SocketContext";
-import {SocketResponse} from "../../@types/SocketEvent";
 import TopTooltip from "../../components/TopTooltip";
 
 const RoomHome = () => {
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState("");
-    const defaultRooms = React.useMemo(() => {
+    const [defaultRooms] = React.useState(() => {
         return Array.from({length: 6}, () => RoomDefault());
-    }, []);
+    });
     const socket = useSocket();
     const {data} = useRooms();
 
@@ -26,14 +25,10 @@ const RoomHome = () => {
     };
 
     const onJoinRoom = async () => {
-        socket?.emit(
-            "room:join",
-            selectedRoom,
-            ({message, roomId}: SocketResponse) => {
-                if (roomId) return navigate(`/play/${roomId}`);
-                if (message) alert(message);
-            }
-        );
+        socket?.emit("room:join", selectedRoom, ({message, roomId}) => {
+            if (roomId) return navigate(`/play/${roomId}`);
+            if (message) alert(message);
+        });
     };
     const isDisable = selectedRoom === "";
     const tooltipText = isDisable ? "Please select a room" : "Join now";
