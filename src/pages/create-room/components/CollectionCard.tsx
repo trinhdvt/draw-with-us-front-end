@@ -62,7 +62,7 @@ const CollectionCard = ({
                         </span>
                     </TopTooltip>
                     <Typography variant="body2" className="font-medium">
-                        {numberOfTopics ?? 10}
+                        {playedCount}
                     </Typography>
                 </div>
                 <div className="flex flex-col items-center flex-1">
@@ -82,7 +82,7 @@ const CollectionCard = ({
                         </span>
                     </TopTooltip>
                     <Typography variant="body2" className="font-medium">
-                        {playedCount ?? 49}
+                        {numberOfTopics}
                     </Typography>
                 </div>
             </Grid>
