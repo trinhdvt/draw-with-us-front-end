@@ -11,6 +11,8 @@ interface ICollection {
     name: string;
     type: CollectionType;
     id: string;
+    playedCount?: number;
+    numberOfTopics?: number;
 }
 
 export {CollectionType};

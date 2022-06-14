@@ -38,7 +38,7 @@ $max-height: 350px;
 }
 
 .gameRoom {
-  border: 7px solid $white;
+  border: 5px solid $white;
   background-color: $white;
 
   &:hover {
@@ -48,7 +48,6 @@ $max-height: 350px;
 
 .gameCollection {
   @extend .gameRoom;
-  @apply p-0 mx-[4px] mt-0 mb-[8px] max-h-[118px];
 }
 
 .selected {

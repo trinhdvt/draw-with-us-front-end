@@ -31,6 +31,23 @@ const ListCollection = ({onSelect}: Props) => {
         setFilteredData(filterRs);
     }, [filterType, data]);
 
+    const CollectionFilter = () => (
+        <Select
+            className={styles.selectBox}
+            value={filterType}
+            onChange={e => setFilter(e.target.value as CollectionType)}
+        >
+            {Object.keys(CollectionType)
+                .filter(k => !isNaN(Number(k)))
+                .map(Number)
+                .map(k => (
+                    <MenuItem value={k} key={k}>
+                        {CollectionType[k]}
+                    </MenuItem>
+                ))}
+        </Select>
+    );
+
     const isLogin = true;
 
     return (
@@ -53,24 +70,7 @@ const ListCollection = ({onSelect}: Props) => {
                         </Grid>
                         <Grid item container md justifyContent="space-evenly">
                             <Grid item md={5}>
-                                <Select
-                                    className={styles.selectBox}
-                                    value={filterType}
-                                    onChange={e =>
-                                        setFilter(
-                                            e.target.value as CollectionType
-                                        )
-                                    }
-                                >
-                                    {Object.keys(CollectionType)
-                                        .filter(k => !isNaN(Number(k)))
-                                        .map(Number)
-                                        .map(k => (
-                                            <MenuItem value={k} key={k}>
-                                                {CollectionType[k]}
-                                            </MenuItem>
-                                        ))}
-                                </Select>
+                                <CollectionFilter />
                             </Grid>
                             <Grid item>
                                 <Button
@@ -86,15 +86,15 @@ const ListCollection = ({onSelect}: Props) => {
                 )}
             </Grid>
             <Grid item container className={styles.collectionPanel}>
-                {filteredData?.map((p, idx) => (
+                {filteredData?.map(item => (
                     <CollectionCard
-                        {...p}
-                        key={idx}
-                        md={2.75}
-                        selected={selected === p.id}
+                        {...item}
+                        key={item.id}
+                        md={3.7}
+                        selected={selected === item.id}
                         onClick={() => {
-                            setSelected(p.id);
-                            onSelect(p.id);
+                            setSelected(item.id);
+                            onSelect(item.id);
                         }}
                     />
                 ))}

@@ -30,6 +30,6 @@ $scroll-container-height: 250px;
 }
 
 .btn-border {
-  @apply rounded-[10px];
+  @apply rounded-xl;
   border: 2px solid $blue-light;
 }
