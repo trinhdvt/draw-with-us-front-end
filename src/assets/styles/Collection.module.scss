@@ -4,7 +4,7 @@
   @extend .scrollableContainer;
   background-color: $blue-light;
   border: 1px $blue-sky solid;
-  @apply p-[3px] rounded-[10px];
+  @apply p-1 rounded-xl;
 }
 
 .searchBar {

@@ -9,9 +9,7 @@ import SamplePanel from "./components/SamplePanel";
 
 const Gallery = () => {
     const {data} = useTopics();
-    const [selectedId, setSelectId] = React.useState<string | undefined>(
-        undefined
-    );
+    const [selectedId, setSelectId] = React.useState<string | undefined>();
 
     return (
         <RoomLayout
@@ -37,21 +35,16 @@ const Gallery = () => {
                                 key={id}
                                 className={clsx(
                                     selectedId == id && styles.selected,
-                                    "mx-[5px]"
+                                    "mx-1"
                                 )}
                                 onClick={() => setSelectId(id)}
-                                variant="outlined"
                             >
                                 {nameVi}
                             </Button>
                         ))}
                     </Stack>
                 </Grid>
-                <SamplePanel
-                    topicId={selectedId}
-                    md={9}
-                    className={styles.samplePanel}
-                />
+                <SamplePanel topicId={selectedId} md={9} />
             </Grid>
         </RoomLayout>
     );

@@ -38,7 +38,7 @@ const DrawSample = ({strokes, ...others}: Props & GridProps) => {
             item
             width={SAMPLE_SIZE}
             height={SAMPLE_SIZE}
-            className={styles.sampleCard}
+            className="mb-2 ml-2"
             {...others}
         >
             <svg className="w-full h-full">{strokes && drawPaths()}</svg>

@@ -19,15 +19,21 @@ import CssTextField from "../../components/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
 import TopTooltip from "../../components/TopTooltip";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import TopicSampleModal from "./components/TopicSampleModal";
+import {useUser} from "../../context/UserContext";
 
 const CreateCollection = () => {
+    const {user} = useUser();
     const [topics, setTopics] = React.useState<ITopic[]>([]);
     const [open, setOpen] = React.useState(false);
     const loading = open && topics.length == 0;
-    const [collectionName, setCollectionName] = React.useState("");
+    const [collectionName, setCollectionName] = React.useState(user.name);
     const [isPublic, setPublic] = React.useState(true);
     const [currentTopic, setCurrentTopic] = React.useState<ITopic | null>(null);
+    const [currentTopicText, setTextCrtTopic] = React.useState("");
     const [addTopics, setAddTopic] = React.useState<ITopic[]>([]);
+    const [openPreview, setOpenPreview] = React.useState(false);
     const isTopicArrEmpty = addTopics.length == 0;
 
     React.useEffect(() => {
@@ -36,20 +42,22 @@ const CreateCollection = () => {
         }
     }, [loading]);
 
-    const onTopicSelect = (_: React.SyntheticEvent, value: unknown) => {
-        setCurrentTopic(value as ITopic);
+    const onTopicSelect = (_: React.SyntheticEvent, value_: unknown) => {
+        const value = value_ as ITopic;
+        setCurrentTopic(value);
+        setTextCrtTopic(value.nameVi);
     };
 
     const onTopicAdd = () => {
         setAddTopic(prev => {
             if (!currentTopic) return prev;
-
             setTopics(prevTopics =>
                 prevTopics.filter(topic => topic.id !== currentTopic.id)
             );
-            setCurrentTopic(null);
             return [...prev, currentTopic];
         });
+        setCurrentTopic(null);
+        setTextCrtTopic("");
     };
 
     const removeTopic = (topic: ITopic) => {
@@ -58,6 +66,9 @@ const CreateCollection = () => {
             [...prev, topic].sort((a, b) => a.nameVi.localeCompare(b.nameVi))
         );
     };
+
+    const handleOpenPreview = () => setOpenPreview(true);
+    const handleClose = () => setOpenPreview(false);
 
     const isDisable = isTopicArrEmpty || collectionName.trim() === "";
     const tooltipText = !isDisable
@@ -76,12 +87,7 @@ const CreateCollection = () => {
                     direction="column"
                     className={styles.sidePanel}
                 >
-                    <Grid
-                        item
-                        container
-                        direction="column"
-                        className="mb-[10px]"
-                    >
+                    <Grid item container className="flex-col mb-2.5">
                         <Typography className={styles.requiredInput}>
                             1. Collection name <span>*</span>
                         </Typography>
@@ -90,17 +96,10 @@ const CreateCollection = () => {
                             size="small"
                             autoComplete="off"
                             value={collectionName}
-                            onChange={e => {
-                                setCollectionName(e.target.value);
-                            }}
+                            onChange={e => setCollectionName(e.target.value)}
                         />
                     </Grid>
-                    <Grid
-                        item
-                        container
-                        alignItems="center"
-                        className="mb-[10px]"
-                    >
+                    <Grid item container alignItems="center" className="mb-2.5">
                         <Typography className="capitalize">
                             2. Share with others
                         </Typography>
@@ -115,7 +114,6 @@ const CreateCollection = () => {
                                 3. Select topic below <span>*</span>
                             </Typography>
                         </Grid>
-
                         <Grid
                             item
                             container
@@ -129,12 +127,14 @@ const CreateCollection = () => {
                                     value={null}
                                     onOpen={() => setOpen(true)}
                                     onClose={() => setOpen(false)}
+                                    inputValue={currentTopicText}
                                     onChange={onTopicSelect}
                                     options={topics}
                                     loading={loading}
                                     isOptionEqualToValue={(option, value) =>
                                         option.id == value.id
                                     }
+                                    clearOnBlur={false}
                                     getOptionLabel={option => option.nameVi}
                                     sx={{"& input": {maxWidth: "80%"}}}
                                     renderInput={params => (
@@ -142,6 +142,9 @@ const CreateCollection = () => {
                                             {...params}
                                             size="small"
                                             label="Topic"
+                                            onChange={e =>
+                                                setTextCrtTopic(e.target.value)
+                                            }
                                             InputProps={{
                                                 ...params.InputProps,
                                                 endAdornment: (
@@ -176,12 +179,17 @@ const CreateCollection = () => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid
-                        item
-                        container
-                        justifyContent="center"
-                        className="mt-auto"
-                    >
+                    <Grid item className="mt-1">
+                        <Button
+                            endIcon={<VisibilityIcon />}
+                            size="small"
+                            disabled={!currentTopic}
+                            onClick={handleOpenPreview}
+                        >
+                            Preview
+                        </Button>
+                    </Grid>
+                    <Grid item className="mt-auto mx-auto">
                         <TopTooltip title={tooltipText}>
                             <span>
                                 <Button
@@ -226,19 +234,20 @@ const CreateCollection = () => {
                                 You haven&apos;t select any topics yet
                             </Typography>
                         ) : (
-                            addTopics.map((topic, index) => (
+                            addTopics.map(topic => (
                                 <Tag
                                     label={topic.nameVi}
-                                    key={index}
-                                    onDelete={() => {
-                                        removeTopic(topic);
-                                    }}
+                                    key={topic.id}
+                                    onDelete={() => removeTopic(topic)}
                                 />
                             ))
                         )}
                     </Grid>
                 </Grid>
             </Grid>
+            {openPreview && (
+                <TopicSampleModal onClose={handleClose} topic={currentTopic} />
+            )}
         </RoomLayout>
     );
 };

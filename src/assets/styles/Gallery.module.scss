@@ -8,10 +8,6 @@
   @apply p-[3px] rounded-[10px] ml-auto rounded-[10px] h-[350px] max-h-[350px] content-start pt-[10px];
 }
 
-.sampleCard {
-  @apply mb-[8px] ml-[8px] ;
-}
-
 .topicSelectPanel {
   @extend .scrollableContainer;
   @apply h-[350px] max-h-[350px] py-[10px];

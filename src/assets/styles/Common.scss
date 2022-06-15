@@ -21,7 +21,7 @@ $scroll-container-height: 250px;
 .scrollableContainer {
   height: $scroll-container-height;
   max-height: $scroll-container-height;
-  @apply overflow-y-auto mt-[10px];
+  @apply overflow-y-auto mt-2.5;
 }
 
 .sidePanel {
@@ -32,4 +32,15 @@ $scroll-container-height: 250px;
 .btn-border {
   @apply rounded-xl;
   border: 2px solid $blue-light;
+}
+
+.centerModal {
+  position: absolute;
+  background: white;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid $blue-sky;
+  padding: 4px;
 }

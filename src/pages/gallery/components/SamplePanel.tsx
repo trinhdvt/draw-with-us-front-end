@@ -2,6 +2,7 @@ import React from "react";
 import {Grid, GridProps} from "@mui/material";
 import DrawSample from "./DrawSample";
 import {useSamples} from "../../../api/services/TopicServices";
+import styles from "../../../assets/styles/Gallery.module.scss";
 
 type Props = {
     topicId?: string;
@@ -24,7 +25,13 @@ const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
     }, [fetchNextPage, topicId]);
 
     return (
-        <Grid item container {...others} ref={containerRef}>
+        <Grid
+            item
+            container
+            className={styles.samplePanel}
+            {...others}
+            ref={containerRef}
+        >
             {data?.pages?.map(({data: samples}, i) => (
                 <React.Fragment key={i}>
                     {samples.map(({id, strokes}) => (
