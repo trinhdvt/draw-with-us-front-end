@@ -1,22 +1,18 @@
 import React from "react";
-import {Grid} from "@mui/material";
 import {useNavigate} from "react-router-dom";
+import {ReactComponent as Logo} from "../assets/images/logo.svg";
 
 const AppHeader = () => {
     const navigate = useNavigate();
-    const logoUrl = "https://cdn.trinhdvt.tech/logo.svg";
-
     return (
-        <Grid container justifyContent="center" className="mb-4">
-            <img
-                src={logoUrl}
-                className="hover:cursor-pointer"
-                width="auto"
+        <div className="flex justify-center mb-4">
+            <Logo
+                width="100%"
                 height="80px"
-                alt="logo"
+                className="cursor-pointer"
                 onClick={() => navigate("/", {replace: true})}
             />
-        </Grid>
+        </div>
     );
 };
 
