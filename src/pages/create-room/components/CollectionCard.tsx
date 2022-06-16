@@ -7,8 +7,8 @@ import styles from "../../../assets/styles/Room.module.scss";
 import clsx from "clsx";
 import {ICollection, CollectionType} from "../../../@types/Collection";
 import StyledAvatar from "../../../components/StyledAvatar";
-import {FaPencilAlt} from "react-icons/fa";
 import {RiImageEditFill} from "react-icons/ri";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import TopTooltip from "../../../components/TopTooltip";
 
 const CollectionIcon = {
@@ -34,7 +34,7 @@ const CollectionCard = ({
             item
             container
             className={clsx(
-                "flex-col items-center rounded-xl mx-1 mb-2 max-h-[141px]",
+                "flex-col items-center cursor-pointer rounded-xl mx-1 mb-2 max-h-[141px]",
                 styles.gameCollection,
                 selected && styles.selected
             )}
@@ -58,7 +58,7 @@ const CollectionCard = ({
                 <div className="flex flex-col items-center flex-1">
                     <TopTooltip title="Played times">
                         <span>
-                            <FaPencilAlt className="primary-icon" />
+                            <VisibilityIcon color="primary" />
                         </span>
                     </TopTooltip>
                     <Typography variant="body2" className="font-medium">
