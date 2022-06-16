@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
 import {IUser} from "../@types/User";
 
-const BackendUrl = "https://backend.draw-with.trinhdvt.tech/";
+const BackendUrl = "https://api.draw-with.trinhdvt.tech/";
 // const BackendUrl = "http://localhost:8888";
 
 const onRequest = (config: AxiosRequestConfig) => {
