@@ -25,6 +25,7 @@ const Game = () => {
     const socket = useSocket();
     const {state, dispatch} = useGame();
     const {data} = useRoom(state.roomId);
+    const isPlaying = data?.status === RoomStatus.PLAYING;
 
     React.useEffect(() => {
         socket?.on("game:nextTurn", (topic: ITopic) => {
@@ -33,7 +34,7 @@ const Game = () => {
 
         socket?.on("game:endTurn", async () => {
             dispatch({type: GameActionType.END_TURN});
-            if (!state.isDone) {
+            if (!state.isDone && isPlaying) {
                 await timeUp();
             }
         });
@@ -41,9 +42,8 @@ const Game = () => {
             socket?.off("game:nextTurn");
             socket?.off("game:endTurn");
         };
-    }, [state.isDone, socket, dispatch]);
+    }, [state.isDone, socket, dispatch, isPlaying]);
 
-    const isPlaying = data?.status === RoomStatus.PLAYING;
     const GameWaitingScreen = () => {
         if (isPlaying) return;
         const isHost = data?.isHost;
@@ -82,7 +82,7 @@ const Game = () => {
                                 <DrawBoard className="max-h-[320px]" />
                             )}
                             {data && (
-                                <Grid item md className="mt-5">
+                                <Grid item md className="mt-3">
                                     <CountdownTimer maxTime={data.timeOut} />
                                 </Grid>
                             )}

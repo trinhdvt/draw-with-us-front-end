@@ -1,6 +1,6 @@
 import React from "react";
-import {Button, Grid, GridProps, Typography} from "@mui/material";
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import {Button, Typography} from "@mui/material";
+import {BsHourglassSplit} from "react-icons/bs";
 import clsx from "clsx";
 
 import styles from "../../../assets/styles/WaitingScreen.module.scss";
@@ -15,22 +15,18 @@ const WaitingScreen = ({
     children,
     title,
     ...others
-}: WaitingScreenProps & GridProps) => {
+}: WaitingScreenProps & React.HTMLAttributes<HTMLDivElement>) => {
     return (
-        <Grid
-            item
-            container
-            md={8}
-            className="flex-col items-center justify-center bg-white rounded-xl h-[350px]"
-            {...others}
-        >
+        <div className={styles.waitingScreen} {...others}>
             <Typography variant="h3">{title}</Typography>
-            <HourglassEmptyIcon
-                color="primary"
-                className={clsx("text-[100px] my-4", styles.rotateAnimate)}
+            <BsHourglassSplit
+                className={clsx(
+                    "text-[80px] my-4 primary-icon",
+                    styles.rotateAnimate
+                )}
             />
             {children}
-        </Grid>
+        </div>
     );
 };
 

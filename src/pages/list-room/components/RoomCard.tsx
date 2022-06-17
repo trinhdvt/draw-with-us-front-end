@@ -1,9 +1,9 @@
 import React from "react";
 import {Grid, GridProps, Typography} from "@mui/material";
 import clsx from "clsx";
-import {IoHourglassOutline} from "react-icons/io5";
 import {BiHash} from "react-icons/bi";
 import {FaRegUser} from "react-icons/fa";
+import {GiEmptyHourglass} from "react-icons/gi";
 
 import styles from "../../../assets/styles/Room.module.scss";
 import {IRoomResponse} from "../../../api/@types/Room";
@@ -92,7 +92,7 @@ const RoomCard = ({
                 <div className="flex flex-col justify-center items-center flex-1">
                     <TopTooltip title="Timeout per turn">
                         <span>
-                            <IoHourglassOutline className="primary-icon" />
+                            <GiEmptyHourglass className="primary-icon" />
                         </span>
                     </TopTooltip>
                     <Typography variant="body1" className="font-light">

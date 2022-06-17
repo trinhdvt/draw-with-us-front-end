@@ -1,5 +1,12 @@
 import React from "react";
-import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
+import {
+    Button,
+    Grid,
+    GridProps,
+    MenuItem,
+    Select,
+    Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
 
@@ -10,10 +17,10 @@ import styles from "../../../assets/styles/Room.module.scss";
 import CollectionCard from "./CollectionCard";
 
 interface Props {
-    onSelect: (collectionId: string) => void;
+    onCollectionSelect: (collectionId: string) => void;
 }
 
-const ListCollection = ({onSelect}: Props) => {
+const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
     const navigate = useNavigate();
     const [filterType, setFilter] = React.useState(CollectionType.ALL);
     const [filteredData, setFilteredData] = React.useState<ICollection[]>();
@@ -28,7 +35,7 @@ const ListCollection = ({onSelect}: Props) => {
         const filterRs =
             filterType == CollectionType.ALL
                 ? data
-                : data?.filter(item => item.type == filterType);
+                : data?.filter(item => item.type === filterType);
 
         setFilteredData(filterRs);
     }, [filterType, data]);
@@ -53,7 +60,7 @@ const ListCollection = ({onSelect}: Props) => {
     const isLogin = true;
 
     return (
-        <>
+        <Grid item container md={7.8} className="flex-col ml-auto" {...others}>
             <Grid
                 item
                 container={isLogin}
@@ -96,12 +103,12 @@ const ListCollection = ({onSelect}: Props) => {
                         selected={selected === item.id}
                         onClick={() => {
                             setSelected(item.id);
-                            onSelect(item.id);
+                            onCollectionSelect(item.id);
                         }}
                     />
                 ))}
             </Grid>
-        </>
+        </Grid>
     );
 };
 

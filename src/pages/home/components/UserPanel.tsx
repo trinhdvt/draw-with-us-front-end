@@ -57,6 +57,7 @@ const UserPanel = () => {
                 <RandomAvatar
                     size={100}
                     value={user.sid}
+                    src={user.avatar}
                     className="w-[100px] h-[100px]"
                 />
             </Grid>

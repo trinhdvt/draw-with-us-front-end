@@ -1,5 +1,9 @@
+.waitingScreen {
+  @apply flex flex-col items-center justify-center bg-white rounded-xl h-[300px];
+}
+
 .rotateAnimate {
-  //animation: rotateAnimate_1929378484 3s linear infinite;
+  animation: rotateAnimate_1929378484 3s linear infinite;
 }
 
 @keyframes rotateAnimate_1929378484 {

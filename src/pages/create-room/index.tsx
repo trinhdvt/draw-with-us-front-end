@@ -2,8 +2,8 @@ import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import {useNavigate} from "react-router-dom";
-import {IoHourglassOutline} from "react-icons/io5";
 import {FaRegUser} from "react-icons/fa";
+import {GiEmptyHourglass} from "react-icons/gi";
 
 import RoomLayout from "../../layout/RoomLayout";
 import {useCreateRoom} from "../../api/services/RoomServices";
@@ -11,21 +11,31 @@ import styles from "../../assets/styles/Room.module.scss";
 import {IRoomRequest} from "../../api/@types/Room";
 import {notifyError} from "../../utils/Notify";
 import TopTooltip from "../../components/TopTooltip";
+import {useAppConfig} from "../../api/services/AppServices";
 
 import ListCollection from "./components/ListCollection";
 
 const CreateRoom = () => {
-    const maxUserList = [10, 15, 30, 50];
-    const timeOutList = [20, 45, 60, 90, 120];
-
     const navigate = useNavigate();
     const [payload, setPayload] = React.useState<IRoomRequest>({
-        maxUsers: maxUserList[0],
-        timeOut: timeOutList[0],
+        maxUsers: 0,
+        timeOut: 0,
         collectionId: "",
     });
     const [isDisable, setDisableCreate] = React.useState(true);
+    const {data} = useAppConfig();
+    const createConfig = data?.room;
     const {mutate} = useCreateRoom();
+
+    React.useEffect(() => {
+        if (createConfig) {
+            setPayload({
+                maxUsers: createConfig.maxUsers[0],
+                timeOut: createConfig.timeOut[0],
+                collectionId: "",
+            });
+        }
+    }, [createConfig]);
 
     const createRoom = () => {
         mutate(payload, {
@@ -66,7 +76,7 @@ const CreateRoom = () => {
                                     setPayload({...payload, maxUsers: value});
                                 }}
                             >
-                                {maxUserList.map(m => (
+                                {createConfig?.maxUsers?.map(m => (
                                     <MenuItem key={m} value={m}>
                                         {m}
                                     </MenuItem>
@@ -76,7 +86,7 @@ const CreateRoom = () => {
                     </Grid>
                     <Grid item container alignItems="center">
                         <Grid item md={2}>
-                            <IoHourglassOutline className="primary-icon" />
+                            <GiEmptyHourglass className="primary-icon" />
                         </Grid>
                         <Grid item md>
                             <Typography>Timeout (sec)</Typography>
@@ -90,7 +100,7 @@ const CreateRoom = () => {
                                     setPayload({...payload, timeOut: value});
                                 }}
                             >
-                                {timeOutList.map(time => (
+                                {createConfig?.timeOut?.map(time => (
                                     <MenuItem value={time} key={time}>
                                         {time}
                                     </MenuItem>
@@ -113,9 +123,7 @@ const CreateRoom = () => {
                         </TopTooltip>
                     </Grid>
                 </Grid>
-                <Grid item container md={7.8} className="flex-col ml-auto">
-                    <ListCollection onSelect={onSelect} />
-                </Grid>
+                <ListCollection onCollectionSelect={onSelect} />
             </Grid>
         </RoomLayout>
     );

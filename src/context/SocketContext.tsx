@@ -3,6 +3,7 @@ import {io, ManagerOptions, SocketOptions} from "socket.io-client";
 
 import {BackendUrl} from "../api/HttpClient";
 import {SocketType} from "../api/@types/SocketEvent";
+import generateAvatar from "../utils/AvatarGenerate";
 
 import {IUser, useUser} from "./UserContext";
 
@@ -14,6 +15,7 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
         React.useMemo(() => {
             return {
                 transports: ["websocket", "polling"],
+                closeOnBeforeunload: false,
                 rememberUpgrade: import.meta.env.PROD,
             };
         }, []);
@@ -29,7 +31,8 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
                 setUser(prev => ({...prev, sid: socketCnn.id}));
             });
             socketCnn.emit("user:init", (response: IUser) => {
-                setUser(response);
+                const avatar = generateAvatar(response.sid);
+                setUser({...response, avatar});
             });
         } catch (e) {
             console.error(e);
