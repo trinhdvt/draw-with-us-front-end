@@ -1,7 +1,7 @@
-import {Button} from "@mui/material";
 import React from "react";
-import "../assets/styles/NotFound.scss";
 import {Link} from "react-router-dom";
+import {Button} from "@mui/material";
+import "../assets/styles/NotFound.scss";
 
 const NotFound = () => (
     <div className="notfound_main">

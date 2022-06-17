@@ -1,8 +1,9 @@
 import React from "react";
 import {Outlet} from "react-router-dom";
+import {Container} from "@mui/material";
+
 import AppHeader from "./AppHeader";
 import AppFooter from "./AppFooter";
-import {Container} from "@mui/material";
 
 const AppLayout = ({children}: {children?: React.ReactNode}) => {
     return (

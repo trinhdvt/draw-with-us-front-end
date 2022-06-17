@@ -1,12 +1,13 @@
 import React from "react";
 import {Grid, GridProps, Typography} from "@mui/material";
 import clsx from "clsx";
-import styles from "../../../assets/styles/Room.module.scss";
-import {IRoomResponse} from "../../../@types/Room";
-import RandomAvatar from "../../../components/RandomAvatar";
 import {IoHourglassOutline} from "react-icons/io5";
 import {BiHash} from "react-icons/bi";
 import {FaRegUser} from "react-icons/fa";
+
+import styles from "../../../assets/styles/Room.module.scss";
+import {IRoomResponse} from "../../../api/@types/Room";
+import RandomAvatar from "../../../components/RandomAvatar";
 import TopTooltip from "../../../components/TopTooltip";
 
 interface RoomProps extends IRoomResponse {

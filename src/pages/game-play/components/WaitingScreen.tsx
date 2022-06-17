@@ -1,8 +1,9 @@
 import React from "react";
 import {Button, Grid, GridProps, Typography} from "@mui/material";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
-import styles from "../../../assets/styles/WaitingScreen.module.scss";
 import clsx from "clsx";
+
+import styles from "../../../assets/styles/WaitingScreen.module.scss";
 import {useSocket} from "../../../context/SocketContext";
 
 interface WaitingScreenProps {
@@ -20,10 +21,7 @@ const WaitingScreen = ({
             item
             container
             md={8}
-            alignItems="center"
-            justifyContent="center"
-            direction="column"
-            className="bg-white rounded-xl h-[350px]"
+            className="flex-col items-center justify-center bg-white rounded-xl h-[350px]"
             {...others}
         >
             <Typography variant="h3">{title}</Typography>

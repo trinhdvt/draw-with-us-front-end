@@ -1,15 +1,17 @@
 import React from "react";
 import {Button, Grid} from "@mui/material";
-import RoomCard, {RoomDefault} from "./components/RoomCard";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
+
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
 import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../context/SocketContext";
 import TopTooltip from "../../components/TopTooltip";
+
+import RoomCard, {RoomDefault} from "./components/RoomCard";
 
 const RoomHome = () => {
     const navigate = useNavigate();
@@ -51,31 +53,28 @@ const RoomHome = () => {
                     />
                 ))}
             </Grid>
-            <Grid item container justifyContent="center" className="mt-[10px]">
-                <Grid item container md={4.5} justifyContent="space-evenly">
-                    <Button
-                        startIcon={<MeetingRoomIcon />}
-                        variant="contained"
-                        onClick={() => {
-                            navigate("/create");
-                        }}
-                    >
-                        New Room
-                    </Button>
-                    <TopTooltip title={tooltipText}>
-                        <span>
-                            <Button
-                                startIcon={<SportsEsportsIcon />}
-                                variant="contained"
-                                disabled={isDisable}
-                                className="w-[135px]"
-                                onClick={onJoinRoom}
-                            >
-                                Play
-                            </Button>
-                        </span>
-                    </TopTooltip>
-                </Grid>
+            <Grid item container className="justify-center mt-2.5 px-2">
+                <Button
+                    className="mr-2"
+                    startIcon={<MeetingRoomIcon />}
+                    variant="contained"
+                    onClick={() => navigate("/create")}
+                >
+                    New Room
+                </Button>
+                <TopTooltip title={tooltipText}>
+                    <span>
+                        <Button
+                            startIcon={<SportsEsportsIcon />}
+                            variant="contained"
+                            disabled={isDisable}
+                            className="w-[135px]"
+                            onClick={onJoinRoom}
+                        >
+                            Play
+                        </Button>
+                    </span>
+                </TopTooltip>
             </Grid>
         </RoomLayout>
     );

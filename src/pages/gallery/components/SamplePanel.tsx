@@ -1,8 +1,10 @@
 import React from "react";
 import {Grid, GridProps} from "@mui/material";
-import DrawSample from "./DrawSample";
+
 import {useSamples} from "../../../api/services/TopicServices";
 import styles from "../../../assets/styles/Gallery.module.scss";
+
+import DrawSample from "./DrawSample";
 
 type Props = {
     topicId?: string;

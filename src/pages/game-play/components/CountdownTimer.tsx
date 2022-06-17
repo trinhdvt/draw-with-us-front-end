@@ -1,5 +1,6 @@
 import React from "react";
 import {LinearProgress, LinearProgressProps, Typography} from "@mui/material";
+
 import {useGame} from "../context/GameContext";
 
 interface TimerProps extends LinearProgressProps {
@@ -58,7 +59,7 @@ const Timer = (props: TimerProps) => {
                 <LinearProgress
                     variant="determinate"
                     value={progress.remainPercent}
-                    className="h-[10px] rounded-[5px]"
+                    className="h-2.5 rounded-xl"
                     color="warning"
                     {...others}
                 />

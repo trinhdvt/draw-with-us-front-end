@@ -1,6 +1,7 @@
-import {BackendAPI} from "../HttpClient";
-import {ICollection} from "../../@types/Collection";
 import {useQuery} from "react-query";
+
+import {BackendAPI} from "../HttpClient";
+import {ICollection} from "../@types/Collection";
 
 const fetchCollections = async (): Promise<ICollection[]> => {
     const {data} = await BackendAPI.get("/api/collections");

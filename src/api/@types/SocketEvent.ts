@@ -1,4 +1,5 @@
 import {Socket} from "socket.io-client";
+
 import ITopic from "./Topic";
 import {IUser} from "./User";
 
@@ -25,7 +26,5 @@ interface ClientToServerEvents {
 }
 
 type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
-type SocketResponse = Record<string, unknown>;
 
-export type {SocketResponse};
 export type {SocketType};

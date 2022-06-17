@@ -1,6 +1,7 @@
 import React from "react";
-import styles from "../../../assets/styles/Gallery.module.scss";
 import {Grid, GridProps} from "@mui/material";
+
+import styles from "../../../assets/styles/Gallery.module.scss";
 
 type Props = {
     strokes: string;

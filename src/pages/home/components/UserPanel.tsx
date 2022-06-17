@@ -1,17 +1,18 @@
 import React from "react";
 import {Button, Grid, InputAdornment, Typography} from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import {useNavigate} from "react-router-dom";
-import CssTextField from "../../../components/CssTextField";
-import {useUser} from "../../../context/UserContext";
-import {useSocket} from "../../../context/SocketContext";
-import RandomAvatar from "../../../components/RandomAvatar";
-import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
-import {fetchRandom} from "../../../api/services/RoomServices";
 import {useMutation} from "react-query";
+import {useNavigate} from "react-router-dom";
+
+import {fetchRandom} from "../../../api/services/RoomServices";
+import CssTextField from "../../../components/CssTextField";
 import {AnimatedLoading} from "../../../components/LoadingScreen";
+import RandomAvatar from "../../../components/RandomAvatar";
+import {useSocket} from "../../../context/SocketContext";
+import {useUser} from "../../../context/UserContext";
+import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 
 const UserPanel = () => {
     const navigate = useNavigate();
@@ -43,11 +44,9 @@ const UserPanel = () => {
         <Grid
             item
             container
-            className="mt-[5px] mb-[20px]"
             md={5}
-            direction="column"
-            alignItems="center"
             rowSpacing={2}
+            className="flex-col items-center mt-1 mb-5"
         >
             <Grid item>
                 <Typography variant="h2" align="center" className="uppercase">
@@ -58,16 +57,10 @@ const UserPanel = () => {
                 <RandomAvatar
                     size={100}
                     value={user.sid}
-                    className="w-[100px] h-[100px] bg-white"
+                    className="w-[100px] h-[100px]"
                 />
             </Grid>
-            <Grid
-                item
-                container
-                justifyContent="center"
-                alignItems="center"
-                sx={{paddingBottom: "6px"}}
-            >
+            <Grid item className="mb-1.5">
                 <CssTextField
                     size="small"
                     label="Nickname"

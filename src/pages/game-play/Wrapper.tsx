@@ -1,11 +1,13 @@
 import React from "react";
-import {GameActionType, useGame} from "./context/GameContext";
 import {Navigate, useParams} from "react-router-dom";
-import {useSocket} from "../../context/SocketContext";
 import {useQueryClient} from "react-query";
+
+import {useSocket} from "../../context/SocketContext";
 import {useValidPlayer} from "../../api/services/RoomServices";
-import {alertWelcome} from "./utils/GameNotify";
 import {AnimatedLoading} from "../../components/LoadingScreen";
+
+import {alertWelcome} from "./utils/GameNotify";
+import {GameActionType, useGame} from "./context/GameContext";
 import GameLayout from "./layout/GameLayout";
 
 const Wrapper = ({children}: {children: React.ReactNode}) => {
@@ -38,21 +40,19 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
 
     React.useEffect(() => {
         window.addEventListener("beforeunload", handleTabClose);
-        return () => {
-            window.removeEventListener("beforeunload", handleTabClose);
-        };
+        return () => window.removeEventListener("beforeunload", handleTabClose);
     }, [handleTabClose]);
 
     React.useEffect(() => {
         if (isSuccess) {
             dispatch({type: GameActionType.SET_ROOM_ID, payload: roomId});
-            alertWelcome().then(() => ({}));
-            document.title = `Playing - Draw With Us`;
+            alertWelcome().then(
+                () => (document.title = `Playing - Draw With Us`)
+            );
         }
     }, [dispatch, isSuccess, roomId]);
 
     if (isError) return <Navigate to="/" replace />;
-
     if (isFetching) return <AnimatedLoading />;
 
     return <GameLayout>{children}</GameLayout>;

@@ -4,6 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import svgrPlugin from "vite-plugin-svgr";
+
 import {dependencies} from "./package.json";
 
 const renderChunks = (deps: Record<string, string>) => {

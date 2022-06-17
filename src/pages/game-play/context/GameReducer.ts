@@ -1,4 +1,4 @@
-import ITopic from "../../../@types/Topic";
+import ITopic from "../../../api/@types/Topic";
 
 enum GameActionType {
     DONE,

@@ -1,7 +1,8 @@
 import React from "react";
-import CssTextField from "./CssTextField";
 import {InputAdornment, TextFieldProps} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+
+import CssTextField from "./CssTextField";
 
 const SearchField = (props?: TextFieldProps) => (
     <CssTextField

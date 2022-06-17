@@ -1,5 +1,5 @@
 import React from "react";
-import {Divider, Grid, Stack, Typography} from "@mui/material";
+import {Divider, Stack, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 
 const AppFooter = () => {
@@ -7,34 +7,28 @@ const AppFooter = () => {
     const footerLink = ["/gallery", "#", "#"];
 
     return (
-        <footer className="mt-[5px] ml-[5px]">
-            <Grid container columns={2}>
-                <Grid item md={1}>
-                    <Stack
-                        direction="row"
-                        divider={<Divider orientation="vertical" flexItem />}
-                        spacing={1}
-                        alignItems="center"
+        <footer className="my-2 ml-2">
+            <Stack
+                direction="row"
+                divider={<Divider orientation="vertical" flexItem />}
+                spacing={1}
+            >
+                {footerText.map((label, index) => (
+                    <Link
+                        to={footerLink[index]}
+                        key={label}
+                        className="no-underline"
                     >
-                        {footerText.map((item, index) => (
-                            <Link
-                                to={footerLink[index]}
-                                key={index}
-                                className="no-underline"
-                            >
-                                <Typography
-                                    key={index}
-                                    variant="body2"
-                                    color="textSecondary"
-                                    align="center"
-                                >
-                                    {item}
-                                </Typography>
-                            </Link>
-                        ))}
-                    </Stack>
-                </Grid>
-            </Grid>
+                        <Typography
+                            variant="body1"
+                            align="center"
+                            color="textSecondary"
+                        >
+                            {label}
+                        </Typography>
+                    </Link>
+                ))}
+            </Stack>
         </footer>
     );
 };

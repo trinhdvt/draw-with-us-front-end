@@ -3,12 +3,13 @@ import {Grid, GridProps, Typography} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import LockIcon from "@mui/icons-material/Lock";
 import PublicIcon from "@mui/icons-material/Public";
-import styles from "../../../assets/styles/Room.module.scss";
-import clsx from "clsx";
-import {ICollection, CollectionType} from "../../../@types/Collection";
-import StyledAvatar from "../../../components/StyledAvatar";
-import {RiImageEditFill} from "react-icons/ri";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import {RiImageEditFill} from "react-icons/ri";
+import clsx from "clsx";
+
+import styles from "../../../assets/styles/Room.module.scss";
+import {ICollection, CollectionType} from "../../../api/@types/Collection";
+import StyledAvatar from "../../../components/StyledAvatar";
 import TopTooltip from "../../../components/TopTooltip";
 
 const CollectionIcon = {

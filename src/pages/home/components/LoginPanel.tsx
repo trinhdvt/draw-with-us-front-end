@@ -1,12 +1,13 @@
 import React from "react";
 import {Button, Divider, Grid, Stack, Typography} from "@mui/material";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleIcon from "@mui/icons-material/Google";
-import DividerWithText from "../../../components/DividerWithText";
-import CssTextField from "../../../components/CssTextField";
+import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import queryString from "query-string";
+
+import CssTextField from "../../../components/CssTextField";
+import DividerWithText from "../../../components/DividerWithText";
 
 const LoginPanel = () => {
     const fbLoginUrl = () => {
@@ -34,11 +35,9 @@ const LoginPanel = () => {
         <Grid
             item
             container
-            className="mt-1"
             md={5}
             rowSpacing={2}
-            direction="column"
-            alignItems="center"
+            className="flex-col items-center mt-1"
         >
             <Grid item>
                 <Typography variant="h2" className="uppercase text-center">
@@ -77,10 +76,9 @@ const LoginPanel = () => {
                     container
                     md={5}
                     justifyContent="space-evenly"
-                    className="mb-[25px]"
+                    className="mb-6"
                 >
                     <Stack
-                        direction="column"
                         divider={
                             <DividerWithText>
                                 <Typography>OR</Typography>
@@ -110,12 +108,7 @@ const LoginPanel = () => {
             >
                 <Typography>Login With</Typography>
             </Divider>
-            <Grid
-                item
-                container
-                justifyContent="space-evenly"
-                className="pt-[23px]"
-            >
+            <Grid item container justifyContent="space-evenly" className="pt-6">
                 <Button
                     startIcon={<FacebookIcon />}
                     variant="outlined"

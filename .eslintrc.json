@@ -7,9 +7,14 @@
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
-        "plugin:react-hooks/recommended"
+        "plugin:react-hooks/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
     ],
     "parser": "@typescript-eslint/parser",
+    "ignorePatterns": [
+        "node_modules/*"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -21,6 +26,38 @@
         "react",
         "@typescript-eslint"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".ts",
+                    ".tsx"
+                ],
+                "moduleDirectory": [
+                    "src",
+                    "node_modules"
+                ]
+            }
+        }
+    },
     "rules": {
+        "import/order": [
+            "warn",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index",
+                    "object"
+                ],
+                "newlines-between": "always"
+            }
+        ]
     }
 }

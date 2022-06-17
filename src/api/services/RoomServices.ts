@@ -1,7 +1,8 @@
 import {useMutation, useQuery} from "react-query";
+
 import {BackendAPI, HttpError} from "../HttpClient";
-import {IRoomConfig, IRoomRequest, IRoomResponse} from "../../@types/Room";
-import {IPlayer} from "../../@types/User";
+import {IRoomConfig, IRoomRequest, IRoomResponse} from "../@types/Room";
+import {IPlayer} from "../@types/User";
 
 const createRoom = async (payload: IRoomRequest): Promise<IRoomResponse> => {
     const {data} = await BackendAPI.post("/api/rooms", payload);

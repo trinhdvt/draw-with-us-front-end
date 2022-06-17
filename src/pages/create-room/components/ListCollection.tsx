@@ -1,11 +1,13 @@
 import React from "react";
-import {CollectionType, ICollection} from "../../../@types/Collection";
-import {useCollections} from "../../../api/services/CollectionServices";
-import CollectionCard from "./CollectionCard";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
-import styles from "../../../assets/styles/Room.module.scss";
 import AddIcon from "@mui/icons-material/Add";
 import {useNavigate} from "react-router-dom";
+
+import {CollectionType, ICollection} from "../../../api/@types/Collection";
+import {useCollections} from "../../../api/services/CollectionServices";
+import styles from "../../../assets/styles/Room.module.scss";
+
+import CollectionCard from "./CollectionCard";
 
 interface Props {
     onSelect: (collectionId: string) => void;

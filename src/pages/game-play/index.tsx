@@ -1,10 +1,12 @@
 import React from "react";
 import {Grid, Typography} from "@mui/material";
-import RoomPlayers from "./components/RoomPlayers";
+
 import styles from "../../assets/styles/Game.module.scss";
-import DrawBoard from "./components/DrawBoard";
-import CountdownTimer from "./components/CountdownTimer";
-import {RoomStatus} from "../../@types/Room";
+import {RoomStatus} from "../../api/@types/Room";
+import {useRoom} from "../../api/services/RoomServices";
+import {useSocket} from "../../context/SocketContext";
+import ITopic from "../../api/@types/Topic";
+
 import {
     WaitEndTurn,
     ReadyToStartGame,
@@ -12,9 +14,9 @@ import {
     WaitHost,
     WaitOtherPlayer,
 } from "./components/WaitingScreen";
-import {useRoom} from "../../api/services/RoomServices";
-import {useSocket} from "../../context/SocketContext";
-import ITopic from "../../@types/Topic";
+import CountdownTimer from "./components/CountdownTimer";
+import DrawBoard from "./components/DrawBoard";
+import RoomPlayers from "./components/RoomPlayers";
 import GameProvider, {GameActionType, useGame} from "./context/GameContext";
 import {timeUp} from "./utils/GameNotify";
 import Wrapper from "./Wrapper";
@@ -62,7 +64,7 @@ const Game = () => {
     return (
         <Grid container>
             <Grid item md={3.5} />
-            <Grid item md={6} className="mb-[10px] mx-auto">
+            <Grid item md={6} className="mb-2.5 mx-auto">
                 {isPlaying && !state.isEndTurn && !state.isDone && (
                     <Typography variant="h4">
                         Let&apos;s draw: <b>{state.target?.nameVi}</b>
@@ -73,13 +75,7 @@ const Game = () => {
                 <Grid item md={3.5} className={styles.playerList}>
                     <RoomPlayers />
                 </Grid>
-                <Grid
-                    item
-                    container
-                    md={6}
-                    direction="column"
-                    className="mx-auto"
-                >
+                <Grid item container md={6} className="flex-col mx-auto">
                     {GameWaitingScreen() ?? (
                         <React.Fragment>
                             {EndTurnWaitingScreen() ?? (

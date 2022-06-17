@@ -1,5 +1,6 @@
 import React from "react";
-import {IUser} from "../@types/User";
+
+import {IUser} from "../api/@types/User";
 
 const DefaultUser: IUser = {
     name: "",
@@ -10,7 +11,7 @@ const DefaultUser: IUser = {
 
 interface UserContextProps {
     user: IUser;
-    setUser: (user: IUser) => void;
+    setUser: React.Dispatch<React.SetStateAction<IUser>>;
 }
 
 const UserContext = React.createContext<UserContextProps | null>(null);

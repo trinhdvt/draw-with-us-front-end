@@ -1,6 +1,8 @@
 import {Grid} from "@mui/material";
 import React from "react";
+
 import styles from "../assets/styles/Room.module.scss";
+
 import RoomHeader, {HeaderProps} from "./RoomHeader";
 
 interface RoomLayoutProps extends HeaderProps {

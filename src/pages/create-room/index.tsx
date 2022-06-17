@@ -2,15 +2,17 @@ import React from "react";
 import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import {useNavigate} from "react-router-dom";
-import styles from "../../assets/styles/Room.module.scss";
-import {useCreateRoom} from "../../api/services/RoomServices";
-import RoomLayout from "../../layout/RoomLayout";
 import {IoHourglassOutline} from "react-icons/io5";
 import {FaRegUser} from "react-icons/fa";
-import ListCollection from "./components/ListCollection";
-import {IRoomRequest} from "../../@types/Room";
+
+import RoomLayout from "../../layout/RoomLayout";
+import {useCreateRoom} from "../../api/services/RoomServices";
+import styles from "../../assets/styles/Room.module.scss";
+import {IRoomRequest} from "../../api/@types/Room";
 import {notifyError} from "../../utils/Notify";
 import TopTooltip from "../../components/TopTooltip";
+
+import ListCollection from "./components/ListCollection";
 
 const CreateRoom = () => {
     const maxUserList = [10, 15, 30, 50];
@@ -48,12 +50,7 @@ const CreateRoom = () => {
                     direction="column"
                     className={styles.sidePanel}
                 >
-                    <Grid
-                        item
-                        container
-                        alignItems="center"
-                        className="mb-[10px]"
-                    >
+                    <Grid item container className="items-center mb-2.5">
                         <Grid item md={2}>
                             <FaRegUser className="primary-icon" />
                         </Grid>
@@ -101,12 +98,7 @@ const CreateRoom = () => {
                             </Select>
                         </Grid>
                     </Grid>
-                    <Grid
-                        item
-                        container
-                        justifyContent="center"
-                        className="mt-auto"
-                    >
+                    <Grid item container className="justify-center mt-auto">
                         <TopTooltip title={tooltipText}>
                             <span>
                                 <Button
@@ -121,13 +113,7 @@ const CreateRoom = () => {
                         </TopTooltip>
                     </Grid>
                 </Grid>
-                <Grid
-                    item
-                    container
-                    md={7.8}
-                    direction="column"
-                    className="ml-auto"
-                >
+                <Grid item container md={7.8} className="flex-col ml-auto">
                     <ListCollection onSelect={onSelect} />
                 </Grid>
             </Grid>

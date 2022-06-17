@@ -1,9 +1,11 @@
 import React, {Suspense} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {QueryClient, QueryClientProvider} from "react-query";
+import {ReactQueryDevtools} from "react-query/devtools";
+
 import {AnimatedLoading} from "./components/LoadingScreen";
 import SocketProvider from "./context/SocketContext";
 import UserProvider from "./context/UserContext";
-import {QueryClient, QueryClientProvider} from "react-query";
 import GameWrapper from "./pages/game-play";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
@@ -24,6 +26,9 @@ const queryClient = new QueryClient({
 
 const App = () => (
     <QueryClientProvider client={queryClient}>
+        {import.meta.env.DEV && (
+            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+        )}
         <UserProvider>
             <SocketProvider>
                 <BrowserRouter>

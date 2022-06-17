@@ -1,10 +1,12 @@
 import React from "react";
 import {Button, Divider, Grid, Stack} from "@mui/material";
-import styles from "../../assets/styles/Gallery.module.scss";
 import clsx from "clsx";
+
+import styles from "../../assets/styles/Gallery.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
 import {useTopics} from "../../api/services/TopicServices";
+
 import SamplePanel from "./components/SamplePanel";
 
 const Gallery = () => {

@@ -8,20 +8,22 @@ import {
     Typography,
 } from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
-import MyCheckbox from "../../components/Checkbox";
 import AddIcon from "@mui/icons-material/Add";
-import ITopic from "../../@types/Topic";
+import clsx from "clsx";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+import MyCheckbox from "../../components/Checkbox";
+import ITopic from "../../api/@types/Topic";
 import Tag from "../../components/Tag";
 import styles from "../../assets/styles/Collection.module.scss";
-import clsx from "clsx";
 import {fetchAllTopics} from "../../api/services/TopicServices";
 import CssTextField from "../../components/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
 import TopTooltip from "../../components/TopTooltip";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import TopicSampleModal from "./components/TopicSampleModal";
 import {useUser} from "../../context/UserContext";
+
+import TopicSampleModal from "./components/TopicSampleModal";
 
 const CreateCollection = () => {
     const {user} = useUser();

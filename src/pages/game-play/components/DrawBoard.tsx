@@ -9,11 +9,12 @@ import {
     Switch,
 } from "@mui/material";
 import {ReactSketchCanvas, ReactSketchCanvasRef} from "react-sketch-canvas";
-import styles from "../../../assets/styles/Game.module.scss";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import UndoIcon from "@mui/icons-material/Undo";
 import clsx from "clsx";
+
+import styles from "../../../assets/styles/Game.module.scss";
 import LoadingButton from "../../../components/LoadingButton";
 import {GameActionType, useGame} from "../context/GameContext";
 import {useSocket} from "../../../context/SocketContext";
@@ -72,12 +73,9 @@ const DrawBoard = ({...others}: GridProps) => {
                 />
             </Grid>
             <Stack
-                direction="column"
                 spacing={3}
                 divider={<Divider orientation="horizontal" flexItem />}
-                justifyContent="flex-start"
-                alignItems="center"
-                className="ml-auto my-auto"
+                className="justify-start items-center ml-auto my-auto"
             >
                 <LoadingButton
                     isLoading={isPredicting}

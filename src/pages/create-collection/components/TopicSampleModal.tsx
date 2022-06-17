@@ -1,9 +1,10 @@
 import React from "react";
-import ITopic from "../../../@types/Topic";
 import clsx from "clsx";
-import styles from "../../../assets/styles/Collection.module.scss";
 import {Grid, IconButton, Typography} from "@mui/material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+
+import styles from "../../../assets/styles/Collection.module.scss";
+import ITopic from "../../../api/@types/Topic";
 import SamplePanel from "../../gallery/components/SamplePanel";
 
 type TopicSampleModalProps = {

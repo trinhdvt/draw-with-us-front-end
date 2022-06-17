@@ -1,9 +1,11 @@
 import React from "react";
 import FlipMove from "react-flip-move";
-import Player, {PlayerSkeleton} from "./Player";
+
 import {usePlayers} from "../../../api/services/RoomServices";
 import {useUser} from "../../../context/UserContext";
 import {useGame} from "../context/GameContext";
+
+import Player, {PlayerSkeleton} from "./Player";
 
 const RoomPlayers = () => {
     const {state} = useGame();

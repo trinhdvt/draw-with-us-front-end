@@ -1,11 +1,16 @@
 import React from "react";
-import {Chip, Grid, GridProps, Typography} from "@mui/material";
-import {IPlayer} from "../../../@types/User";
+import {Chip, ChipProps, Grid, GridProps, Typography} from "@mui/material";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+
+import {IPlayer} from "../../../api/@types/User";
 import RandomAvatar from "../../../components/RandomAvatar";
 import StyledAvatar from "../../../components/StyledAvatar";
 import styles from "../../../assets/styles/Player.module.scss";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
 import {useGame} from "../context/GameContext";
+
+const SmallChip = (props: ChipProps) => {
+    return <Chip variant="filled" size="small" {...props} />;
+};
 
 class Player extends React.Component<IPlayer & GridProps> {
     render() {
@@ -14,22 +19,10 @@ class Player extends React.Component<IPlayer & GridProps> {
         const Badge = () => {
             if (topk)
                 return (
-                    <Chip
-                        variant="filled"
-                        size="small"
-                        label={`Top${topk}`}
-                        className="bg-yellow-300"
-                    />
+                    <SmallChip label={`Top${topk}`} className="bg-yellow-300" />
                 );
             if (isHost)
-                return (
-                    <Chip
-                        variant="filled"
-                        size="small"
-                        label="Host"
-                        className="bg-cyan-500"
-                    />
-                );
+                return <SmallChip label="Host" className="bg-cyan-500" />;
         };
 
         return (
@@ -43,9 +36,7 @@ class Player extends React.Component<IPlayer & GridProps> {
                     item
                     container
                     md={3}
-                    direction="column"
-                    className="pr-[10px]"
-                    alignItems="center"
+                    className="flex-col items-center pr-2.5"
                 >
                     <RandomAvatar value={eid} size={45} />
                     {Badge()}
@@ -77,7 +68,7 @@ const PlayerSkeleton = () => {
 
     return (
         <Grid container alignItems="center" className={styles.playerCard}>
-            <Grid item md={3} className="pr-[10px]">
+            <Grid item md={3} className="pr-2.5">
                 <StyledAvatar />
             </Grid>
 

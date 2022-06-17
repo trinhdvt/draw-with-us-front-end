@@ -1,7 +1,7 @@
 import React from "react";
-import StyledAvatar from "./StyledAvatar";
-
 import {AvatarProps} from "@mui/material";
+
+import StyledAvatar from "./StyledAvatar";
 
 interface Props {
     size: number;

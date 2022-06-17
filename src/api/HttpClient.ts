@@ -1,5 +1,6 @@
 import axios, {AxiosError, AxiosRequestConfig} from "axios";
-import {IUser} from "../@types/User";
+
+import {IUser} from "./@types/User";
 
 const BackendUrl = "https://api.draw-with.trinhdvt.tech/";
 // const BackendUrl = "http://localhost:8888";

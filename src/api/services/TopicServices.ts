@@ -1,7 +1,8 @@
-import {BackendAPI} from "../HttpClient";
-import ITopic from "../../@types/Topic";
 import {useInfiniteQuery, useQuery} from "react-query";
-import ISample from "../../@types/Sample";
+
+import {BackendAPI} from "../HttpClient";
+import ITopic from "../@types/Topic";
+import ISample from "../@types/Sample";
 
 const fetchAllTopics = async (): Promise<ITopic[]> => {
     const {data} = await BackendAPI.get("/api/topics");
