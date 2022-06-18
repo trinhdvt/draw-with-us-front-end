@@ -7,3 +7,7 @@
 .primary-icon {
     @apply text-[#1565c0] text-2xl;
 }
+
+.avatar {
+    border: 3px solid #1565c0;
+}

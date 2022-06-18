@@ -75,7 +75,7 @@ const Game = () => {
                 <Grid item md={3.5} className={styles.playerList}>
                     <RoomPlayers />
                 </Grid>
-                <Grid item container md={6} className="flex-col mx-auto">
+                <Grid item md={6} className="flex flex-col mx-auto">
                     {GameWaitingScreen() ?? (
                         <React.Fragment>
                             {EndTurnWaitingScreen() ?? (

@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Grid, InputAdornment, Typography} from "@mui/material";
+import {Avatar, Button, Grid, InputAdornment, Typography} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
@@ -9,7 +9,6 @@ import {useNavigate} from "react-router-dom";
 import {fetchRandom} from "../../../api/services/RoomServices";
 import CssTextField from "../../../components/CssTextField";
 import {AnimatedLoading} from "../../../components/LoadingScreen";
-import RandomAvatar from "../../../components/RandomAvatar";
 import {useSocket} from "../../../context/SocketContext";
 import {useUser} from "../../../context/UserContext";
 import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
@@ -54,12 +53,7 @@ const UserPanel = () => {
                 </Typography>
             </Grid>
             <Grid item>
-                <RandomAvatar
-                    size={100}
-                    value={user.sid}
-                    src={user.avatar}
-                    className="w-[100px] h-[100px]"
-                />
+                <Avatar src={user.avatar} className="w-[100px] h-[100px]" />
             </Grid>
             <Grid item className="mb-1.5">
                 <CssTextField

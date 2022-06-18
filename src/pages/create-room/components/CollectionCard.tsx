@@ -33,9 +33,8 @@ const CollectionCard = ({
     return (
         <Grid
             item
-            container
             className={clsx(
-                "flex-col items-center cursor-pointer rounded-xl mx-1 mb-2 max-h-[141px]",
+                "flex flex-col items-center cursor-pointer rounded-xl mx-1 mb-2 max-h-[141px]",
                 styles.gameCollection,
                 selected && styles.selected
             )}
@@ -55,7 +54,7 @@ const CollectionCard = ({
                     </Typography>
                 </TopTooltip>
             </Grid>
-            <Grid item md container className="mt-1">
+            <Grid item md className="flex mt-1">
                 <div className="flex flex-col items-center flex-1">
                     <TopTooltip title="Played times">
                         <span>

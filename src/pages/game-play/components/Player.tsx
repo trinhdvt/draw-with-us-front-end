@@ -1,10 +1,15 @@
 import React from "react";
-import {Chip, ChipProps, Grid, GridProps, Typography} from "@mui/material";
+import {
+    Avatar,
+    Chip,
+    ChipProps,
+    Grid,
+    GridProps,
+    Typography,
+} from "@mui/material";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 
 import {IPlayer} from "../../../api/@types/User";
-import RandomAvatar from "../../../components/RandomAvatar";
-import StyledAvatar from "../../../components/StyledAvatar";
 import styles from "../../../assets/styles/Player.module.scss";
 import {useGame} from "../context/GameContext";
 
@@ -14,35 +19,35 @@ const SmallChip = (props: ChipProps) => {
 
 class Player extends React.Component<IPlayer & GridProps> {
     render() {
-        const {name, eid, point, topk, isHost, isMe, ...others} = this.props;
+        const {name, point, topk, isHost, isMe, avatar, ...others} = this.props;
 
-        const Badge = () => {
+        const PlayerBadge = () => {
             if (topk)
                 return (
                     <SmallChip label={`Top${topk}`} className="bg-yellow-300" />
                 );
             if (isHost)
                 return <SmallChip label="Host" className="bg-cyan-500" />;
+            return <></>;
         };
+
+        const PlayerAvatar = () => (
+            <Avatar src={avatar} className="w-[45px] h-[45px]" />
+        );
 
         return (
             <Grid
                 container
                 alignItems="center"
-                {...others}
                 className={styles.playerCard}
+                {...others}
             >
-                <Grid
-                    item
-                    container
-                    md={3}
-                    className="flex-col items-center pr-2.5"
-                >
-                    <RandomAvatar value={eid} size={45} />
-                    {Badge()}
+                <Grid item md={3} className="flex flex-col items-center pr-2.5">
+                    <PlayerAvatar />
+                    <PlayerBadge />
                 </Grid>
 
-                <Grid item container md={9} direction="column">
+                <Grid item md={9} className="flex flex-col">
                     <div className="flex items-center">
                         {isMe && <HowToRegIcon color="primary" />}
                         <Typography
@@ -69,7 +74,7 @@ const PlayerSkeleton = () => {
     return (
         <Grid container alignItems="center" className={styles.playerCard}>
             <Grid item md={3} className="pr-2.5">
-                <StyledAvatar />
+                <Avatar className="avatar" />
             </Grid>
 
             <Grid item md={9}>
