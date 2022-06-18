@@ -3,7 +3,6 @@ import {io, ManagerOptions, SocketOptions} from "socket.io-client";
 
 import {BackendUrl} from "../api/HttpClient";
 import {SocketType} from "../api/@types/SocketEvent";
-import generateAvatar from "../utils/AvatarGenerate";
 
 import {IUser, useUser} from "./UserContext";
 
@@ -31,8 +30,7 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
                 setUser(prev => ({...prev, sid: socketCnn.id}));
             });
             socketCnn.emit("user:init", (response: IUser) => {
-                const avatar = generateAvatar(response.sid);
-                setUser({...response, avatar});
+                setUser(response);
             });
         } catch (e) {
             console.error(e);

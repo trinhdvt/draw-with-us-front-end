@@ -2,7 +2,7 @@ import React from "react";
 import {
     Autocomplete,
     Button,
-    CircularProgress,
+    Checkbox,
     Grid,
     TextField,
     Typography,
@@ -12,7 +12,6 @@ import AddIcon from "@mui/icons-material/Add";
 import clsx from "clsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
-import MyCheckbox from "../../components/Checkbox";
 import ITopic from "../../api/@types/Topic";
 import Tag from "../../components/Tag";
 import styles from "../../assets/styles/Collection.module.scss";
@@ -84,12 +83,10 @@ const CreateCollection = () => {
             <Grid container className={styles.subContainer}>
                 <Grid
                     item
-                    container
                     md={4}
-                    direction="column"
-                    className={styles.sidePanel}
+                    className={clsx(styles.sidePanel, "flex flex-col")}
                 >
-                    <Grid item container className="flex-col mb-2.5">
+                    <Grid item className="flex flex-col mb-2.5">
                         <Typography className={styles.requiredInput}>
                             1. Collection name <span>*</span>
                         </Typography>
@@ -101,16 +98,16 @@ const CreateCollection = () => {
                             onChange={e => setCollectionName(e.target.value)}
                         />
                     </Grid>
-                    <Grid item container alignItems="center" className="mb-2.5">
+                    <Grid item className="flex items-center mb-2.5">
                         <Typography className="capitalize">
                             2. Share with others
                         </Typography>
-                        <MyCheckbox
+                        <Checkbox
                             checked={isPublic}
                             onClick={() => setPublic(!isPublic)}
                         />
                     </Grid>
-                    <Grid item container direction="column">
+                    <Grid item className="flex flex-col">
                         <Grid item>
                             <Typography className={styles.requiredInput}>
                                 3. Select topic below <span>*</span>
@@ -118,10 +115,8 @@ const CreateCollection = () => {
                         </Grid>
                         <Grid
                             item
-                            container
                             md
-                            justifyContent="space-between"
-                            alignItems="center"
+                            className="flex items-center justify-between"
                         >
                             <Grid item md={8}>
                                 <Autocomplete
@@ -147,23 +142,6 @@ const CreateCollection = () => {
                                             onChange={e =>
                                                 setTextCrtTopic(e.target.value)
                                             }
-                                            InputProps={{
-                                                ...params.InputProps,
-                                                endAdornment: (
-                                                    <React.Fragment>
-                                                        {loading ? (
-                                                            <CircularProgress
-                                                                color="inherit"
-                                                                size={20}
-                                                            />
-                                                        ) : null}
-                                                        {
-                                                            params.InputProps
-                                                                .endAdornment
-                                                        }
-                                                    </React.Fragment>
-                                                ),
-                                            }}
                                         />
                                     )}
                                 />
@@ -207,12 +185,10 @@ const CreateCollection = () => {
                 </Grid>
                 <Grid
                     item
-                    container
-                    direction="column"
                     md={7.9}
-                    className={styles.searchBar}
+                    className={clsx(styles.searchBar, "flex flex-col")}
                 >
-                    <Grid item container alignItems="center">
+                    <Grid item className="flex items-center ">
                         <Typography>
                             You have select <b>{addTopics.length}/340</b> topics
                         </Typography>

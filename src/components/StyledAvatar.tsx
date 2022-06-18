@@ -1,7 +1,8 @@
-import {Avatar, styled} from "@mui/material";
+import React from "react";
+import {Avatar, AvatarProps} from "@mui/material";
 
-const StyledAvatar = styled(Avatar)({
-    border: "3px solid #1565c0",
-});
+const StyledAvatar = ({className, ...others}: AvatarProps) => {
+    return <Avatar className={`avatar ${className}`} {...others} />;
+};
 
 export default StyledAvatar;

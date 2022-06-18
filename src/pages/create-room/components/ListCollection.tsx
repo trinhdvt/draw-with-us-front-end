@@ -8,11 +8,13 @@ import {
     Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import clsx from "clsx";
 
 import {CollectionType, ICollection} from "../../../api/@types/Collection";
 import {useCollections} from "../../../api/services/CollectionServices";
 import styles from "../../../assets/styles/Room.module.scss";
+import {LightTooltip} from "../../../components/TopTooltip";
 
 import CollectionCard from "./CollectionCard";
 
@@ -57,42 +59,46 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
         </Select>
     );
 
-    const isLogin = true;
+    const isLogin = false;
+    const tooltipTitle = () => {
+        if (isLogin) return "";
+
+        return (
+            <Typography>
+                <Link to={"#"}>Sign In</Link>
+                <span>{" to create your collection"}</span>
+            </Typography>
+        );
+    };
 
     return (
-        <Grid item container md={7.8} className="flex-col ml-auto" {...others}>
+        <Grid item md={7.8} className="flex flex-col ml-auto" {...others}>
             <Grid
                 item
-                container={isLogin}
-                alignItems="center"
-                className={styles.collectionOption}
+                className={clsx(styles.selectPanel, "flex items-center")}
             >
-                {!isLogin ? (
-                    <Typography>
-                        Select any topic collection or <b>Sign in</b> to create
-                        your own.
-                    </Typography>
-                ) : (
-                    <>
-                        <Grid item md={5}>
-                            <Typography>Select one topic</Typography>
-                        </Grid>
-                        <Grid item container md justifyContent="space-evenly">
-                            <Grid item md={5}>
-                                <CollectionFilter />
-                            </Grid>
-                            <Grid item>
+                <Grid item md={5}>
+                    <Typography>Select one topic</Typography>
+                </Grid>
+                <Grid item md className="flex justify-evenly items-center">
+                    <Grid item md={4}>
+                        <CollectionFilter />
+                    </Grid>
+                    <Grid item>
+                        <LightTooltip title={tooltipTitle()}>
+                            <span>
                                 <Button
                                     startIcon={<AddIcon />}
                                     variant="contained"
+                                    disabled={!isLogin}
                                     onClick={() => navigate("/collection")}
                                 >
-                                    Create
+                                    New Collection
                                 </Button>
-                            </Grid>
-                        </Grid>
-                    </>
-                )}
+                            </span>
+                        </LightTooltip>
+                    </Grid>
+                </Grid>
             </Grid>
             <Grid item container className={styles.collectionPanel}>
                 {filteredData?.map(item => (
