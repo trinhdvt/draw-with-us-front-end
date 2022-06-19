@@ -1,7 +1,7 @@
 import React from "react";
 import {Grid, Typography} from "@mui/material";
+import clsx from "clsx";
 
-import styles from "../../assets/styles/Game.module.scss";
 import {RoomStatus} from "../../api/@types/Room";
 import {useRoom} from "../../api/services/RoomServices";
 import {useSocket} from "../../context/SocketContext";
@@ -21,6 +21,7 @@ import GameProvider, {GameActionType, useGame} from "./context/GameContext";
 import {timeUp} from "./utils/GameNotify";
 import Wrapper from "./Wrapper";
 import MessagePanel from "./components/MessagePanel";
+import GameSupportController from "./components/GameSupportController";
 
 const Game = () => {
     const socket = useSocket();
@@ -73,8 +74,9 @@ const Game = () => {
                 )}
             </Grid>
             <Grid item container>
-                <Grid item md={3.5} className={styles.playerList}>
+                <Grid item md={3.5} className="flex flex-col">
                     <RoomPlayers />
+                    <GameSupportController />
                 </Grid>
                 <Grid item md={6} className="flex flex-col mx-auto">
                     {GameWaitingScreen() ?? (
@@ -83,13 +85,13 @@ const Game = () => {
                                 <DrawBoard className="max-h-[320px]" />
                             )}
                             {data && (
-                                <Grid item md className="mt-2 max-h-[30px]">
+                                <Grid item md className="my-auto max-h-[30px]">
                                     <CountdownTimer maxTime={data.timeOut} />
                                 </Grid>
                             )}
                         </React.Fragment>
                     )}
-                    <MessagePanel />
+                    <MessagePanel className={clsx(!isPlaying && "mt-auto")} />
                 </Grid>
             </Grid>
         </Grid>

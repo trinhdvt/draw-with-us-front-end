@@ -3,14 +3,12 @@ import {Container} from "@mui/material";
 
 import AppHeader from "../../../layout/AppHeader";
 
-import GameFooter from "./GameFooter";
-
 const GameLayout = ({children}: {children?: React.ReactNode}) => (
     <main>
         <Container maxWidth="md" className="mt-1 mx-auto bg-blue-300">
             <AppHeader height="60px" />
             {children}
-            <GameFooter />
+            <footer />
         </Container>
     </main>
 );

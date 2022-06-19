@@ -4,6 +4,7 @@ import FlipMove from "react-flip-move";
 import {usePlayers} from "../../../api/services/RoomServices";
 import {useUser} from "../../../context/UserContext";
 import {useGame} from "../context/GameContext";
+import styles from "../../../assets/styles/Game.module.scss";
 
 import Player, {PlayerSkeleton} from "./Player";
 
@@ -19,7 +20,7 @@ const RoomPlayers = () => {
     };
 
     return (
-        <>
+        <div className={styles.playerList}>
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/*
             // @ts-ignore */}
@@ -40,7 +41,7 @@ const RoomPlayers = () => {
                 ))}
             </FlipMove>
             {GenerateSkeleton(10 - (data?.length ?? 0))}
-        </>
+        </div>
     );
 };
 

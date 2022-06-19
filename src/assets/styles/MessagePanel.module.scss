@@ -1,8 +1,5 @@
 @import "Common";
 
 .msgPanel {
-  @apply flex flex-col border-solid bg-white
-  border-gray-500 rounded-xl overflow-y-scroll mb-1;
-
   @extend .scrollBar;
 }

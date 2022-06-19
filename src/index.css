@@ -11,3 +11,16 @@
 .avatar {
     border: 3px solid #1565c0;
 }
+
+.scrollBar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    border-radius: 12px;
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122, 153, 217)), color-stop(0.72, rgb(73, 125, 189)), color-stop(0.86, rgb(28, 58, 148)));
+    border-radius: 12px;
+}

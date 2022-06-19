@@ -1,8 +1,13 @@
 import React from "react";
-import {Grid, IconButton, InputAdornment, Typography} from "@mui/material";
+import {
+    Grid,
+    GridProps,
+    IconButton,
+    InputAdornment,
+    Typography,
+} from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 
-import styles from "../../../assets/styles/MessagePanel.module.scss";
 import CssTextField from "../../../components/CssTextField";
 
 const MessageColorPalette = {
@@ -35,7 +40,7 @@ const Message = ({from, message, type}: IMessage) => {
     );
 };
 
-const MessagePanel = () => {
+const MessagePanel = (props: GridProps) => {
     const [roomMsg, setRoomMsg] = React.useState(() => {
         return Array.from(
             {length: 10},
@@ -60,18 +65,20 @@ const MessagePanel = () => {
     };
 
     return (
-        <Grid item className="flex flex-col mt-3">
+        <Grid item container direction="column" {...props}>
             <Grid
                 item
                 height="110px"
-                className={styles.msgPanel}
                 ref={containerRef}
+                className="scrollBar flex flex-col mb-1 border-solid bg-white
+                border-gray-500 rounded-xl overflow-y-scroll"
             >
                 {roomMsg.map((message, index) => (
                     <Message key={index} {...message} />
                 ))}
             </Grid>
             <CssTextField
+                className="my-1"
                 value={myMsg}
                 onChange={e => setMyMsg(e.target.value.slice(0, 255))}
                 size="small"
