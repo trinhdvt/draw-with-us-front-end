@@ -20,6 +20,7 @@ import RoomPlayers from "./components/RoomPlayers";
 import GameProvider, {GameActionType, useGame} from "./context/GameContext";
 import {timeUp} from "./utils/GameNotify";
 import Wrapper from "./Wrapper";
+import MessagePanel from "./components/MessagePanel";
 
 const Game = () => {
     const socket = useSocket();
@@ -82,12 +83,13 @@ const Game = () => {
                                 <DrawBoard className="max-h-[320px]" />
                             )}
                             {data && (
-                                <Grid item md className="mt-3">
+                                <Grid item md className="mt-2 max-h-[30px]">
                                     <CountdownTimer maxTime={data.timeOut} />
                                 </Grid>
                             )}
                         </React.Fragment>
                     )}
+                    <MessagePanel />
                 </Grid>
             </Grid>
         </Grid>

@@ -56,7 +56,7 @@ const GameFooter = () => {
     );
 
     return (
-        <Grid component="footer" container className="mt-7">
+        <Grid component="footer" container className="mt-1">
             <Grid item container md={3.5} alignItems="center" className="mb-2">
                 <SmallOutlineBtn
                     startIcon={<LogoutIcon />}

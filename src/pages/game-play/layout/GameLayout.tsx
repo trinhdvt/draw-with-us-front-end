@@ -7,7 +7,7 @@ import GameFooter from "./GameFooter";
 
 const GameLayout = ({children}: {children?: React.ReactNode}) => (
     <main>
-        <Container maxWidth="md" className="mt-[30px] mx-auto bg-blue-300">
+        <Container maxWidth="md" className="mt-1 mx-auto bg-blue-300">
             <AppHeader height="60px" />
             {children}
             <GameFooter />

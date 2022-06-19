@@ -44,3 +44,18 @@ $scroll-container-height: 250px;
   border: 2px solid $blue-sky;
   padding: 4px;
 }
+
+.scrollBar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122, 153, 217)), color-stop(0.72, rgb(73, 125, 189)), color-stop(0.86, rgb(28, 58, 148)));
+    border-radius: 12px;
+  }
+}
