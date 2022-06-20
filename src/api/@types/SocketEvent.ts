@@ -1,5 +1,7 @@
 import {Socket} from "socket.io-client";
 
+import {IMessage} from "../../pages/game-play/components/MessagePanel";
+
 import ITopic from "./Topic";
 import {IUser} from "./User";
 
@@ -7,6 +9,7 @@ interface ServerToClientEvents {
     "room:update": () => void;
     "game:nextTurn": (topic: ITopic) => void;
     "game:endTurn": () => void;
+    "room:msg": (payload: IMessage) => void;
 }
 
 interface ClientToServerEvents {
@@ -23,6 +26,7 @@ interface ClientToServerEvents {
         image: string,
         callback: (response: {isCorrect: boolean}) => void
     ) => void;
+    "room:msg": (roomId: string, payload: IMessage) => void;
 }
 
 type SocketType = Socket<ServerToClientEvents, ClientToServerEvents>;
