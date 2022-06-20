@@ -7,8 +7,12 @@ import {
     Typography,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
+import clsx from "clsx";
 
 import CssTextField from "../../../components/CssTextField";
+import {useSocket} from "../../../context/SocketContext";
+import {useGame} from "../context/GameContext";
+import {useUser} from "../../../context/UserContext";
 
 const MessageColorPalette = {
     warn: "#ffa726",
@@ -18,9 +22,10 @@ const MessageColorPalette = {
 };
 
 type IMessage = {
-    from: string;
+    from?: string;
     message: string;
     type?: keyof typeof MessageColorPalette;
+    id?: string;
 };
 
 const Message = ({from, message, type}: IMessage) => {
@@ -29,7 +34,10 @@ const Message = ({from, message, type}: IMessage) => {
         <div className="flex my-0.5">
             <Typography
                 variant="body1"
-                className="capitalize font-bold mx-1 text-gray-800"
+                className={clsx(
+                    "capitalize font-bold ml-1 text-gray-800",
+                    from && "mr-1"
+                )}
             >
                 {from}
             </Typography>
@@ -41,27 +49,35 @@ const Message = ({from, message, type}: IMessage) => {
 };
 
 const MessagePanel = (props: GridProps) => {
-    const [roomMsg, setRoomMsg] = React.useState(() => {
-        return Array.from(
-            {length: 10},
-            (): IMessage => ({
-                from: "Asan ",
-                message: "has done!",
-                type: "success",
-            })
-        );
-    });
+    const socket = useSocket();
+    const {
+        state: {roomId},
+    } = useGame();
+    const {user} = useUser();
     const [myMsg, setMyMsg] = React.useState("");
     const containerRef = React.useRef<HTMLDivElement>(null);
+    const [roomMsg, setRoomMsg] = React.useState<IMessage[]>([]);
+
+    React.useEffect(() => {
+        socket?.on("room:msg", payload => {
+            setRoomMsg(prev => [payload, ...prev]);
+        });
+        return () => {
+            socket?.off("room:msg");
+        };
+    }, [socket]);
+
     const onMsgSend = () => {
         const trimmedMsg = myMsg.trim();
         if (trimmedMsg.length === 0) return;
         setMyMsg("");
-        setRoomMsg(prevState => [
-            {from: "Me", message: trimmedMsg},
-            ...prevState,
-        ]);
-        containerRef.current?.scrollTo({top: 0, behavior: "smooth"});
+        if (roomId) {
+            socket?.emit("room:msg", roomId, {
+                from: `${user.name}💬: `,
+                message: trimmedMsg,
+            });
+            containerRef.current?.scrollTo({top: 0, behavior: "smooth"});
+        }
     };
 
     return (
@@ -74,7 +90,7 @@ const MessagePanel = (props: GridProps) => {
                 border-gray-500 rounded-xl overflow-y-scroll"
             >
                 {roomMsg.map((message, index) => (
-                    <Message key={index} {...message} />
+                    <Message key={message.id ?? index} {...message} />
                 ))}
             </Grid>
             <CssTextField
@@ -102,4 +118,5 @@ const MessagePanel = (props: GridProps) => {
     );
 };
 
+export type {IMessage};
 export default MessagePanel;
