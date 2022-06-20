@@ -6,7 +6,7 @@ const DefaultUser: IUser = {
     name: "",
     eid: "",
     sid: "",
-    avatar: "https://cdn.trinhdvt.tech/avatar.png",
+    avatar: "",
 };
 
 interface UserContextProps {
