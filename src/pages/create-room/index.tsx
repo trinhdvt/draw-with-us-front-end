@@ -4,6 +4,7 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import {useNavigate} from "react-router-dom";
 import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
+import clsx from "clsx";
 
 import RoomLayout from "../../layout/RoomLayout";
 import {useCreateRoom} from "../../api/services/RoomServices";
@@ -55,10 +56,8 @@ const CreateRoom = () => {
             <Grid container className={styles.subContainer}>
                 <Grid
                     item
-                    container
                     md={4}
-                    direction="column"
-                    className={styles.sidePanel}
+                    className={clsx("flex flex-col", styles.sidePanel)}
                 >
                     <Grid item container className="items-center mb-2.5">
                         <Grid item md={2}>
