@@ -12,7 +12,7 @@ import clsx from "clsx";
 import CssTextField from "../../../components/CssTextField";
 import {useSocket} from "../../../context/SocketContext";
 import {useGame} from "../context/GameContext";
-import {useUser} from "../../../context/UserContext";
+import {useUser} from "../../../context/UserStore";
 
 const MessageColorPalette = {
     warn: "#ffa726",

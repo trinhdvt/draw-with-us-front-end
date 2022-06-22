@@ -20,7 +20,7 @@ import CssTextField from "../../components/CssTextField";
 import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
 import TopTooltip from "../../components/TopTooltip";
-import {useUser} from "../../context/UserContext";
+import {useUser} from "../../context/UserStore";
 
 import TopicSampleModal from "./components/TopicSampleModal";
 

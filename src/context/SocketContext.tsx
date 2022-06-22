@@ -4,7 +4,7 @@ import {io, ManagerOptions, SocketOptions} from "socket.io-client";
 import {BackendUrl} from "../api/HttpClient";
 import {SocketType} from "../api/@types/SocketEvent";
 
-import {IUser, useUser} from "./UserContext";
+import {useUser} from "./UserStore";
 
 const SocketContext = React.createContext<SocketType | null>(null);
 
@@ -19,23 +19,17 @@ const SocketProvider = ({children}: {children: React.ReactNode}) => {
             };
         }, []);
 
-    const {setUser} = useUser();
+    const {setSID, setUser} = useUser();
     React.useEffect(() => {
         try {
             const socketCnn: SocketType = io(BackendUrl, options);
-            console.log("Socket connected");
-
             setConnection(socketCnn);
-            socketCnn.on("connect", () => {
-                setUser(prev => ({...prev, sid: socketCnn.id}));
-            });
-            socketCnn.emit("user:init", (response: IUser) => {
-                setUser(response);
-            });
+            socketCnn.on("connect", () => setSID(socketCnn.id));
+            socketCnn.emit("user:init", response => setUser(response));
         } catch (e) {
-            console.error(e);
+            alert(e);
         }
-    }, [options, setUser]);
+    }, [options, setSID, setUser]);
 
     const contextValue = React.useMemo(() => connection, [connection]);
 

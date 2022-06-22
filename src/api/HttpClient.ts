@@ -6,12 +6,17 @@ const BackendUrl = "https://api.draw-with.trinhdvt.tech/";
 // const BackendUrl = "http://localhost:8888";
 
 const onRequest = (config: AxiosRequestConfig) => {
-    const user: IUser = JSON.parse(sessionStorage.getItem("user") ?? "{}");
-    const {sid, eid} = user;
-    config.headers = {
-        "X-SID": sid,
-        "X-EID": eid,
-    };
+    const state = JSON.parse(
+        sessionStorage.getItem("user-state") ?? "{}"
+    ).state;
+    if (Object.hasOwn(state, "user")) {
+        const userState: IUser = state.user;
+        const {sid, eid} = userState;
+        config.headers = {
+            "X-SID": sid,
+            "X-EID": eid,
+        };
+    }
 
     return config;
 };

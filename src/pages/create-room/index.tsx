@@ -18,8 +18,8 @@ import ListCollection from "./components/ListCollection";
 const CreateRoom = () => {
     const navigate = useNavigate();
     const [payload, setPayload] = React.useState<IRoomRequest>({
-        maxUsers: 0,
-        timeOut: 0,
+        maxUsers: 10,
+        timeOut: 30,
         collectionId: "",
     });
     const [isDisable, setDisableCreate] = React.useState(true);

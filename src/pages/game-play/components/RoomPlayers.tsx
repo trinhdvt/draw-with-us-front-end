@@ -2,7 +2,7 @@ import React from "react";
 import FlipMove from "react-flip-move";
 
 import {usePlayers} from "../../../api/services/RoomServices";
-import {useUser} from "../../../context/UserContext";
+import {useUser} from "../../../context/UserStore";
 import {useGame} from "../context/GameContext";
 import styles from "../../../assets/styles/Game.module.scss";
 
@@ -36,7 +36,7 @@ const RoomPlayers = () => {
                     <Player
                         key={player.eid}
                         {...player}
-                        isMe={player.eid == user.eid}
+                        isMe={player.eid === user.eid}
                     />
                 ))}
             </FlipMove>

@@ -5,7 +5,6 @@ import {ReactQueryDevtools} from "react-query/devtools";
 
 import {AnimatedLoading} from "./components/LoadingScreen";
 import SocketProvider from "./context/SocketContext";
-import UserProvider from "./context/UserContext";
 import GameWrapper from "./pages/game-play";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
@@ -29,38 +28,30 @@ const App = () => (
         {import.meta.env.DEV && (
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         )}
-        <UserProvider>
-            <SocketProvider>
-                <BrowserRouter>
-                    <Suspense fallback={<AnimatedLoading />}>
-                        <Routes>
-                            <Route element={<AppLayout />}>
-                                <Route path="/" element={<HomePage />} />
-                                <Route path="/room" element={<ListRoom />} />
-                                <Route
-                                    path="/create"
-                                    element={<CreateRoom />}
-                                />
-                                <Route path="/gallery" element={<Gallery />} />
-                                <Route
-                                    path="/collection"
-                                    element={<CreateCollection />}
-                                />
-                                <Route
-                                    path="/login/fb/callback"
-                                    element={<HomePage />}
-                                />
-                            </Route>
+        <SocketProvider>
+            <BrowserRouter>
+                <Suspense fallback={<AnimatedLoading />}>
+                    <Routes>
+                        <Route element={<AppLayout />}>
+                            <Route path="/" element={<HomePage />} />
+                            <Route path="/room" element={<ListRoom />} />
+                            <Route path="/create" element={<CreateRoom />} />
+                            <Route path="/gallery" element={<Gallery />} />
                             <Route
-                                path="/play/:roomId"
-                                element={<GameWrapper />}
+                                path="/collection"
+                                element={<CreateCollection />}
                             />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </Suspense>
-                </BrowserRouter>
-            </SocketProvider>
-        </UserProvider>
+                            <Route
+                                path="/login/fb/callback"
+                                element={<HomePage />}
+                            />
+                        </Route>
+                        <Route path="/play/:roomId" element={<GameWrapper />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </Suspense>
+            </BrowserRouter>
+        </SocketProvider>
     </QueryClientProvider>
 );
 

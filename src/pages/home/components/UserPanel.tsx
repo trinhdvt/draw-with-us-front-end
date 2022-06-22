@@ -10,7 +10,7 @@ import {fetchRandom} from "../../../api/services/RoomServices";
 import CssTextField from "../../../components/CssTextField";
 import {AnimatedLoading} from "../../../components/LoadingScreen";
 import {useSocket} from "../../../context/SocketContext";
-import {useUser} from "../../../context/UserContext";
+import {useUser} from "../../../context/UserStore";
 import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 
 const UserPanel = () => {
