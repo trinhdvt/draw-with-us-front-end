@@ -19,9 +19,10 @@ const useSamples = (topicId?: string) => {
     return useInfiniteQuery(
         ["samples", topicId],
         async ({pageParam = 0}) => {
+            const params = {page: pageParam, size: 20};
             const {data} = await BackendAPI.get<ISample[]>(
                 `/api/topic/${topicId}/samples`,
-                {params: {page: pageParam, size: 20}}
+                {params}
             );
             return {data, nextPage: pageParam + 1};
         },

@@ -10,9 +10,9 @@ import SendIcon from "@mui/icons-material/Send";
 import clsx from "clsx";
 
 import CssTextField from "../../../components/CssTextField";
-import {useSocket} from "../../../context/SocketContext";
+import {useSocket} from "../../../store/SocketStore";
 import {useGame} from "../context/GameContext";
-import {useUser} from "../../../context/UserStore";
+import {useUser} from "../../../store/UserStore";
 
 const MessageColorPalette = {
     warn: "#ffa726",
@@ -51,7 +51,7 @@ const Message = ({from, message, type}: IMessage) => {
 const MessagePanel = (props: GridProps) => {
     const socket = useSocket();
     const {
-        state: {roomId},
+        gameState: {roomId},
     } = useGame();
     const {user} = useUser();
     const [myMsg, setMyMsg] = React.useState("");

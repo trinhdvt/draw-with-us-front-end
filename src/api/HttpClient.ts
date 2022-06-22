@@ -8,7 +8,7 @@ const BackendUrl = "https://api.draw-with.trinhdvt.tech/";
 const onRequest = (config: AxiosRequestConfig) => {
     const state = JSON.parse(
         sessionStorage.getItem("user-state") ?? "{}"
-    ).state;
+    ).gameState;
     if (Object.hasOwn(state, "user")) {
         const userState: IUser = state.user;
         const {sid, eid} = userState;

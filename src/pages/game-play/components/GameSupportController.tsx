@@ -27,11 +27,11 @@ const SmallOutlineBtn = ({
 );
 
 const GameSupportController = () => {
-    const {state} = useGame();
+    const {gameState} = useGame();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [isCopied, setCopied] = React.useState(false);
-    const shareLink = `${location.protocol}://${location.hostname}/play?rid=${state.roomId}`;
+    const shareLink = `${location.protocol}://${location.hostname}/play?rid=${gameState.roomId}`;
 
     const onExit = () => {
         const isExit = confirm("Are you sure you want to exit the game?");

@@ -4,7 +4,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {ReactQueryDevtools} from "react-query/devtools";
 
 import {AnimatedLoading} from "./components/LoadingScreen";
-import SocketProvider from "./context/SocketContext";
+import SocketWrapper from "./store/SocketStore";
 import GameWrapper from "./pages/game-play";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
@@ -28,7 +28,7 @@ const App = () => (
         {import.meta.env.DEV && (
             <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
         )}
-        <SocketProvider>
+        <SocketWrapper>
             <BrowserRouter>
                 <Suspense fallback={<AnimatedLoading />}>
                     <Routes>
@@ -51,7 +51,7 @@ const App = () => (
                     </Routes>
                 </Suspense>
             </BrowserRouter>
-        </SocketProvider>
+        </SocketWrapper>
     </QueryClientProvider>
 );
 

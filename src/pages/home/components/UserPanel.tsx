@@ -9,8 +9,8 @@ import {useNavigate} from "react-router-dom";
 import {fetchRandom} from "../../../api/services/RoomServices";
 import CssTextField from "../../../components/CssTextField";
 import {AnimatedLoading} from "../../../components/LoadingScreen";
-import {useSocket} from "../../../context/SocketContext";
-import {useUser} from "../../../context/UserStore";
+import {useSocket} from "../../../store/SocketStore";
+import {useUser} from "../../../store/UserStore";
 import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 
 const UserPanel = () => {

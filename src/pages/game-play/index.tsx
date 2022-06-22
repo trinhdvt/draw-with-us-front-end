@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import {RoomStatus} from "../../api/@types/Room";
 import {useRoom} from "../../api/services/RoomServices";
-import {useSocket} from "../../context/SocketContext";
+import {useSocket} from "../../store/SocketStore";
 import ITopic from "../../api/@types/Topic";
 
 import {
@@ -25,18 +25,17 @@ import GameSupportController from "./components/GameSupportController";
 
 const Game = () => {
     const socket = useSocket();
-    const {state, dispatch} = useGame();
-    const {data} = useRoom(state.roomId);
+    const {gameState, dispatch} = useGame();
+    const {data} = useRoom(gameState.roomId);
     const isPlaying = data?.status === RoomStatus.PLAYING;
 
     React.useEffect(() => {
         socket?.on("game:nextTurn", (topic: ITopic) => {
             dispatch({type: GameActionType.NEXT_TURN, payload: topic});
         });
-
         socket?.on("game:endTurn", async () => {
             dispatch({type: GameActionType.END_TURN});
-            if (!state.isDone && isPlaying) {
+            if (!gameState.isDone && isPlaying) {
                 await timeUp();
             }
         });
@@ -44,7 +43,7 @@ const Game = () => {
             socket?.off("game:nextTurn");
             socket?.off("game:endTurn");
         };
-    }, [state.isDone, socket, dispatch, isPlaying]);
+    }, [gameState.isDone, socket, dispatch, isPlaying]);
 
     const GameWaitingScreen = () => {
         if (isPlaying) return;
@@ -58,8 +57,8 @@ const Game = () => {
 
     const EndTurnWaitingScreen = () => {
         if (!isPlaying) return;
-        if (state.isEndTurn) return <WaitNextTurn />;
-        if (state.isDone) return <WaitEndTurn />;
+        if (gameState.isEndTurn) return <WaitNextTurn />;
+        if (gameState.isDone) return <WaitEndTurn />;
         return;
     };
 
@@ -67,9 +66,9 @@ const Game = () => {
         <Grid container>
             <Grid item md={3.5} />
             <Grid item md={6} className="mb-2.5 mx-auto">
-                {isPlaying && !state.isEndTurn && !state.isDone && (
+                {isPlaying && !gameState.isEndTurn && !gameState.isDone && (
                     <Typography variant="h4">
-                        Let&apos;s draw: <b>{state.target?.nameVi}</b>
+                        Let&apos;s draw: <b>{gameState.target?.nameVi}</b>
                     </Typography>
                 )}
             </Grid>

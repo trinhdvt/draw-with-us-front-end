@@ -4,7 +4,7 @@ import {BsHourglassSplit} from "react-icons/bs";
 import clsx from "clsx";
 
 import styles from "../../../assets/styles/WaitingScreen.module.scss";
-import {useSocket} from "../../../context/SocketContext";
+import {useSocket} from "../../../store/SocketStore";
 
 interface WaitingScreenProps {
     title: string;

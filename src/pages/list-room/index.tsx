@@ -3,12 +3,13 @@ import {Button, Grid} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
+import {useQueryClient} from "react-query";
 
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
 import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
-import {useSocket} from "../../context/SocketContext";
+import {useSocket} from "../../store/SocketStore";
 import TopTooltip from "../../components/TopTooltip";
 
 import RoomCard, {RoomDefault} from "./components/RoomCard";
@@ -21,15 +22,26 @@ const RoomHome = () => {
     });
     const socket = useSocket();
     const {data} = useRooms();
+    const queryClient = useQueryClient();
 
-    const onRoomSelect = (roomId: string) => {
-        setSelectedRoom(roomId != selectedRoom ? roomId : "");
-    };
+    React.useEffect(() => {
+        socket?.on("list-room:update", async () => {
+            await queryClient.invalidateQueries(["rooms"]);
+        });
+        return () => {
+            socket?.off("list-room:update");
+        };
+    }, [queryClient, socket]);
 
+    const onRoomSelect = (roomId: string) => setSelectedRoom(roomId);
     const onJoinRoom = async () => {
         socket?.emit("room:join", selectedRoom, ({message, roomId}) => {
             if (roomId) return navigate(`/play/${roomId}`);
-            if (message) alert(message);
+            if (message) {
+                queryClient
+                    .invalidateQueries(["rooms"])
+                    .then(() => alert(message));
+            }
         });
     };
     const isDisable = selectedRoom === "";

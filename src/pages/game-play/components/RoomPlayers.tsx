@@ -1,16 +1,17 @@
 import React from "react";
 import FlipMove from "react-flip-move";
+import clsx from "clsx";
 
 import {usePlayers} from "../../../api/services/RoomServices";
-import {useUser} from "../../../context/UserStore";
+import {useUser} from "../../../store/UserStore";
 import {useGame} from "../context/GameContext";
 import styles from "../../../assets/styles/Game.module.scss";
 
 import Player, {PlayerSkeleton} from "./Player";
 
 const RoomPlayers = () => {
-    const {state} = useGame();
-    const {data} = usePlayers(state.roomId);
+    const {gameState} = useGame();
+    const {data} = usePlayers(gameState.roomId);
     const {user} = useUser();
 
     const GenerateSkeleton = (amount: number) => {
@@ -20,7 +21,7 @@ const RoomPlayers = () => {
     };
 
     return (
-        <div className={styles.playerList}>
+        <div className={clsx(styles.playerList, "scrollBar")}>
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/*
             // @ts-ignore */}

@@ -2,7 +2,7 @@ import React from "react";
 import {Navigate, useParams} from "react-router-dom";
 import {useQueryClient} from "react-query";
 
-import {useSocket} from "../../context/SocketContext";
+import {useSocket} from "../../store/SocketStore";
 import {useValidPlayer} from "../../api/services/RoomServices";
 import {AnimatedLoading} from "../../components/LoadingScreen";
 

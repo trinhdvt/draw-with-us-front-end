@@ -17,13 +17,13 @@ import clsx from "clsx";
 import styles from "../../../assets/styles/Game.module.scss";
 import LoadingButton from "../../../components/LoadingButton";
 import {GameActionType, useGame} from "../context/GameContext";
-import {useSocket} from "../../../context/SocketContext";
+import {useSocket} from "../../../store/SocketStore";
 import {alertSuccess, alertWrong} from "../utils/GameNotify";
 
 const DrawBoard = ({...others}: GridProps) => {
     const socket = useSocket();
-    const {state, dispatch} = useGame();
-    const {roomId} = state;
+    const {gameState, dispatch} = useGame();
+    const {roomId} = gameState;
     const canvasRef = React.useRef<ReactSketchCanvasRef>(null);
     const [eraseMode, setEraseMode] = React.useState(false);
     const [isPredicting, setPredicting] = React.useState(false);
@@ -82,7 +82,7 @@ const DrawBoard = ({...others}: GridProps) => {
                     variant="contained"
                     endIcon={<ArrowForwardIcon />}
                     onClick={onPredict}
-                    disabled={state.isDone}
+                    disabled={gameState.isDone}
                 >
                     Check
                 </LoadingButton>

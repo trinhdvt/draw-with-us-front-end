@@ -68,8 +68,8 @@ class Player extends React.Component<IPlayer & GridProps> {
 }
 
 const PlayerSkeleton = () => {
-    const {state} = useGame();
-    const isPlaying = !state.target;
+    const {gameState} = useGame();
+    const isPlaying = !gameState.target;
 
     return (
         <Grid container alignItems="center" className={styles.playerCard}>

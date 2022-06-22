@@ -17,7 +17,7 @@ const Timer = (props: TimerProps) => {
     }, [maxTime]);
     const [progress, setProgress] = React.useState(defaultProgress);
     const [timeOut, setTimeOut] = React.useState(-1);
-    const {state} = useGame();
+    const {gameState} = useGame();
     const BREAK_TIME = 3;
 
     React.useEffect(() => {
@@ -31,27 +31,27 @@ const Timer = (props: TimerProps) => {
             }
 
             remainingTime = Math.max(0, remainingTime);
-            const factor = state.isEndTurn ? BREAK_TIME : maxTime;
+            const factor = gameState.isEndTurn ? BREAK_TIME : maxTime;
             const remainPercent = (remainingTime / factor) * 100;
             setProgress({remainPercent, remainingTime});
         }, 1e3);
 
         return () => clearInterval(timer);
-    }, [maxTime, state.isEndTurn, timeOut]);
+    }, [maxTime, gameState.isEndTurn, timeOut]);
 
     React.useEffect(() => {
-        if (state.target) {
+        if (gameState.target) {
             setProgress(defaultProgress);
             setTimeOut(new Date().getTime() + maxTime * 1e3);
         }
-    }, [defaultProgress, maxTime, state.target]);
+    }, [defaultProgress, maxTime, gameState.target]);
 
     React.useEffect(() => {
-        if (state.isEndTurn) {
+        if (gameState.isEndTurn) {
             setProgress({remainPercent: 100, remainingTime: BREAK_TIME});
             setTimeOut(new Date().getTime() + BREAK_TIME * 1e3);
         }
-    }, [state.isEndTurn]);
+    }, [gameState.isEndTurn]);
 
     return (
         <div className="flex items-center">

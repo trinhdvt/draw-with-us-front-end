@@ -1,5 +1,6 @@
 import React from "react";
 import {Grid, GridProps} from "@mui/material";
+import clsx from "clsx";
 
 import {useSamples} from "../../../api/services/TopicServices";
 import styles from "../../../assets/styles/Gallery.module.scss";
@@ -30,7 +31,7 @@ const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
         <Grid
             item
             container
-            className={styles.samplePanel}
+            className={clsx("scrollBar", styles.samplePanel)}
             {...others}
             ref={containerRef}
         >

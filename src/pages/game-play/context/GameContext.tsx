@@ -14,24 +14,23 @@ const initState: IGameState = {
 };
 
 interface GameContextProps {
-    state: IGameState;
+    gameState: IGameState;
     dispatch: React.Dispatch<IGameAction>;
 }
 
 const GameContext = React.createContext<GameContextProps | null>(null);
-
-function GameProvider({children}: {children: React.ReactNode}) {
-    const [state, dispatch] = React.useReducer(GameReducer, initState);
+const GameProvider = ({children}: {children: React.ReactNode}) => {
+    const [gameState, dispatch] = React.useReducer(GameReducer, initState);
     const contextValue = React.useMemo(() => {
-        return {state, dispatch};
-    }, [state]);
+        return {gameState, dispatch};
+    }, [gameState]);
 
     return (
         <GameContext.Provider value={contextValue}>
             {children}
         </GameContext.Provider>
     );
-}
+};
 
 const useGame = () => {
     const ctx = React.useContext(GameContext);
