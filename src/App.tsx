@@ -7,6 +7,7 @@ import GameWrapper from "./pages/game-play";
 import OAuthLogin from "./pages/home/components/OAuthLogin";
 import SocketWrapper from "./store/SocketStore";
 import HomePage from "./pages/home";
+import {useUser} from "./store/UserStore";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
 const ListRoom = React.lazy(() => import("./pages/list-room"));
@@ -24,6 +25,9 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+    const token = useUser(state => state.token);
+    const isLoggedIn = !!token;
+
     return (
         <QueryClientProvider client={queryClient}>
             <SocketWrapper>
@@ -38,10 +42,12 @@ const App = () => {
                                     element={<CreateRoom />}
                                 />
                                 <Route path="/gallery" element={<Gallery />} />
-                                <Route
-                                    path="/collection"
-                                    element={<CreateCollection />}
-                                />
+                                {isLoggedIn && (
+                                    <Route
+                                        path="/collection"
+                                        element={<CreateCollection />}
+                                    />
+                                )}
                                 <Route
                                     path="/login/fb/callback"
                                     element={<OAuthLogin />}

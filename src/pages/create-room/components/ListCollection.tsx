@@ -15,6 +15,7 @@ import {CollectionType, ICollection} from "../../../api/@types/Collection";
 import {useCollections} from "../../../api/services/CollectionServices";
 import styles from "../../../assets/styles/Room.module.scss";
 import {LightTooltip} from "../../../components/TopTooltip";
+import {useUser} from "../../../store/UserStore";
 
 import CollectionCard from "./CollectionCard";
 
@@ -59,13 +60,14 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
         </Select>
     );
 
-    const isLogin = false;
+    const token = useUser(state => state.token);
+    const isLogin = !!token;
     const tooltipTitle = () => {
         if (isLogin) return "";
 
         return (
             <Typography>
-                <Link to={"#"}>Sign In</Link>
+                <Link to={"/"}>Sign In</Link>
                 <span>{" to create your collection"}</span>
             </Typography>
         );
