@@ -16,7 +16,7 @@ const FbLoginBtn = (props: ButtonProps) => {
             client_id: clientId,
             redirect_uri: redirectUri,
             scope: ["email", "public_profile"].join(","),
-            response_type: "token",
+            response_type: "code",
             display: "popup",
         });
 

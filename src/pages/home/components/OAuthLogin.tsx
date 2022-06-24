@@ -1,6 +1,5 @@
 import React from "react";
-import {useLocation, useNavigate} from "react-router-dom";
-import queryString from "query-string";
+import {useNavigate, useSearchParams} from "react-router-dom";
 
 import {useUser} from "../../../store/UserStore";
 import {useSocket} from "../../../store/SocketStore";
@@ -9,22 +8,21 @@ import HomePage from "..";
 
 const OAuthLogin = () => {
     const navigate = useNavigate();
-    const location = useLocation();
     const {setUser, setToken} = useUser();
     const socket = useSocket();
-    const {long_lived_token} = queryString.parse(location.hash);
+    const [searchParams] = useSearchParams();
     React.useEffect(() => {
-        if (!long_lived_token) return;
-
+        const code = searchParams.get("code");
+        if (!code) return;
         BackendAPI.post("/api/login/fb", {
-            access_token: long_lived_token,
+            code,
         }).then(({data: {name, avatar, token}}) => {
             setUser({name, avatar});
             setToken(token);
             socket?.emit("user:update", {name, avatar});
             navigate("/", {replace: true});
         });
-    }, [long_lived_token, navigate, setToken, setUser, socket]);
+    }, [navigate, searchParams, setToken, setUser, socket]);
 
     return <HomePage />;
 };
