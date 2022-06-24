@@ -19,7 +19,7 @@ const useAppSocket = create<ISocketState>()(setState => ({
 
 const SocketWrapper = ({children}: {children: React.ReactNode}) => {
     const {setSocket} = useAppSocket();
-    const {setSID, setUser} = useUser();
+    const {setUser} = useUser();
     React.useEffect(() => {
         try {
             const options: Partial<ManagerOptions & SocketOptions> = {
@@ -29,12 +29,13 @@ const SocketWrapper = ({children}: {children: React.ReactNode}) => {
             };
             const socketCnn: SocketType = io(BackendUrl, options);
             setSocket(socketCnn);
-            socketCnn.on("connect", () => setSID(socketCnn.id));
-            socketCnn.emit("user:init", response => setUser(response));
+            socketCnn.emit("user:init", response => {
+                setUser({...response, sid: socketCnn.id});
+            });
         } catch (e) {
             alert(e);
         }
-    }, [setSID, setSocket, setUser]);
+    }, [setSocket, setUser]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };

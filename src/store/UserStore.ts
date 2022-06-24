@@ -12,19 +12,23 @@ const DefaultUser: IUser = {
 
 interface IUserState {
     user: IUser;
+    token?: string;
 }
 
 interface IUserAction {
-    setUser: (user: IUser) => void;
-    setSID: (sid: string) => void;
+    setUser: (user: Partial<IUser>) => void;
+    setToken: (token: string) => void;
 }
 
 const useUser = create<IUserState & IUserAction>()(
     persist(
         (set, getState) => ({
             user: DefaultUser,
-            setSID: sid => set({user: {...getState().user, sid}}),
-            setUser: user => set({user}),
+            token: undefined,
+            setUser: user => {
+                set({user: {...getState().user, ...user}});
+            },
+            setToken: token => set({token}),
         }),
         {
             name: "user-state",
