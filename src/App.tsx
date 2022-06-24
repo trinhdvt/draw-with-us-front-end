@@ -1,14 +1,14 @@
 import React, {Suspense} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
-import {ReactQueryDevtools} from "react-query/devtools";
 
 import {AnimatedLoading} from "./components/LoadingScreen";
-import SocketWrapper from "./store/SocketStore";
 import GameWrapper from "./pages/game-play";
+import OAuthLogin from "./pages/home/components/OAuthLogin";
+import SocketWrapper from "./store/SocketStore";
+import HomePage from "./pages/home";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
-const HomePage = React.lazy(() => import("./pages/home"));
 const ListRoom = React.lazy(() => import("./pages/list-room"));
 const CreateRoom = React.lazy(() => import("./pages/create-room"));
 const CreateCollection = React.lazy(() => import("./pages/create-collection"));
@@ -23,36 +23,41 @@ const queryClient = new QueryClient({
     },
 });
 
-const App = () => (
-    <QueryClientProvider client={queryClient}>
-        {import.meta.env.DEV && (
-            <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-        )}
-        <SocketWrapper>
-            <BrowserRouter>
-                <Suspense fallback={<AnimatedLoading />}>
-                    <Routes>
-                        <Route element={<AppLayout />}>
-                            <Route path="/" element={<HomePage />} />
-                            <Route path="/room" element={<ListRoom />} />
-                            <Route path="/create" element={<CreateRoom />} />
-                            <Route path="/gallery" element={<Gallery />} />
+const App = () => {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <SocketWrapper>
+                <BrowserRouter>
+                    <Suspense fallback={<AnimatedLoading />}>
+                        <Routes>
+                            <Route element={<AppLayout />}>
+                                <Route path="/" element={<HomePage />} />
+                                <Route path="/room" element={<ListRoom />} />
+                                <Route
+                                    path="/create"
+                                    element={<CreateRoom />}
+                                />
+                                <Route path="/gallery" element={<Gallery />} />
+                                <Route
+                                    path="/collection"
+                                    element={<CreateCollection />}
+                                />
+                                <Route
+                                    path="/login/fb/callback"
+                                    element={<OAuthLogin />}
+                                />
+                            </Route>
                             <Route
-                                path="/collection"
-                                element={<CreateCollection />}
+                                path="/play/:roomId"
+                                element={<GameWrapper />}
                             />
-                            <Route
-                                path="/login/fb/callback"
-                                element={<HomePage />}
-                            />
-                        </Route>
-                        <Route path="/play/:roomId" element={<GameWrapper />} />
-                        <Route path="*" element={<NotFound />} />
-                    </Routes>
-                </Suspense>
-            </BrowserRouter>
-        </SocketWrapper>
-    </QueryClientProvider>
-);
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
+                    </Suspense>
+                </BrowserRouter>
+            </SocketWrapper>
+        </QueryClientProvider>
+    );
+};
 
 export default App;

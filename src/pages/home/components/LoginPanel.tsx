@@ -1,36 +1,12 @@
 import React from "react";
-import {Button, Divider, Grid, Stack, Typography} from "@mui/material";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GoogleIcon from "@mui/icons-material/Google";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
-import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import queryString from "query-string";
+import {Button, Divider, Grid, Typography} from "@mui/material";
+import {FaUserLock} from "react-icons/fa";
+import {MdOutlinePrivacyTip} from "react-icons/md";
+import {FcGoogle} from "react-icons/fc";
 
-import CssTextField from "../../../components/CssTextField";
-import DividerWithText from "../../../components/DividerWithText";
+import FbLoginBtn from "./FbLoginBtn";
 
 const LoginPanel = () => {
-    const fbLoginUrl = () => {
-        let clientId = "406293024760126";
-        let redirectUri = "https://draw-with.trinhdvt.tech/login/fb/callback";
-        if (import.meta.env.DEV) {
-            clientId = "438978628228056";
-            redirectUri = "http://localhost:3000/login/fb/callback";
-        }
-
-        const params = queryString.stringify({
-            client_id: clientId,
-            redirect_uri: redirectUri,
-            scope: ["email", "public_profile"].join(","),
-            response_type: "code",
-            display: "popup",
-        });
-
-        return `https://www.facebook.com/v14.0/dialog/oauth?${params}`;
-    };
-
-    const loginFb = () => (window.location.href = fbLoginUrl());
-
     return (
         <Grid
             item
@@ -44,83 +20,53 @@ const LoginPanel = () => {
                     Login Here
                 </Typography>
             </Grid>
-            <Grid
-                item
-                container
-                columnSpacing={2}
-                justifyContent="space-evenly"
-                component="form"
-            >
+            <Grid item container className="my-auto">
                 <Grid
                     item
-                    container
-                    md={5}
-                    justifyContent="space-around"
-                    alignItems="center"
-                    direction="column"
+                    md={6}
+                    className="flex flex-col items-center justify-center"
                 >
-                    <Grid item xs={5}>
-                        <CssTextField required size="small" label="Email" />
-                    </Grid>
-                    <Grid item xs={5}>
-                        <CssTextField
-                            required
-                            label="Password"
-                            size="small"
-                            type="password"
-                        />
-                    </Grid>
+                    <FaUserLock className="primary-icon text-[40px]" />
+                    <Typography
+                        variant="h5"
+                        className="capitalize mt-1 text-center"
+                    >
+                        Create Your Private Room
+                    </Typography>
                 </Grid>
                 <Grid
                     item
-                    container
-                    md={5}
-                    justifyContent="space-evenly"
-                    className="mb-6"
+                    md={6}
+                    className="flex flex-col items-center justify-center"
                 >
-                    <Stack
-                        divider={
-                            <DividerWithText>
-                                <Typography>OR</Typography>
-                            </DividerWithText>
-                        }
-                        spacing={1}
+                    <MdOutlinePrivacyTip className="primary-icon text-[40px]" />
+                    <Typography
+                        variant="h5"
+                        className="capitalize mt-1 text-center"
                     >
-                        <Button
-                            startIcon={<MeetingRoomIcon />}
-                            variant="contained"
-                        >
-                            Sign In
-                        </Button>
-                        <Button
-                            startIcon={<SportsEsportsIcon />}
-                            variant="outlined"
-                        >
-                            Sign Up
-                        </Button>
-                    </Stack>
+                        Create Your Own Collection
+                    </Typography>
                 </Grid>
             </Grid>
             <Divider
                 orientation="horizontal"
                 flexItem
+                className="mt-auto"
                 sx={{"&::before": {top: "0%"}, "&::after": {top: "0%"}}}
             >
-                <Typography>Login With</Typography>
+                <Typography variant="h5">Login With</Typography>
             </Divider>
-            <Grid item container justifyContent="space-evenly" className="pt-6">
+            <div className="flex justify-evenly mb-auto mt-2">
+                <FbLoginBtn className="flex-1" />
+                <div className="mx-7" />
                 <Button
-                    startIcon={<FacebookIcon />}
+                    startIcon={<FcGoogle />}
                     variant="outlined"
-                    onClick={loginFb}
+                    className="flex-1"
                 >
-                    Facebook
-                </Button>
-
-                <Button startIcon={<GoogleIcon />} variant="outlined">
                     Google
                 </Button>
-            </Grid>
+            </div>
         </Grid>
     );
 };
