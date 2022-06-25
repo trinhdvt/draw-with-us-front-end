@@ -14,7 +14,7 @@ const onRequest = (config: AxiosRequestConfig) => {
         config.headers = {
             "X-SID": sid,
             "X-EID": eid,
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token ?? ""}`,
         };
     }
 
