@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
 import clsx from "clsx";
+import {MdOutlineDriveFileRenameOutline} from "react-icons/md";
 
 import RoomLayout from "../../layout/RoomLayout";
 import {useCreateRoom} from "../../api/services/RoomServices";
@@ -13,15 +14,19 @@ import {IRoomRequest} from "../../api/@types/Room";
 import {notifyError} from "../../utils/Notify";
 import TopTooltip from "../../components/TopTooltip";
 import {useAppConfig} from "../../api/services/AppServices";
+import CssTextField from "../../components/CssTextField";
+import {useUser} from "../../store/UserStore";
 
 import ListCollection from "./components/ListCollection";
 
 const CreateRoom = () => {
+    const {user} = useUser();
     const navigate = useNavigate();
     const [payload, setPayload] = React.useState<IRoomRequest>({
         maxUsers: 10,
         timeOut: 30,
         collectionId: "",
+        name: user.name,
     });
     const [isDisable, setDisableCreate] = React.useState(true);
     const {data} = useAppConfig();
@@ -30,11 +35,11 @@ const CreateRoom = () => {
 
     React.useEffect(() => {
         if (createConfig) {
-            setPayload({
+            setPayload(prev => ({
+                ...prev,
                 maxUsers: createConfig.maxUsers[0],
                 timeOut: createConfig.timeOut[0],
-                collectionId: "",
-            });
+            }));
         }
     }, [createConfig]);
 
@@ -59,6 +64,32 @@ const CreateRoom = () => {
                     md={4}
                     className={clsx("flex flex-col", styles.sidePanel)}
                 >
+                    <Grid
+                        item
+                        container
+                        className="items-center justify-center mb-2.5"
+                    >
+                        <Grid item md={2}>
+                            <MdOutlineDriveFileRenameOutline className="primary-icon" />
+                        </Grid>
+                        <Grid item md={3}>
+                            <Typography>Name</Typography>
+                        </Grid>
+                        <Grid item md>
+                            <CssTextField
+                                value={payload.name}
+                                onChange={e =>
+                                    setPayload({
+                                        ...payload,
+                                        name: e.target.value,
+                                    })
+                                }
+                                placeholder={user.name}
+                                autoComplete="off"
+                                size="small"
+                            />
+                        </Grid>
+                    </Grid>
                     <Grid item container className="items-center mb-2.5">
                         <Grid item md={2}>
                             <FaRegUser className="primary-icon" />

@@ -23,6 +23,7 @@ interface IRoomRequest {
     timeOut: number;
     maxUsers: number;
     collectionId: string;
+    name: string;
 }
 
 export type {IRoomResponse, IRoomRequest, IRoomConfig};

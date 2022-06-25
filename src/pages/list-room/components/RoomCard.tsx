@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, GridProps, Typography} from "@mui/material";
+import {Grid, GridProps, Typography, Avatar} from "@mui/material";
 import clsx from "clsx";
 import {BiHash} from "react-icons/bi";
 import {FaRegUser} from "react-icons/fa";
@@ -19,7 +19,6 @@ const RoomCard = ({
     name,
     maxUsers,
     currentUsers,
-    collectionName,
     timeOut,
     selected,
     image,
@@ -41,37 +40,27 @@ const RoomCard = ({
             {...others}
         >
             <Grid item md>
-                <TopTooltip title={name}>
-                    <span>
-                        {image ? (
-                            <RandomAvatar
-                                size={50}
-                                className="w-[50px] h-[50px]"
-                                src={image}
-                            />
-                        ) : (
-                            <RandomAvatar
-                                size={50}
-                                className="w-[50px] h-[50px]"
-                                value={id}
-                            />
-                        )}
-                    </span>
-                </TopTooltip>
+                {image ? (
+                    <Avatar className="w-[45px] h-[45px]" src={image} />
+                ) : (
+                    <RandomAvatar
+                        size={45}
+                        className="w-[45px] h-[45px]"
+                        value={id}
+                    />
+                )}
             </Grid>
-
-            <Grid item md className="max-w-full">
-                <TopTooltip title="Game's collection">
+            <Grid item md className="pr-1 max-w-full">
+                <TopTooltip title={name}>
                     <Typography
                         noWrap={true}
                         variant="h5"
-                        className="text-xl capitalize mt-1"
+                        className="ml-1 capitalize mt-1"
                     >
-                        {collectionName}
+                        {name}
                     </Typography>
                 </TopTooltip>
             </Grid>
-
             <Grid item container className="mt-2">
                 <div className="flex flex-col justify-center items-center flex-1">
                     <TopTooltip title="Max players">
