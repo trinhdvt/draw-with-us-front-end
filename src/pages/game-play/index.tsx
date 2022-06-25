@@ -22,6 +22,7 @@ import {timeUp} from "./utils/GameNotify";
 import Wrapper from "./Wrapper";
 import MessagePanel from "./components/MessagePanel";
 import GameSupportController from "./components/GameSupportController";
+import CongratsModal from "./components/CongratsModal";
 
 const Game = () => {
     const socket = useSocket();
@@ -39,9 +40,17 @@ const Game = () => {
                 await timeUp();
             }
         });
+        socket?.on("game:finish", () => {
+            dispatch({type: GameActionType.SHOW_RESULT, payload: true});
+            setTimeout(() => {
+                dispatch({type: GameActionType.SHOW_RESULT, payload: false});
+            }, 3e3);
+        });
+
         return () => {
             socket?.off("game:nextTurn");
             socket?.off("game:endTurn");
+            socket?.off("game:finish");
         };
     }, [gameState.isDone, socket, dispatch, isPlaying]);
 
@@ -93,6 +102,7 @@ const Game = () => {
                     <MessagePanel className={clsx(!isPlaying && "mt-auto")} />
                 </Grid>
             </Grid>
+            {gameState.showResult && <CongratsModal />}
         </Grid>
     );
 };

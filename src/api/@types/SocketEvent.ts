@@ -9,6 +9,7 @@ interface ServerToClientEvents {
     "room:update": () => void;
     "game:nextTurn": (topic: ITopic) => void;
     "game:endTurn": () => void;
+    "game:finish": () => void;
     "room:msg": (payload: IMessage) => void;
     "list-room:update": () => void;
 }

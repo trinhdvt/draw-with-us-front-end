@@ -13,19 +13,21 @@ import {IPlayer} from "../../../api/@types/User";
 import styles from "../../../assets/styles/Player.module.scss";
 import {useGame} from "../context/GameContext";
 
-const SmallChip = (props: ChipProps) => {
-    return <Chip variant="filled" size="small" {...props} />;
-};
+const RankingBgColor = ["bg-[#FDAC53]", "bg-[#9BB7D4]", "bg-[#0072B5]"];
+
+const SmallChip = (props: ChipProps) => (
+    <Chip variant="filled" size="small" {...props} />
+);
 
 class Player extends React.Component<IPlayer & GridProps> {
     render() {
         const {name, point, topk, isHost, isMe, avatar, ...others} = this.props;
 
         const PlayerBadge = () => {
-            if (topk)
-                return (
-                    <SmallChip label={`Top${topk}`} className="bg-yellow-300" />
-                );
+            if (topk) {
+                const bgColor = RankingBgColor[topk - 1];
+                return <SmallChip label={`Top${topk}`} className={bgColor} />;
+            }
             if (isHost)
                 return <SmallChip label="Host" className="bg-cyan-500" />;
             return <></>;
@@ -87,4 +89,4 @@ const PlayerSkeleton = () => {
 };
 
 export default Player;
-export {PlayerSkeleton};
+export {PlayerSkeleton, SmallChip, RankingBgColor};

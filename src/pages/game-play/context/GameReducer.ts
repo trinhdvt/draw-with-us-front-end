@@ -5,6 +5,7 @@ enum GameActionType {
     NEXT_TURN,
     SET_ROOM_ID,
     END_TURN,
+    SHOW_RESULT,
 }
 
 interface IGameAction {
@@ -17,6 +18,7 @@ interface IGameState {
     target?: ITopic;
     roomId?: string;
     isEndTurn?: boolean;
+    showResult?: boolean;
 }
 
 const GameReducer = (state: IGameState, {payload, type}: IGameAction) => {
@@ -34,6 +36,8 @@ const GameReducer = (state: IGameState, {payload, type}: IGameAction) => {
             };
         case GameActionType.END_TURN:
             return {...state, isEndTurn: true};
+        case GameActionType.SHOW_RESULT:
+            return {...state, showResult: payload as boolean};
         default:
             return state;
     }
