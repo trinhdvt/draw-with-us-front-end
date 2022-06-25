@@ -8,11 +8,12 @@ import styles from "../assets/styles/Room.module.scss";
 interface HeaderProps {
     title: string;
     headerChildren?: React.ReactNode;
+    endChildren?: React.ReactNode;
 }
 
 const RoomHeader = (props: HeaderProps & GridProps) => {
     const navigate = useNavigate();
-    const {title, headerChildren, ...others} = props;
+    const {title, headerChildren, endChildren, ...others} = props;
 
     return (
         <Grid
@@ -36,6 +37,7 @@ const RoomHeader = (props: HeaderProps & GridProps) => {
                     {title}
                 </Typography>
             </Grid>
+            <Grid item>{endChildren}</Grid>
         </Grid>
     );
 };

@@ -10,7 +10,7 @@ interface RoomLayoutProps extends HeaderProps {
 }
 
 const RoomLayout = (props: RoomLayoutProps) => {
-    const {children, title, headerChildren, ...others} = props;
+    const {children, title, headerChildren, endChildren, ...others} = props;
 
     React.useEffect(() => {
         document.title = `${title} - Draw With Us`;
@@ -18,7 +18,11 @@ const RoomLayout = (props: RoomLayoutProps) => {
 
     return (
         <Grid container className={styles.container} {...others}>
-            <RoomHeader title={title} headerChildren={headerChildren} />
+            <RoomHeader
+                title={title}
+                headerChildren={headerChildren}
+                endChildren={endChildren}
+            />
             {children}
         </Grid>
     );

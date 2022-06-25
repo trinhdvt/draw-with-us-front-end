@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, GridProps, Typography, Avatar} from "@mui/material";
+import {Avatar, Grid, GridProps, Typography} from "@mui/material";
 import clsx from "clsx";
 import {BiHash} from "react-icons/bi";
 import {FaRegUser} from "react-icons/fa";
@@ -9,14 +9,18 @@ import styles from "../../../assets/styles/Room.module.scss";
 import {IRoomResponse} from "../../../api/@types/Room";
 import RandomAvatar from "../../../components/RandomAvatar";
 import TopTooltip from "../../../components/TopTooltip";
+import {ShowMode} from "../index";
 
 interface RoomProps extends IRoomResponse {
     selected?: boolean;
+    showMode?: ShowMode;
 }
 
 const RoomCard = ({
     id,
     name,
+    collectionName,
+    showMode,
     maxUsers,
     currentUsers,
     timeOut,
@@ -26,6 +30,8 @@ const RoomCard = ({
     ...others
 }: RoomProps & GridProps) => {
     const isFull = maxUsers === currentUsers;
+    const roomLabel = showMode == ShowMode.ROOM_NAME ? name : collectionName;
+
     return (
         <Grid
             item
@@ -41,7 +47,7 @@ const RoomCard = ({
         >
             <Grid item md>
                 {image ? (
-                    <Avatar className="w-[45px] h-[45px]" src={image} />
+                    <Avatar className="w-[45px] h-[45px]" src,={image} />
                 ) : (
                     <RandomAvatar
                         size={45}
@@ -51,13 +57,13 @@ const RoomCard = ({
                 )}
             </Grid>
             <Grid item md className="pr-1 max-w-full">
-                <TopTooltip title={name}>
+                <TopTooltip title={roomLabel}>
                     <Typography
                         noWrap={true}
                         variant="h5"
                         className="ml-1 capitalize mt-1"
                     >
-                        {name}
+                        {roomLabel}
                     </Typography>
                 </TopTooltip>
             </Grid>
