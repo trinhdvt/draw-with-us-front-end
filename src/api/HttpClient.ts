@@ -9,12 +9,12 @@ const onRequest = (config: AxiosRequestConfig) => {
     const {state} = JSON.parse(sessionStorage.getItem("user-state") ?? "{}");
     if (state && Object.hasOwn(state, "user")) {
         const userState: IUser = state.user;
-        const { sid, eid } = userState;
+        const {sid, eid} = userState;
         const token = state.token;
         config.headers = {
             "X-SID": sid,
             "X-EID": eid,
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
         };
     }
 
