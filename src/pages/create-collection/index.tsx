@@ -11,6 +11,8 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import clsx from "clsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import {useQueryClient} from "react-query";
+import {useNavigate} from "react-router-dom";
 
 import ITopic from "../../api/@types/Topic";
 import Tag from "../../components/Tag";
@@ -21,11 +23,15 @@ import RoomLayout from "../../layout/RoomLayout";
 import SearchField from "../../components/SearchField";
 import TopTooltip from "../../components/TopTooltip";
 import {useUser} from "../../store/UserStore";
+import {useCreateCollection} from "../../api/services/CollectionServices";
+import {ICollectionRequest} from "../../api/@types/Collection";
 
 import TopicSampleModal from "./components/TopicSampleModal";
 
 const CreateCollection = () => {
     const {user} = useUser();
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
     const [topics, setTopics] = React.useState<ITopic[]>([]);
     const [open, setOpen] = React.useState(false);
     const loading = open && topics.length == 0;
@@ -35,7 +41,9 @@ const CreateCollection = () => {
     const [currentTopicText, setTextCrtTopic] = React.useState("");
     const [addTopics, setAddTopic] = React.useState<ITopic[]>([]);
     const [openPreview, setOpenPreview] = React.useState(false);
+    const {mutate} = useCreateCollection();
     const isTopicArrEmpty = addTopics.length == 0;
+    const isNotEnoughTopic = addTopics.length < 5;
 
     React.useEffect(() => {
         if (loading) {
@@ -71,12 +79,27 @@ const CreateCollection = () => {
     const handleOpenPreview = () => setOpenPreview(true);
     const handleClose = () => setOpenPreview(false);
 
-    const isDisable = isTopicArrEmpty || collectionName.trim() === "";
+    const isDisable = isNotEnoughTopic || collectionName.trim() === "";
     const tooltipText = !isDisable
         ? ""
-        : isTopicArrEmpty
-        ? "Please add at least one topic"
+        : isNotEnoughTopic
+        ? "Please add at least 5 topic"
         : "Please enter collection name";
+
+    const onCreateCollection = () => {
+        const payload: ICollectionRequest = {
+            name: collectionName,
+            topicIds: addTopics.map(({id}) => id),
+            isPublic: isPublic,
+        };
+        mutate(payload, {
+            onSuccess: async () => {
+                await queryClient.invalidateQueries("collections");
+                navigate("/create");
+            },
+            onError: err => alert(err.response?.data.message),
+        });
+    };
 
     return (
         <RoomLayout title="Create Collection">
@@ -176,6 +199,7 @@ const CreateCollection = () => {
                                     startIcon={<ConstructionIcon />}
                                     variant="contained"
                                     disabled={isDisable}
+                                    onClick={onCreateCollection}
                                 >
                                     Create
                                 </Button>
@@ -207,7 +231,7 @@ const CreateCollection = () => {
                             !isTopicArrEmpty && "content-start"
                         )}
                     >
-                        {isTopicArrEmpty ? (
+                        {addTopics.length === 0 ? (
                             <Typography>
                                 You haven&apos;t select any topics yet
                             </Typography>

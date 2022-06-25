@@ -15,5 +15,11 @@ interface ICollection {
     numberOfTopics?: number;
 }
 
+interface ICollectionRequest {
+    name: string;
+    topicIds: string[];
+    isPublic: boolean;
+}
+
 export {CollectionType};
-export type {ICollection};
+export type {ICollection, ICollectionRequest};
