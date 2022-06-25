@@ -22,6 +22,7 @@ const RoomCard = ({
     collectionName,
     timeOut,
     selected,
+    image,
     onClick,
     ...others
 }: RoomProps & GridProps) => {
@@ -42,11 +43,19 @@ const RoomCard = ({
             <Grid item md>
                 <TopTooltip title={name}>
                     <span>
-                        <RandomAvatar
-                            size={50}
-                            className="w-[50px] h-[50px]"
-                            value={id}
-                        />
+                        {image ? (
+                            <RandomAvatar
+                                size={50}
+                                className="w-[50px] h-[50px]"
+                                src={image}
+                            />
+                        ) : (
+                            <RandomAvatar
+                                size={50}
+                                className="w-[50px] h-[50px]"
+                                value={id}
+                            />
+                        )}
                     </span>
                 </TopTooltip>
             </Grid>

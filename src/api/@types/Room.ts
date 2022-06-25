@@ -6,6 +6,7 @@ interface IRoomResponse {
     maxUsers: number;
     currentUsers: number;
     collectionName: string;
+    image?: string;
 }
 
 enum RoomStatus {
