@@ -47,7 +47,7 @@ const RoomCard = ({
         >
             <Grid item md>
                 {image ? (
-                    <Avatar className="w-[45px] h-[45px]" src,={image} />
+                    <Avatar className="w-[45px] h-[45px]" src={image} />
                 ) : (
                     <RandomAvatar
                         size={45}
