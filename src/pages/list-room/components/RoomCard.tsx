@@ -9,18 +9,16 @@ import styles from "../../../assets/styles/Room.module.scss";
 import {IRoomResponse} from "../../../api/@types/Room";
 import RandomAvatar from "../../../components/RandomAvatar";
 import TopTooltip from "../../../components/TopTooltip";
-import {ShowMode} from "../index";
+import {ShowMode, useRoomStore} from "../store/RoomStore";
 
 interface RoomProps extends IRoomResponse {
     selected?: boolean;
-    showMode?: ShowMode;
 }
 
 const RoomCard = ({
     id,
     name,
     collectionName,
-    showMode,
     maxUsers,
     currentUsers,
     timeOut,
@@ -30,7 +28,8 @@ const RoomCard = ({
     ...others
 }: RoomProps & GridProps) => {
     const isFull = maxUsers === currentUsers;
-    const roomLabel = showMode == ShowMode.ROOM_NAME ? name : collectionName;
+    const showMode = useRoomStore(state => state.roomShowMode);
+    const roomLabel = showMode === ShowMode.ROOM_NAME ? name : collectionName;
 
     return (
         <Grid

@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Grid, MenuItem, Select} from "@mui/material";
+import {Button, Grid} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
@@ -13,11 +13,7 @@ import {useSocket} from "../../store/SocketStore";
 import TopTooltip from "../../components/TopTooltip";
 
 import RoomCard, {RoomDefault} from "./components/RoomCard";
-
-enum ShowMode {
-    ROOM_NAME,
-    COLLECTION_NAME,
-}
+import ShowModeSelector from "./components/ShowModeSelector";
 
 const RoomHome = () => {
     const navigate = useNavigate();
@@ -28,7 +24,6 @@ const RoomHome = () => {
     const socket = useSocket();
     const {data} = useRooms();
     const queryClient = useQueryClient();
-    const [showMode, setShowMode] = React.useState(ShowMode.ROOM_NAME);
 
     React.useEffect(() => {
         socket?.on("list-room:update", async () => {
@@ -38,20 +33,6 @@ const RoomHome = () => {
             socket?.off("list-room:update");
         };
     }, [queryClient, socket]);
-
-    // eslint-disable-next-line react/display-name
-    const ModeSelector = React.memo(() => (
-        <Select
-            size="small"
-            value={showMode}
-            onChange={e => setShowMode(e.target.value as ShowMode)}
-        >
-            <MenuItem value={ShowMode.ROOM_NAME}>Room&apos;s name</MenuItem>
-            <MenuItem value={ShowMode.COLLECTION_NAME}>
-                Collection&apos;s name
-            </MenuItem>
-        </Select>
-    ));
 
     const onRoomSelect = (roomId: string) => setSelectedRoom(roomId);
     const onJoinRoom = async () => {
@@ -73,14 +54,13 @@ const RoomHome = () => {
             headerChildren={
                 <SearchField className="w-[130px]" placeholder="Room's ID" />
             }
-            endChildren={<ModeSelector />}
+            endChildren={<ShowModeSelector />}
         >
             <Grid item container className={styles.mainPanel}>
                 {[...(data ?? []), ...defaultRooms].map(room => (
                     <RoomCard
                         md={2.85}
                         {...room}
-                        showMode={showMode}
                         key={room.eid}
                         selected={room.eid == selectedRoom}
                         onClick={() => onRoomSelect(room.eid)}
@@ -115,4 +95,3 @@ const RoomHome = () => {
 };
 
 export default RoomHome;
-export {ShowMode};
