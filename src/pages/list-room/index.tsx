@@ -51,11 +51,14 @@ const RoomHome = () => {
         socket?.emit(
             "room:join",
             {eid, password},
-            async ({message, roomId}) => {
-                if (roomId) return navigate(`/play/${roomId}`);
+            async ({message, roomId, onMiddleGame}) => {
+                if (roomId)
+                    return navigate(`/play/${roomId}`, {
+                        state: {onMiddleGame},
+                    });
                 if (message) {
                     await queryClient.invalidateQueries(["rooms"]);
-                    await notifyError(message);
+                    await notifyError(message as string);
                 }
             }
         );
