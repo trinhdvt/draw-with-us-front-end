@@ -7,6 +7,7 @@ interface IRoomResponse {
     currentUsers: number;
     collectionName: string;
     image?: string;
+    isPrivate?: boolean;
 }
 
 enum RoomStatus {
@@ -24,7 +25,13 @@ interface IRoomRequest {
     maxUsers: number;
     collectionId: string;
     name: string;
+    password?: string;
 }
 
-export type {IRoomResponse, IRoomRequest, IRoomConfig};
+interface IRoomJoinEvent {
+    eid: string;
+    password?: string;
+}
+
+export type {IRoomResponse, IRoomRequest, IRoomConfig, IRoomJoinEvent};
 export {RoomStatus};

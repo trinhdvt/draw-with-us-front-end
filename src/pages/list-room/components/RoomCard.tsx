@@ -4,6 +4,7 @@ import clsx from "clsx";
 import {BiHash} from "react-icons/bi";
 import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
+import {FcPrivacy} from "react-icons/fc";
 
 import styles from "../../../assets/styles/Room.module.scss";
 import {IRoomResponse} from "../../../api/@types/Room";
@@ -24,6 +25,7 @@ const RoomCard = ({
     timeOut,
     selected,
     image,
+    isPrivate,
     onClick,
     ...others
 }: RoomProps & GridProps) => {
@@ -44,9 +46,9 @@ const RoomCard = ({
             onClick={isFull ? undefined : onClick}
             {...others}
         >
-            <Grid item md>
+            <Grid item md className="relative">
                 {image ? (
-                    <Avatar className="w-[45px] h-[45px]" src={image} />
+                    <Avatar className="w-[51px] h-[51px]" src={image} />
                 ) : (
                     <RandomAvatar
                         size={45}
@@ -54,19 +56,26 @@ const RoomCard = ({
                         value={id}
                     />
                 )}
+                {isPrivate && (
+                    <TopTooltip title={"This is a private room"}>
+                        <span className="absolute top-9 left-3 rounded-xl ">
+                            <FcPrivacy className="primary-icon text-red-500" />
+                        </span>
+                    </TopTooltip>
+                )}
             </Grid>
             <Grid item md className="pr-1 max-w-full">
                 <TopTooltip title={roomLabel}>
                     <Typography
                         noWrap={true}
                         variant="h5"
-                        className="ml-1 capitalize mt-1"
+                        className="ml-1 capitalize mt-2"
                     >
                         {roomLabel}
                     </Typography>
                 </TopTooltip>
             </Grid>
-            <Grid item container className="mt-2">
+            <Grid item container className="mt-1">
                 <div className="flex flex-col justify-center items-center flex-1">
                     <TopTooltip title="Max players">
                         <span>
@@ -110,12 +119,13 @@ const RoomCard = ({
 const RoomDefault = (): RoomProps => ({
     maxUsers: 10,
     timeOut: 20,
-    currentUsers: 10,
+    currentUsers: 9,
     id: Math.random().toString(18).slice(-8),
     eid: Math.random().toString(18).slice(-8),
     name: "fake-room",
     collectionName: "Demo",
     selected: false,
+    isPrivate: Math.random() > 0.5,
 });
 
 export default RoomCard;

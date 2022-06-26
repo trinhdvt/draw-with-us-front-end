@@ -11,13 +11,14 @@ import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../store/SocketStore";
 import TopTooltip from "../../components/TopTooltip";
+import GetPassword from "../../utils/PasswordDialog";
 
-import RoomCard, {RoomDefault} from "./components/RoomCard";
+import RoomCard, {RoomDefault, RoomProps} from "./components/RoomCard";
 import ShowModeSelector from "./components/ShowModeSelector";
 
 const RoomHome = () => {
     const navigate = useNavigate();
-    const [selectedRoom, setSelectedRoom] = React.useState("");
+    const [selectedRoom, setSelectedRoom] = React.useState<RoomProps>();
     const [defaultRooms] = React.useState(() => {
         return Array.from({length: 6}, () => RoomDefault());
     });
@@ -34,18 +35,30 @@ const RoomHome = () => {
         };
     }, [queryClient, socket]);
 
-    const onRoomSelect = (roomId: string) => setSelectedRoom(roomId);
+    const onRoomSelect = (room: RoomProps) => setSelectedRoom(room);
+
     const onJoinRoom = async () => {
-        socket?.emit("room:join", selectedRoom, ({message, roomId}) => {
-            if (roomId) return navigate(`/play/${roomId}`);
-            if (message) {
-                queryClient
-                    .invalidateQueries(["rooms"])
-                    .then(() => alert(message));
+        if (!selectedRoom) return;
+
+        let password: string | undefined;
+        if (selectedRoom.isPrivate) {
+            password = await GetPassword();
+            if (!password) return;
+        }
+        socket?.emit(
+            "room:join",
+            {eid: selectedRoom.eid, password},
+            ({message, roomId}) => {
+                if (roomId) return navigate(`/play/${roomId}`);
+                if (message) {
+                    queryClient
+                        .invalidateQueries(["rooms"])
+                        .then(() => alert(message));
+                }
             }
-        });
+        );
     };
-    const isDisable = selectedRoom === "";
+    const isDisable = !selectedRoom;
     const tooltipText = isDisable ? "Please select a room" : "Join now";
 
     return (
@@ -62,8 +75,8 @@ const RoomHome = () => {
                         md={2.85}
                         {...room}
                         key={room.eid}
-                        selected={room.eid == selectedRoom}
-                        onClick={() => onRoomSelect(room.eid)}
+                        selected={room.eid == selectedRoom?.eid}
+                        onClick={() => onRoomSelect(room)}
                     />
                 ))}
             </Grid>
