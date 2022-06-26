@@ -1,5 +1,5 @@
 import React from "react";
-import {Navigate, useParams} from "react-router-dom";
+import {Navigate, useLocation, useParams} from "react-router-dom";
 import {useQueryClient} from "react-query";
 
 import {useSocket} from "../../store/SocketStore";
@@ -16,6 +16,9 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
     const queryClient = useQueryClient();
     const {dispatch} = useGame();
     const {isError, isFetching, isSuccess} = useValidPlayer(roomId);
+    const location = useLocation();
+    const state = location.state as {onMiddleGame?: boolean};
+    const onMiddleGame = state?.onMiddleGame ?? false;
 
     React.useEffect(() => {
         socket?.on("room:update", async () => {
@@ -46,11 +49,14 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
     React.useEffect(() => {
         if (isSuccess) {
             dispatch({type: GameActionType.SET_ROOM_ID, payload: roomId});
+            if (onMiddleGame) {
+                dispatch({type: GameActionType.DONE, payload: true});
+            }
             alertWelcome().then(
                 () => (document.title = `Playing - Draw With Us`)
             );
         }
-    }, [dispatch, isSuccess, roomId]);
+    }, [dispatch, isSuccess, onMiddleGame, roomId]);
 
     if (isError) return <Navigate to="/" replace />;
     if (isFetching) return <AnimatedLoading />;

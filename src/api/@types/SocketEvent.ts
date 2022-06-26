@@ -20,7 +20,7 @@ interface ClientToServerEvents {
     "user:update": (arg: Partial<IUser>) => void;
     "room:join": (
         payload: IRoomJoinEvent,
-        callback: (e: Record<string, string>) => void
+        callback: (e: Record<string, unknown>) => void
     ) => void;
     "room:exit": (roomId: string) => void;
     "game:start": () => void;

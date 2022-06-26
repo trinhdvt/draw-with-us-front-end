@@ -33,8 +33,11 @@ const UserPanel = () => {
                 socket?.emit(
                     "room:join",
                     {eid: roomEId},
-                    ({message, roomId}) => {
-                        if (roomId) return navigate(`/play/${roomId}`);
+                    ({message, roomId, onMiddleGame}) => {
+                        if (roomId)
+                            return navigate(`/play/${roomId}`, {
+                                state: {onMiddleGame},
+                            });
                         if (message) return alert(message);
                     }
                 );
