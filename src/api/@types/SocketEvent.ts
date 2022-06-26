@@ -2,6 +2,7 @@ import {Socket} from "socket.io-client";
 
 import {IMessage} from "../../pages/game-play/components/MessagePanel";
 
+import {IRoomJoinEvent} from "./Room";
 import ITopic from "./Topic";
 import {IUser} from "./User";
 
@@ -18,8 +19,8 @@ interface ClientToServerEvents {
     "user:init": (callback: (response: IUser) => void) => void;
     "user:update": (arg: Partial<IUser>) => void;
     "room:join": (
-        eid: string,
-        callback: (response: Record<string, string>) => void
+        payload: IRoomJoinEvent,
+        callback: (e: Record<string, string>) => void
     ) => void;
     "room:exit": (roomId: string) => void;
     "game:start": () => void;

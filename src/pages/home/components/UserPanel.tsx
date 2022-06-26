@@ -30,10 +30,14 @@ const UserPanel = () => {
                 const {isConfirmed} = await confirmJoinRoomNotify();
                 if (!isConfirmed) return;
 
-                socket?.emit("room:join", roomEId, ({message, roomId}) => {
-                    if (roomId) return navigate(`/play/${roomId}`);
-                    if (message) return alert(message);
-                });
+                socket?.emit(
+                    "room:join",
+                    {eid: roomEId},
+                    ({message, roomId}) => {
+                        if (roomId) return navigate(`/play/${roomId}`);
+                        if (message) return alert(message);
+                    }
+                );
             },
             onError: async () => await noRoomNotify(),
         });

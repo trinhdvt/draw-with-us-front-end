@@ -6,6 +6,7 @@ import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
 import clsx from "clsx";
 import {MdOutlineDriveFileRenameOutline} from "react-icons/md";
+import {VscShield} from "react-icons/vsc";
 
 import RoomLayout from "../../layout/RoomLayout";
 import {useCreateRoom} from "../../api/services/RoomServices";
@@ -16,17 +17,20 @@ import TopTooltip from "../../components/TopTooltip";
 import {useAppConfig} from "../../api/services/AppServices";
 import CssTextField from "../../components/CssTextField";
 import {useUser} from "../../store/UserStore";
+import PasswordField from "../../components/PasswordField";
 
 import ListCollection from "./components/ListCollection";
 
 const CreateRoom = () => {
-    const {user} = useUser();
+    const {user, token} = useUser();
+    const isLoggedIn = !!token;
     const navigate = useNavigate();
     const [payload, setPayload] = React.useState<IRoomRequest>({
         maxUsers: 10,
         timeOut: 30,
         collectionId: "",
         name: user.name,
+        password: undefined,
     });
     const [isDisable, setDisableCreate] = React.useState(true);
     const {data} = useAppConfig();
@@ -69,10 +73,10 @@ const CreateRoom = () => {
                         container
                         className="items-center justify-center mb-2.5"
                     >
-                        <Grid item md={2}>
+                        <Grid item md={1} className="mr-1">
                             <MdOutlineDriveFileRenameOutline className="primary-icon" />
                         </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={3.5} className="mr-1">
                             <Typography>Name</Typography>
                         </Grid>
                         <Grid item md>
@@ -91,7 +95,7 @@ const CreateRoom = () => {
                         </Grid>
                     </Grid>
                     <Grid item container className="items-center mb-2.5">
-                        <Grid item md={2}>
+                        <Grid item md={1} className="mr-1">
                             <FaRegUser className="primary-icon" />
                         </Grid>
                         <Grid item md>
@@ -114,8 +118,8 @@ const CreateRoom = () => {
                             </Select>
                         </Grid>
                     </Grid>
-                    <Grid item container alignItems="center">
-                        <Grid item md={2}>
+                    <Grid item container className="items-center mb-2.5">
+                        <Grid item md={1} className="mr-1">
                             <GiEmptyHourglass className="primary-icon" />
                         </Grid>
                         <Grid item md>
@@ -138,6 +142,31 @@ const CreateRoom = () => {
                             </Select>
                         </Grid>
                     </Grid>
+                    {isLoggedIn && (
+                        <Grid
+                            item
+                            container
+                            className="items-center justify-center"
+                        >
+                            <Grid item md={1} className="mr-1">
+                                <VscShield className="primary-icon text-red-700" />
+                            </Grid>
+                            <Grid item md={3.5} className="mr-1">
+                                <Typography>Password</Typography>
+                            </Grid>
+                            <Grid item md>
+                                <PasswordField
+                                    value={payload.password}
+                                    onChange={e =>
+                                        setPayload({
+                                            ...payload,
+                                            password: e.target.value,
+                                        })
+                                    }
+                                />
+                            </Grid>
+                        </Grid>
+                    )}
                     <Grid item container className="justify-center mt-auto">
                         <TopTooltip title={tooltipText}>
                             <span>

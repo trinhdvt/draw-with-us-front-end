@@ -12,7 +12,7 @@ const DefaultUser: IUser = {
 
 interface IUserState {
     user: IUser;
-    token?: string;
+    token: string | undefined;
 }
 
 interface IUserAction {
