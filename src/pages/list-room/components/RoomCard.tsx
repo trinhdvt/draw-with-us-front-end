@@ -119,7 +119,7 @@ const RoomCard = ({
 const RoomDefault = (): RoomProps => ({
     maxUsers: 10,
     timeOut: 20,
-    currentUsers: 9,
+    currentUsers: 10,
     id: Math.random().toString(18).slice(-8),
     eid: Math.random().toString(18).slice(-8),
     name: "fake-room",

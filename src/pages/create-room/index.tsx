@@ -152,7 +152,9 @@ const CreateRoom = () => {
                                 <VscShield className="primary-icon text-red-700" />
                             </Grid>
                             <Grid item md={3.5} className="mr-1">
-                                <Typography>Password</Typography>
+                                <TopTooltip title="Password for your room. Please remember it!">
+                                    <Typography>Password</Typography>
+                                </TopTooltip>
                             </Grid>
                             <Grid item md>
                                 <PasswordField

@@ -12,6 +12,7 @@ import SearchField from "../../components/SearchField";
 import {useSocket} from "../../store/SocketStore";
 import TopTooltip from "../../components/TopTooltip";
 import GetPassword from "../../utils/PasswordDialog";
+import {notifyError} from "../../utils/Notify";
 
 import RoomCard, {RoomDefault, RoomProps} from "./components/RoomCard";
 import ShowModeSelector from "./components/ShowModeSelector";
@@ -41,19 +42,20 @@ const RoomHome = () => {
         if (!selectedRoom) return;
 
         let password: string | undefined;
-        if (selectedRoom.isPrivate) {
+        const {isPrivate, eid} = selectedRoom;
+
+        if (isPrivate) {
             password = await GetPassword();
             if (!password) return;
         }
         socket?.emit(
             "room:join",
-            {eid: selectedRoom.eid, password},
-            ({message, roomId}) => {
+            {eid, password},
+            async ({message, roomId}) => {
                 if (roomId) return navigate(`/play/${roomId}`);
                 if (message) {
-                    queryClient
-                        .invalidateQueries(["rooms"])
-                        .then(() => alert(message));
+                    await queryClient.invalidateQueries(["rooms"]);
+                    await notifyError(message);
                 }
             }
         );
