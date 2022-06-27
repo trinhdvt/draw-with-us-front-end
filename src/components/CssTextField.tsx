@@ -1,16 +1,16 @@
-import React from "react";
-import {TextField, TextFieldProps} from "@mui/material";
+import {styled, TextField} from "@mui/material";
 
-const CssTextField = (props: TextFieldProps) => (
-    <TextField
-        sx={{
-            "& fieldset": {
-                border: "2px solid gray",
-                borderRadius: "12px",
-            },
-        }}
-        {...props}
-    />
-);
+const CssTextField = styled(TextField)({
+    "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+            border: "2px solid gray",
+            borderRadius: 12,
+        },
+        "&.Mui-focused fieldset": {
+            borderColor: "purple",
+        },
+    },
+});
 
 export default CssTextField;
+
