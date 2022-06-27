@@ -1,5 +1,12 @@
 import React from "react";
-import {Button, Grid, GridProps, MenuItem, Typography} from "@mui/material";
+import {
+    Button,
+    Grid,
+    GridProps,
+    MenuItem,
+    Select,
+    Typography,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {Link, useNavigate} from "react-router-dom";
 import clsx from "clsx";
@@ -9,7 +16,6 @@ import {useCollections} from "../../../api/services/CollectionServices";
 import styles from "../../../assets/styles/Room.module.scss";
 import {LightTooltip} from "../../../components/TopTooltip";
 import {useUser} from "../../../store/UserStore";
-import CssSelect from "../../../components/CssSelect";
 
 import CollectionCard from "./CollectionCard";
 
@@ -38,7 +44,7 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
     }, [filterType, data]);
 
     const CollectionFilter = () => (
-        <CssSelect
+        <Select
             className={styles.selectBox}
             value={filterType}
             onChange={e => setFilter(e.target.value as CollectionType)}
@@ -51,7 +57,7 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
                         {CollectionType[k]}
                     </MenuItem>
                 ))}
-        </CssSelect>
+        </Select>
     );
 
     const token = useUser(state => state.token);

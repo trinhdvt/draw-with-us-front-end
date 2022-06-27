@@ -1,13 +1,12 @@
 import React from "react";
-import {MenuItem} from "@mui/material";
+import {MenuItem, Select} from "@mui/material";
 
 import {ShowMode, useRoomStore} from "../store/RoomStore";
-import CssSelect from "../../../components/CssSelect";
 
 const ShowModeSelector = () => {
     const {roomShowMode, setRoomShowMode} = useRoomStore();
     return (
-        <CssSelect
+        <Select
             size="small"
             value={roomShowMode}
             onChange={e => setRoomShowMode(e.target.value as ShowMode)}
@@ -16,7 +15,7 @@ const ShowModeSelector = () => {
             <MenuItem value={ShowMode.COLLECTION_NAME}>
                 Collection&apos;s name
             </MenuItem>
-        </CssSelect>
+        </Select>
     );
 };
 
