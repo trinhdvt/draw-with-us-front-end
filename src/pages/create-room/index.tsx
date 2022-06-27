@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Grid, MenuItem, Select, Typography} from "@mui/material";
+import {Button, Grid, MenuItem, Typography} from "@mui/material";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import {useNavigate} from "react-router-dom";
 import {FaRegUser} from "react-icons/fa";
@@ -18,6 +18,7 @@ import {useAppConfig} from "../../api/services/AppServices";
 import CssTextField from "../../components/CssTextField";
 import {useUser} from "../../store/UserStore";
 import PasswordField from "../../components/PasswordField";
+import CssSelect from "../../components/CssSelect";
 
 import ListCollection from "./components/ListCollection";
 
@@ -102,7 +103,7 @@ const CreateRoom = () => {
                             <Typography>Max User</Typography>
                         </Grid>
                         <Grid item md={4}>
-                            <Select
+                            <CssSelect
                                 value={payload.maxUsers}
                                 className={styles.selectBox}
                                 onChange={e => {
@@ -115,7 +116,7 @@ const CreateRoom = () => {
                                         {m}
                                     </MenuItem>
                                 ))}
-                            </Select>
+                            </CssSelect>
                         </Grid>
                     </Grid>
                     <Grid item container className="items-center mb-2.5">
@@ -126,7 +127,7 @@ const CreateRoom = () => {
                             <Typography>Timeout (sec)</Typography>
                         </Grid>
                         <Grid item md={4}>
-                            <Select
+                            <CssSelect
                                 value={payload.timeOut}
                                 className={styles.selectBox}
                                 onChange={e => {
@@ -139,7 +140,7 @@ const CreateRoom = () => {
                                         {time}
                                     </MenuItem>
                                 ))}
-                            </Select>
+                            </CssSelect>
                         </Grid>
                     </Grid>
                     {isLoggedIn && (

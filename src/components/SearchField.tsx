@@ -15,6 +15,7 @@ const SearchField = (props?: TextFieldProps) => (
                     <SearchIcon color="action" />
                 </InputAdornment>
             ),
+            sx: {paddingLeft: "4px"},
         }}
     />
 );
