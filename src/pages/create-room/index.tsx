@@ -30,7 +30,7 @@ const CreateRoom = () => {
         timeOut: 30,
         collectionId: "",
         name: user.name,
-        password: undefined,
+        password: "",
     });
     const [isDisable, setDisableCreate] = React.useState(true);
     const {data} = useAppConfig();
