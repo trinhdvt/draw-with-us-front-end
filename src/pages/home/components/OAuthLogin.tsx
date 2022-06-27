@@ -1,12 +1,11 @@
 import React from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import jwt_decode from "jwt-decode";
 
 import {useUser} from "../../../store/UserStore";
 import {useSocket} from "../../../store/SocketStore";
 import {BackendAPI} from "../../../api/HttpClient";
 import HomePage from "..";
-import {IUser} from "../../../api/@types/User";
+import {ReadToken} from "../../../utils/TokenUtils";
 
 const OAuthLogin = () => {
     const navigate = useNavigate();
@@ -18,9 +17,10 @@ const OAuthLogin = () => {
         if (!code) return;
 
         BackendAPI.post("/api/login/fb", {code}).then(({data: {token}}) => {
-            const {name, avatar} = jwt_decode<IUser>(token);
-            setUser({name, avatar});
             setToken(token);
+
+            const {name, avatar} = ReadToken(token);
+            setUser({name, avatar});
             socket?.emit("user:update", {name, avatar});
             navigate("/", {replace: true});
         });
