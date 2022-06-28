@@ -82,7 +82,7 @@ const MessagePanel = (props: GridProps) => {
         if (roomId) {
             socket?.emit("room:msg", roomId, {
                 from: `${user.name}💬: `,
-                message: trimmedMs,
+                message: trimmedMsg,
             });
         }
     };
