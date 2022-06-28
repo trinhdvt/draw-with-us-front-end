@@ -42,6 +42,7 @@ const Game = () => {
         });
         socket?.on("game:finish", () => {
             dispatch({type: GameActionType.SHOW_RESULT, payload: true});
+            dispatch({type: GameActionType.NEXT_TURN, payload: undefined});
             setTimeout(() => {
                 dispatch({type: GameActionType.SHOW_RESULT, payload: false});
             }, 4e3);

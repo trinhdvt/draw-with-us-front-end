@@ -38,11 +38,11 @@ const RoomHome = () => {
 
     const onRoomSelect = (room: RoomProps) => setSelectedRoom(room);
 
-    const onJoinRoom = async () => {
-        if (!selectedRoom) return;
+    const joinRoom = async (room?: RoomProps) => {
+        if (!room) return;
 
         let password: string | undefined;
-        const {isPrivate, eid} = selectedRoom;
+        const {isPrivate, eid} = room;
 
         if (isPrivate) {
             password = await GetPassword();
@@ -63,6 +63,8 @@ const RoomHome = () => {
             }
         );
     };
+    const onJoinRoom = async () => await joinRoom(selectedRoom);
+
     const isDisable = !selectedRoom;
     const tooltipText = isDisable ? "Please select a room" : "Join now";
 

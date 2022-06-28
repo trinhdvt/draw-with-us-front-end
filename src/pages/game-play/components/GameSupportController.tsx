@@ -5,8 +5,11 @@ import {
     Dialog,
     DialogContent,
     DialogTitle,
+    Divider,
+    Grid,
     IconButton,
     InputAdornment,
+    Typography,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ShareIcon from "@mui/icons-material/Share";
@@ -16,6 +19,7 @@ import {useNavigate} from "react-router-dom";
 import CssTextField from "../../../components/CssTextField";
 import {useGame} from "../context/GameContext";
 import TopTooltip from "../../../components/TopTooltip";
+import AppQrCode from "../../../components/AppQRCode";
 
 const SmallOutlineBtn = ({
     children,
@@ -31,7 +35,8 @@ const GameSupportController = () => {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [isCopied, setCopied] = React.useState(false);
-    const shareLink = `${location.protocol}://${location.hostname}/play?rid=${gameState.roomId}`;
+    const qrCodeEL = React.useRef<HTMLDivElement>(null);
+    const shareLink = `${location.protocol}://${location.hostname}/room?rid=${gameState.roomId}`;
 
     const onExit = () => {
         const isExit = confirm("Are you sure you want to exit the game?");
@@ -54,6 +59,16 @@ const GameSupportController = () => {
         </TopTooltip>
     );
 
+    const copyQRCode = () => {
+        const canvasEl = qrCodeEL.current?.children[0] as HTMLCanvasElement;
+        canvasEl?.toBlob(async blob => {
+            if (!blob) return;
+            const item = new ClipboardItem({"image/png": blob});
+            await navigator.clipboard.write([item]);
+            handleClose();
+        });
+    };
+
     return (
         <div className="flex my-2">
             <SmallOutlineBtn
@@ -71,22 +86,44 @@ const GameSupportController = () => {
             >
                 Share
             </SmallOutlineBtn>
-            <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
+            <Dialog open={open} onClose={handleClose} maxWidth="xs">
                 <DialogTitle>Share this game</DialogTitle>
                 <DialogContent sx={{marginTop: "1px"}}>
-                    <CssTextField
-                        size="small"
-                        disabled
-                        fullWidth
-                        value={shareLink}
-                        InputProps={{
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <CopyBtn />
-                                </InputAdornment>
-                            ),
-                        }}
-                    />
+                    <Grid container direction="column">
+                        <Divider variant="middle" sx={{marginBottom: "8px"}}>
+                            <Typography>Via The Link Below</Typography>
+                        </Divider>
+                        <CssTextField
+                            size="small"
+                            disabled
+                            value={shareLink}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <CopyBtn />
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
+                        <Divider variant="middle" sx={{margin: "8px 0"}}>
+                            <Typography>Or Share This QR Code</Typography>
+                        </Divider>
+                        <Grid item container direction="column">
+                            <Grid
+                                ref={qrCodeEL}
+                                item
+                                sx={{
+                                    margin: "auto",
+                                    "& canvas": {
+                                        borderRadius: "12px",
+                                    },
+                                }}
+                            >
+                                <AppQrCode value={shareLink} />
+                            </Grid>
+                            <Button onClick={copyQRCode}>Copy QR Code</Button>
+                        </Grid>
+                    </Grid>
                 </DialogContent>
             </Dialog>
         </div>
