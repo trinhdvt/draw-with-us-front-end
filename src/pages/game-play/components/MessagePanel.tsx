@@ -17,7 +17,7 @@ import {useUser} from "../../../store/UserStore";
 const MessageColorPalette = {
     warn: "#ffa726",
     success: "#66bb6a",
-    default: "#868d96",
+    default: "#1976d2",
     error: "#f44336",
 };
 
@@ -42,7 +42,7 @@ const Message = ({from, message, type}: IMessage) => {
             >
                 {from}
             </Typography>
-            <Typography component="span" className="font-medium" color={color}>
+            <Typography component="span" className=" break-all" color={color}>
                 {message}
             </Typography>
         </Typography>
@@ -58,6 +58,7 @@ const MessagePanel = (props: GridProps) => {
     const [myMsg, setMyMsg] = React.useState("");
     const containerRef = React.useRef<HTMLDivElement>(null);
     const [roomMsg, setRoomMsg] = React.useState<IMessage[]>([]);
+    const MAX_MSG_LENGTH = 150;
 
     React.useEffect(() => {
         socket?.on("room:msg", payload => {
@@ -81,7 +82,7 @@ const MessagePanel = (props: GridProps) => {
         setMyMsg("");
         if (roomId) {
             socket?.emit("room:msg", roomId, {
-                from: `${user.name}💬: `,
+                from: `💬 ${user.name}:`,
                 message: trimmedMsg,
             });
         }
@@ -90,35 +91,50 @@ const MessagePanel = (props: GridProps) => {
     return (
         <Grid item container direction="column" {...props}>
             <Grid
-                item
-                height="110px"
-                ref={containerRef}
-                className="scrollBar flex flex-col mb-1 border-solid bg-white
-                border-gray-500 rounded-xl overflow-y-scroll"
+              item
+              height="110px"
+              ref={containerRef}
+              className="scrollBar flex flex-col mb-1 border-solid border-[2px] bg-white
+                border-[#1976d2] rounded-xl overflow-y-scroll"
             >
                 {roomMsg.map((message, index) => (
-                    <Message key={message.id ?? index} {...message} />
+                  <Message key={message.id ?? index} {...message} />
                 ))}
             </Grid>
             <CssTextField
-                className="my-1"
-                value={myMsg}
-                onChange={e => setMyMsg(e.target.value.slice(0, 255))}
-                size="small"
-                autoComplete="off"
-                placeholder="Type a message..."
-                onKeyDown={e => {
-                    if (e.key === "Enter") {
-                        onMsgSend();
-                    }
-                }}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton edge="end" onClick={onMsgSend}>
-                                <SendIcon color="primary" />
-                            </IconButton>
-                        </InputAdornment>
+              className="mt-1"
+              value={myMsg}
+              onChange={e =>
+                setMyMsg(e.target.value.slice(0, MAX_MSG_LENGTH))
+              }
+              size="small"
+              label={myMsg ? `${myMsg.length}/${MAX_MSG_LENGTH}` : ""}
+              autoComplete="off"
+              placeholder="Type a message..."
+              onKeyDown={e => {
+                  if (e.key === "Enter") {
+                      onMsgSend();
+                  }
+              }}
+              InputLabelProps={{
+                  style: {
+                      color:
+                        myMsg.length > MAX_MSG_LENGTH * 0.75
+                          ? "red"
+                          : "'#1976d2',
+                  ,
+              }}
+              InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                        <IconButton
+                          size="small"
+                          edge="end"
+                          onClick={onMsgSend}
+                        >
+                            <SendIcon color="warning" />
+                        </IconButton>
+                    </InputAdornment>
                     ),
                 }}
             />

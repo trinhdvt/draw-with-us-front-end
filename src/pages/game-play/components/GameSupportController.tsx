@@ -70,7 +70,7 @@ const GameSupportController = () => {
     };
 
     return (
-        <div className="flex my-2">
+        <div className="flex mt-2">
             <SmallOutlineBtn
                 startIcon={<LogoutIcon />}
                 color="error"

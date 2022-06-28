@@ -82,12 +82,16 @@ const Game = () => {
                     </Typography>
                 )}
             </Grid>
-            <Grid item container>
+            <Grid item container className="pb-2">
                 <Grid item md={3.5} className="flex flex-col">
                     <RoomPlayers />
                     <GameSupportController />
                 </Grid>
-                <Grid item md={6} className="flex flex-col mx-auto">
+                <Grid
+                    item
+                    md={6}
+                    className="flex flex-col justify-between mx-auto"
+                >
                     {GameWaitingScreen() ?? (
                         <React.Fragment>
                             {EndTurnWaitingScreen() ?? (
@@ -100,7 +104,7 @@ const Game = () => {
                             )}
                         </React.Fragment>
                     )}
-                    <MessagePanel className={clsx(!isPlaying && "mt-auto")} />
+                    <MessagePanel className={clsx(!isPlaying)} />
                 </Grid>
             </Grid>
             {gameState.showResult && <CongratsModal />}
