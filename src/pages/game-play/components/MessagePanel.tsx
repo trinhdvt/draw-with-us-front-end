@@ -71,7 +71,7 @@ const MessagePanel = (props: GridProps) => {
     React.useEffect(() => {
         containerRef.current?.scrollTo({
             top: containerRef.current?.scrollHeight,
-            beavior: "smooth",
+            behavior: "smooth",
         });
     }, [roomMsg]);
 
@@ -82,7 +82,7 @@ const MessagePanel = (props: GridProps) => {
         if (roomId) {
             socket?.emit("room:msg", roomId, {
                 from: `${user.name}💬: `,
-                mesage: trimmedMsg,
+                message: trimmedMs,
             });
         }
     };
