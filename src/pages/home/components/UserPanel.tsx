@@ -1,10 +1,19 @@
 import React from "react";
-import {Avatar, Button, Grid, InputAdornment, Typography} from "@mui/material";
+import {
+    Avatar,
+    Button,
+    Grid,
+    IconButton,
+    InputAdornment,
+    Typography,
+} from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useMutation} from "react-query";
 import {useNavigate} from "react-router-dom";
+import {motion} from "framer-motion";
+import {GoSync} from "react-icons/go";
 
 import {fetchRandom} from "../../../api/services/RoomServices";
 import CssTextField from "../../../components/CssTextField";
@@ -15,9 +24,10 @@ import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 
 const UserPanel = () => {
     const navigate = useNavigate();
-    const {user, setUser} = useUser();
+    const {token, user, setUser} = useUser();
     const socket = useSocket();
     const [isFinding, setFinding] = React.useState(false);
+    const isLoggedIn = !!token;
 
     const useRandomRoom = useMutation(fetchRandom, {
         onMutate: () => setFinding(true),
@@ -46,6 +56,18 @@ const UserPanel = () => {
         });
     };
 
+    const changeAvatar = () => {
+        if (isLoggedIn) return;
+
+        const randomIdx = Math.floor(Math.random() * 30) + 1;
+        const newAvatar = `https://cdn.trinhdvt.tech/${randomIdx}.webp`;
+        socket?.emit(
+            "user:update",
+            {avatar: newAvatar, name: user.name},
+            response => setUser(response)
+        );
+    };
+
     return (
         <Grid
             item
@@ -54,20 +76,37 @@ const UserPanel = () => {
             rowSpacing={2}
             className="flex-col items-center mt-1 mb-5"
         >
-            <Grid item>
+            <Grid item md>
                 <Typography variant="h2" align="center" className="uppercase">
                     Play now
                 </Typography>
             </Grid>
-            <Grid item>
+            <Grid item md className="relative mb-1">
                 <Avatar src={user.avatar} className="w-[100px] h-[100px]" />
+                {!isLoggedIn && (
+                    <IconButton
+                        size="small"
+                        className="absolute top-[85%] right-[33%] bg-[rgba(255,255,255,0.8)]"
+                        onClick={changeAvatar}
+                        component={motion.div}
+                        initial={{scale: 1}}
+                        whileHover={{
+                            scale: 1.1,
+                            rotate: 180,
+                            transition: {duration: 0.3},
+                        }}
+                        whileTap={{scale: 0.95}}
+                    >
+                        <GoSync className="primary-icon" />
+                    </IconButton>
+                )}
             </Grid>
             <Grid item className="mb-1.5">
                 <CssTextField
                     size="small"
                     label="Nickname"
                     value={user.name}
-                    onChange={e => setUser({...user, name: e.target.value})}
+                    onChange={e => setUser({name: e.target.value})}
                     onBlur={() => {
                         socket?.emit("user:update", user, response => {
                             setUser({...response});

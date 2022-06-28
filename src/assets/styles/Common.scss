@@ -40,3 +40,12 @@ $scroll-container-height: 250px;
   padding: 4px;
   margin: auto auto;
 }
+
+@keyframes scaleMe {
+  from {
+    transform: scale(0.5);
+  }
+  to {
+    transform: scale(1);
+  }
+}
