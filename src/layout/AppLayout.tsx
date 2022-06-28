@@ -10,7 +10,8 @@ const AppLayout = ({children}: {children?: React.ReactNode}) => {
         <Container
             component="main"
             maxWidth="md"
-            className="my-[30px] mx-auto bg-blue-300"
+            fixed={true}
+            className="my-[40px] min-w-[900px] mx-auto bg-blue-300 rounded-xl"
         >
             <AppHeader />
             {children ?? <Outlet />}

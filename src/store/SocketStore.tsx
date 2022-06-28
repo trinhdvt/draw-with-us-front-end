@@ -4,6 +4,7 @@ import create from "zustand";
 
 import {BackendUrl} from "../api/HttpClient";
 import {SocketType} from "../api/@types/SocketEvent";
+import {ReadToken} from "../utils/TokenUtils";
 
 import {useUser} from "./UserStore";
 
@@ -19,7 +20,7 @@ const useAppSocket = create<ISocketState>()(setState => ({
 
 const SocketWrapper = ({children}: {children: React.ReactNode}) => {
     const {setSocket} = useAppSocket();
-    const {setUser} = useUser();
+    const {token, setUser} = useUser();
     React.useEffect(() => {
         try {
             const options: Partial<ManagerOptions & SocketOptions> = {
@@ -29,13 +30,19 @@ const SocketWrapper = ({children}: {children: React.ReactNode}) => {
             };
             const socketCnn: SocketType = io(BackendUrl, options);
             setSocket(socketCnn);
-            socketCnn.emit("user:init", response => {
+            let initData = {};
+            if (token) {
+                const {name, avatar} = ReadToken(token);
+                initData = {name, avatar};
+            }
+
+            socketCnn.emit("user:init", initData, response => {
                 setUser({...response, sid: socketCnn.id});
             });
         } catch (e) {
             alert(e);
         }
-    }, [setSocket, setUser]);
+    }, [setSocket, setUser, token]);
 
     return <React.Fragment>{children}</React.Fragment>;
 };

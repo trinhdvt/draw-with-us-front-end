@@ -31,9 +31,10 @@ type IMessage = {
 const Message = ({from, message, type}: IMessage) => {
     const color = MessageColorPalette[type ?? "default"];
     return (
-        <div className="flex my-0.5">
+        <Typography className="my-0.5">
             <Typography
                 variant="body1"
+                component="span"
                 className={clsx(
                     "capitalize font-bold ml-1 text-gray-800",
                     from && "mr-1"
@@ -41,10 +42,10 @@ const Message = ({from, message, type}: IMessage) => {
             >
                 {from}
             </Typography>
-            <Typography className="font-medium" color={color}>
+            <Typography component="span" className="font-medium" color={color}>
                 {message}
             </Typography>
-        </div>
+        </Typography>
     );
 };
 
@@ -60,12 +61,19 @@ const MessagePanel = (props: GridProps) => {
 
     React.useEffect(() => {
         socket?.on("room:msg", payload => {
-            setRoomMsg(prev => [payload, ...prev]);
+            setRoomMsg(prev => [...prev, payload]);
         });
         return () => {
             socket?.off("room:msg");
         };
     }, [socket]);
+
+    React.useEffect(() => {
+        containerRef.current?.scrollTo({
+            top: containerRef.current?.scrollHeight,
+            beavior: "smooth",
+        });
+    }, [roomMsg]);
 
     const onMsgSend = () => {
         const trimmedMsg = myMsg.trim();
@@ -74,9 +82,8 @@ const MessagePanel = (props: GridProps) => {
         if (roomId) {
             socket?.emit("room:msg", roomId, {
                 from: `${user.name}💬: `,
-                message: trimmedMsg,
+                mesage: trimmedMsg,
             });
-            containerRef.current?.scrollTo({top: 0, behavior: "smooth"});
         }
     };
 
@@ -98,6 +105,7 @@ const MessagePanel = (props: GridProps) => {
                 value={myMsg}
                 onChange={e => setMyMsg(e.target.value.slice(0, 255))}
                 size="small"
+                autoComplete="off"
                 placeholder="Type a message..."
                 onKeyDown={e => {
                     if (e.key === "Enter") {
@@ -107,7 +115,7 @@ const MessagePanel = (props: GridProps) => {
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">
-                            <IconButton onClick={onMsgSend}>
+                            <IconButton edge="end" onClick={onMsgSend}>
                                 <SendIcon color="primary" />
                             </IconButton>
                         </InputAdornment>

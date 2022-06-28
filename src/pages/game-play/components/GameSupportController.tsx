@@ -43,12 +43,12 @@ const GameSupportController = () => {
     const onCopy = async () => {
         await navigator.clipboard.writeText(shareLink);
         setCopied(true);
-        setTimeout(handleClose, 1500);
+        setTimeout(handleClose, 1000);
     };
 
     const CopyBtn = () => (
         <TopTooltip title={isCopied ? "Copied!" : "Click to copy"}>
-            <IconButton onClick={onCopy}>
+            <IconButton edge="end" onClick={onCopy}>
                 <ContentCopyIcon color="primary" />
             </IconButton>
         </TopTooltip>

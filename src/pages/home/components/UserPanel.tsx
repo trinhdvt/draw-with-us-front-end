@@ -68,7 +68,11 @@ const UserPanel = () => {
                     label="Nickname"
                     value={user.name}
                     onChange={e => setUser({...user, name: e.target.value})}
-                    onBlur={() => socket?.emit("user:update", user)}
+                    onBlur={() => {
+                        socket?.emit("user:update", user, response => {
+                            setUser({...response});
+                        });
+                    }}
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
