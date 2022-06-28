@@ -91,50 +91,50 @@ const MessagePanel = (props: GridProps) => {
     return (
         <Grid item container direction="column" {...props}>
             <Grid
-              item
-              height="110px"
-              ref={containerRef}
-              className="scrollBar flex flex-col mb-1 border-solid border-[2px] bg-white
+                item
+                height="110px"
+                ref={containerRef}
+                className="scrollBar flex flex-col mb-1 border-solid border-[2px] bg-white
                 border-[#1976d2] rounded-xl overflow-y-scroll"
             >
                 {roomMsg.map((message, index) => (
-                  <Message key={message.id ?? index} {...message} />
+                    <Message key={message.id ?? index} {...message} />
                 ))}
             </Grid>
             <CssTextField
-              className="mt-1"
-              value={myMsg}
-              onChange={e =>
-                setMyMsg(e.target.value.slice(0, MAX_MSG_LENGTH))
-              }
-              size="small"
-              label={myMsg ? `${myMsg.length}/${MAX_MSG_LENGTH}` : ""}
-              autoComplete="off"
-              placeholder="Type a message..."
-              onKeyDown={e => {
-                  if (e.key === "Enter") {
-                      onMsgSend();
-                  }
-              }}
-              InputLabelProps={{
-                  style: {
-                      color:
-                        myMsg.length > MAX_MSG_LENGTH * 0.75
-                          ? "red"
-                          : "'#1976d2',
-                  ,
-              }}
-              InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                        <IconButton
-                          size="small"
-                          edge="end"
-                          onClick={onMsgSend}
-                        >
-                            <SendIcon color="warning" />
-                        </IconButton>
-                    </InputAdornment>
+                className="mt-1"
+                value={myMsg}
+                onChange={e =>
+                    setMyMsg(e.target.value.slice(0, MAX_MSG_LENGTH))
+                }
+                size="small"
+                label={myMsg ? `${myMsg.length}/${MAX_MSG_LENGTH}` : ""}
+                autoComplete="off"
+                placeholder="Type a message..."
+                onKeyDown={e => {
+                    if (e.key === "Enter") {
+                        onMsgSend();
+                    }
+                }}
+                InputLabelProps={{
+                    style: {
+                        color:
+                            myMsg.length > MAX_MSG_LENGTH * 0.75
+                                ? "red"
+                                : "#1976d2",
+                    },
+                }}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                size="small"
+                                edge="end"
+                                onClick={onMsgSend}
+                            >
+                                <SendIcon color="warning" />
+                            </IconButton>
+                        </InputAdornment>
                     ),
                 }}
             />
