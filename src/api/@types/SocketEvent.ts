@@ -16,8 +16,14 @@ interface ServerToClientEvents {
 }
 
 interface ClientToServerEvents {
-    "user:init": (callback: (response: IUser) => void) => void;
-    "user:update": (arg: Partial<IUser>) => void;
+    "user:init": (
+        initData: Partial<IUser>,
+        callback: (response: IUser) => void
+    ) => void;
+    "user:update": (
+        arg: Partial<IUser>,
+        callback: (response: IUser) => void
+    ) => void;
     "room:join": (
         payload: IRoomJoinEvent,
         callback: (e: Record<string, unknown>) => void

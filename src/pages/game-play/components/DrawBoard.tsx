@@ -44,8 +44,8 @@ const DrawBoard = ({...others}: GridProps) => {
     };
 
     const onCorrectDraw = () => {
+        dispatch({type: GameActionType.DONE, payload: true});
         alertSuccess().then(() => {
-            dispatch({type: GameActionType.DONE, payload: true});
             clearCanvas();
         });
     };

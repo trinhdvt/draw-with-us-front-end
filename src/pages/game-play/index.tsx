@@ -44,7 +44,7 @@ const Game = () => {
             dispatch({type: GameActionType.SHOW_RESULT, payload: true});
             setTimeout(() => {
                 dispatch({type: GameActionType.SHOW_RESULT, payload: false});
-            }, 3e3);
+            }, 4e3);
         });
 
         return () => {

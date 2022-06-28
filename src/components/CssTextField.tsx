@@ -6,11 +6,7 @@ const CssTextField = styled(TextField)({
             border: "2px solid gray",
             borderRadius: 12,
         },
-        "&.Mui-focused fieldset": {
-            borderColor: "purple",
-        },
     },
 });
 
 export default CssTextField;
-
