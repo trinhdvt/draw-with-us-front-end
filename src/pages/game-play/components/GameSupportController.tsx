@@ -36,7 +36,10 @@ const GameSupportController = () => {
     const [open, setOpen] = React.useState(false);
     const [isCopied, setCopied] = React.useState(false);
     const qrCodeEL = React.useRef<HTMLDivElement>(null);
-    const shareLink = `${location.protocol}://${location.hostname}/room?rid=${gameState.roomId}`;
+    const {protocol, hostname} = location;
+    const port = import.meta.env.DEV ? `:${location.port}` : "";
+
+    const shareLink = `${protocol}//${hostname}${port}/join?rid=${gameState.roomId}`;
 
     const onExit = () => {
         const isExit = confirm("Are you sure you want to exit the game?");

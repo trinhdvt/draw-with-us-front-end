@@ -11,11 +11,10 @@ import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../store/SocketStore";
 import TopTooltip from "../../components/TopTooltip";
-import GetPassword from "../../utils/PasswordDialog";
-import {notifyError} from "../../utils/Notify";
 
 import RoomCard, {RoomDefault, RoomProps} from "./components/RoomCard";
 import ShowModeSelector from "./components/ShowModeSelector";
+import useJoinRoom from "./hooks/useJoinRoom";
 
 const RoomHome = () => {
     const navigate = useNavigate();
@@ -26,6 +25,7 @@ const RoomHome = () => {
     const socket = useSocket();
     const {data} = useRooms();
     const queryClient = useQueryClient();
+    const {joinRoom} = useJoinRoom();
 
     React.useEffect(() => {
         socket?.on("list-room:update", async () => {
@@ -37,33 +37,11 @@ const RoomHome = () => {
     }, [queryClient, socket]);
 
     const onRoomSelect = (room: RoomProps) => setSelectedRoom(room);
-
-    const joinRoom = async (room?: RoomProps) => {
-        if (!room) return;
-
-        let password: string | undefined;
-        const {isPrivate, eid} = room;
-
-        if (isPrivate) {
-            password = await GetPassword();
-            if (!password) return;
-        }
-        socket?.emit(
-            "room:join",
-            {eid, password},
-            async ({message, roomId, onMiddleGame}) => {
-                if (roomId)
-                    return navigate(`/play/${roomId}`, {
-                        state: {onMiddleGame},
-                    });
-                if (message) {
-                    await queryClient.invalidateQueries(["rooms"]);
-                    await notifyError(message as string);
-                }
-            }
-        );
+    const onJoinRoom = async () => {
+        if (!selectedRoom) return;
+        const {isPrivate, eid} = selectedRoom;
+        await joinRoom({eid, isPrivate: !!isPrivate});
     };
-    const onJoinRoom = async () => await joinRoom(selectedRoom);
 
     const isDisable = !selectedRoom;
     const tooltipText = isDisable ? "Please select a room" : "Join now";

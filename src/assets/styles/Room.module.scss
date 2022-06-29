@@ -54,3 +54,25 @@ $max-height: 350px;
 .selected {
   border-color: $blue-sky;
 }
+
+.avatarBorder {
+  border: 2px solid $blue-sky;
+  border-radius: 50%;
+}
+
+.iconAvatar {
+  @apply w-[50px] h-[50px] flex items-center justify-center;
+  @extend .avatarBorder;
+}
+
+.joinRoomMain {
+  @apply h-[250px] rounded-xl ;
+  background-color: $blue-light;
+  border-bottom: 10px solid $blue-light;
+  border-top: 10px solid $blue-light;
+}
+
+.subPanel {
+  @apply rounded-xl;
+  background-color: $white;
+}

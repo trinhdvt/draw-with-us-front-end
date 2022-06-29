@@ -1,7 +1,12 @@
 import {useMutation, useQuery} from "react-query";
 
 import {BackendAPI, HttpError} from "../HttpClient";
-import {IRoomConfig, IRoomRequest, IRoomResponse} from "../@types/Room";
+import {
+    IRoomConfig,
+    IRoomPreview,
+    IRoomRequest,
+    IRoomResponse,
+} from "../@types/Room";
 import {IPlayer} from "../@types/User";
 
 const createRoom = async (payload: IRoomRequest): Promise<IRoomResponse> => {
@@ -47,6 +52,20 @@ const useRoom = (roomId?: string) => {
     );
 };
 
+const usePreviewRoom = (roomId: string | null) => {
+    return useQuery<IRoomPreview, HttpError>(
+        ["room-preview", roomId],
+        async () => {
+            const {data} = await BackendAPI.get(`/api/room/${roomId}/preview`);
+            return data;
+        },
+        {
+            enabled: !!roomId,
+            retry: false,
+        }
+    );
+};
+
 const usePlayers = (roomId?: string) => {
     return useQuery<IPlayer[], HttpError>(
         ["room-players", roomId],
@@ -74,4 +93,5 @@ export {
     useRooms,
     useValidPlayer,
     useCreateRoom,
+    usePreviewRoom,
 };

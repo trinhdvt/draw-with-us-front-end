@@ -11,6 +11,7 @@ import {useUser} from "./store/UserStore";
 
 const AppLayout = React.lazy(() => import("./layout/AppLayout"));
 const ListRoom = React.lazy(() => import("./pages/list-room"));
+const JoinRoom = React.lazy(() => import("./pages/join-room"));
 const CreateRoom = React.lazy(() => import("./pages/create-room"));
 const CreateCollection = React.lazy(() => import("./pages/create-collection"));
 const Gallery = React.lazy(() => import("./pages/gallery"));
@@ -35,7 +36,7 @@ const App = () => {
                     <Suspense fallback={<AnimatedLoading />}>
                         <Routes>
                             <Route element={<AppLayout />}>
-                                <Route path="/" element={<HomePage />} />
+                                <Route index element={<HomePage />} />
                                 <Route path="/room" element={<ListRoom />} />
                                 <Route
                                     path="/create"
@@ -53,6 +54,7 @@ const App = () => {
                                     element={<OAuthLogin />}
                                 />
                             </Route>
+                            <Route path="/join" element={<JoinRoom />} />
                             <Route
                                 path="/play/:roomId"
                                 element={<GameWrapper />}

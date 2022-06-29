@@ -3,7 +3,7 @@ import {Divider, Grid, Typography} from "@mui/material";
 
 import {useUser} from "../../store/UserStore";
 
-import UserPanel from "./components/UserPanel";
+import PlayNowPanel from "./components/PlayNowPanel";
 import LoginPanel from "./components/LoginPanel";
 import ListCreatedCollection from "./components/ListCreatedCollection";
 
@@ -11,15 +11,19 @@ const HomePage = () => {
     React.useEffect(() => {
         document.title = "Draw With Us";
     }, []);
-
     const token = useUser(state => state.token);
+    const isLoggedIn = !!token;
+
     return (
-        <Grid container className="bg-white rounded-xl justify-evenly">
-            <UserPanel />
+        <Grid
+            container
+            className="h-[270px] justify-evenly bg-white rounded-xl pb-2"
+        >
+            <PlayNowPanel />
             <Divider orientation="vertical" flexItem variant="middle">
                 <Typography>OR</Typography>
             </Divider>
-            {token ? <ListCreatedCollection /> : <LoginPanel />}
+            {isLoggedIn ? <ListCreatedCollection /> : <LoginPanel />}
         </Grid>
     );
 };

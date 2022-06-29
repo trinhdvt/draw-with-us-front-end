@@ -25,7 +25,7 @@ const RoomHeader = (props: HeaderProps & GridProps) => {
             <Grid item container md={5} alignItems="center">
                 <Button
                     startIcon={<ArrowBackIcon />}
-                    className={styles.backBtn}
+                    className="mr-2.5 rounded-xl border-[2px] border-solid border-[#9fbdca]"
                     onClick={() => navigate(-1)}
                 >
                     Back

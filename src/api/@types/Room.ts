@@ -20,6 +20,13 @@ interface IRoomConfig extends IRoomResponse {
     isHost: boolean;
 }
 
+interface IRoomPreview extends IRoomResponse {
+    host: {
+        name: string;
+        avatar: string;
+    };
+}
+
 interface IRoomRequest {
     timeOut: number;
     maxUsers: number;
@@ -33,5 +40,11 @@ interface IRoomJoinEvent {
     password?: string;
 }
 
-export type {IRoomResponse, IRoomRequest, IRoomConfig, IRoomJoinEvent};
+export type {
+    IRoomResponse,
+    IRoomRequest,
+    IRoomConfig,
+    IRoomJoinEvent,
+    IRoomPreview,
+};
 export {RoomStatus};
