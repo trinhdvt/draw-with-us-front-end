@@ -807,6 +807,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-oauth/google@npm:latest":
+  version: 0.2.6
+  resolution: "@react-oauth/google@npm:0.2.6"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 917ecb8df4cd8246a2945a684d92d5ccad4e279ef48a87000c1357627aefbe49742377d772da1a8817ea072d3fb4b99afbebfaf8dec2006cfb8d195b9d89d865
+  languageName: node
+  linkType: hard
+
 "@rollup/pluginutils@npm:^4.2.1":
   version: 4.2.1
   resolution: "@rollup/pluginutils@npm:4.2.1"
@@ -1941,6 +1951,7 @@ __metadata:
     "@emotion/styled": ^11.8.1
     "@mui/icons-material": ^5.6.1
     "@mui/material": ^5.6.1
+    "@react-oauth/google": latest
     "@types/canvas-confetti": ^1.4.2
     "@types/node": ^16.7.13
     "@types/react": ^18.0.0

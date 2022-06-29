@@ -1,10 +1,10 @@
 import React from "react";
-import {Button, Divider, Grid, Typography} from "@mui/material";
+import {Divider, Grid, Typography} from "@mui/material";
 import {FaUserLock} from "react-icons/fa";
 import {MdOutlinePrivacyTip} from "react-icons/md";
-import {FcGoogle} from "react-icons/fc";
 
 import FbLoginBtn from "./FbLoginBtn";
+import GoogleLoginBtn from "./GoogleLoginBtn";
 
 const LoginPanel = () => (
     <Grid item container md={5} className="flex-col items-center mt-1">
@@ -41,13 +41,7 @@ const LoginPanel = () => (
         <div className="flex justify-evenly mt-2">
             <FbLoginBtn className="flex-1" />
             <div className="mx-4" />
-            <Button
-                startIcon={<FcGoogle />}
-                variant="outlined"
-                className="flex-1"
-            >
-                Google
-            </Button>
+            <GoogleLoginBtn className="flex-1" />
         </div>
     </Grid>
 );

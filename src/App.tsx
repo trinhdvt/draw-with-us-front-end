@@ -1,6 +1,7 @@
 import React, {Suspense} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
+import {GoogleOAuthProvider} from "@react-oauth/google";
 
 import {AnimatedLoading} from "./components/LoadingScreen";
 import GameWrapper from "./pages/game-play";
@@ -31,39 +32,47 @@ const App = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <SocketWrapper>
-                <BrowserRouter>
-                    <Suspense fallback={<AnimatedLoading />}>
-                        <Routes>
-                            <Route element={<AppLayout />}>
-                                <Route index element={<HomePage />} />
-                                <Route path="/room" element={<ListRoom />} />
-                                <Route
-                                    path="/create"
-                                    element={<CreateRoom />}
-                                />
-                                <Route path="/gallery" element={<Gallery />} />
-                                {isLoggedIn && (
+            <GoogleOAuthProvider clientId="545452035521-leue10pl1h50n85g7r967bf43qjea24d.apps.googleusercontent.com">
+                <SocketWrapper>
+                    <BrowserRouter>
+                        <Suspense fallback={<AnimatedLoading />}>
+                            <Routes>
+                                <Route element={<AppLayout />}>
+                                    <Route index element={<HomePage />} />
                                     <Route
-                                        path="/collection"
-                                        element={<CreateCollection />}
+                                        path="/room"
+                                        element={<ListRoom />}
                                     />
-                                )}
+                                    <Route
+                                        path="/create"
+                                        element={<CreateRoom />}
+                                    />
+                                    <Route
+                                        path="/gallery"
+                                        element={<Gallery />}
+                                    />
+                                    {isLoggedIn && (
+                                        <Route
+                                            path="/collection"
+                                            element={<CreateCollection />}
+                                        />
+                                    )}
+                                    <Route
+                                        path="/login/fb/callback"
+                                        element={<OAuthLogin />}
+                                    />
+                                </Route>
+                                <Route path="/join" element={<JoinRoom />} />
                                 <Route
-                                    path="/login/fb/callback"
-                                    element={<OAuthLogin />}
+                                    path="/play/:roomId"
+                                    element={<GameWrapper />}
                                 />
-                            </Route>
-                            <Route path="/join" element={<JoinRoom />} />
-                            <Route
-                                path="/play/:roomId"
-                                element={<GameWrapper />}
-                            />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    </Suspense>
-                </BrowserRouter>
-            </SocketWrapper>
+                                <Route path="*" element={<NotFound />} />
+                            </Routes>
+                        </Suspense>
+                    </BrowserRouter>
+                </SocketWrapper>
+            </GoogleOAuthProvider>
         </QueryClientProvider>
     );
 };
