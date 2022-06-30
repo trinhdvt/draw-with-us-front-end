@@ -11,7 +11,11 @@ const AppLayout = ({children}: {children?: React.ReactNode}) => {
             component="main"
             maxWidth="md"
             fixed={true}
-            className="my-[40px] min-w-[900px] mx-auto bg-blue-300 rounded-xl"
+            sx={{
+                backgroundImage:
+                    "linear-gradient(to bottom right, #00C0FF, #a9d1d0)",
+            }}
+            className="my-[40px] min-w-[900px] mx-auto rounded-xl"
         >
             <AppHeader />
             {children ?? <Outlet />}

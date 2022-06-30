@@ -45,12 +45,15 @@ const PlayNowPanel = (props: GridProps) => {
     };
 
     return (
-        <Grid className="flex-col items-center mt-1" {...props}>
-            <Typography variant="h2" className="uppercase mb-3">
+        <Grid
+            className="w-full grid grid-rows-[1fr_4fr_1fr] items-center"
+            {...props}
+        >
+            <Typography variant="h2" className="uppercase text-center">
                 Play now
             </Typography>
             <UserInfo />
-            <Grid container className="justify-center">
+            <div className="w-full flex justify-center">
                 <Button
                     startIcon={<MeetingRoomIcon />}
                     variant="contained"
@@ -66,7 +69,7 @@ const PlayNowPanel = (props: GridProps) => {
                 >
                     Play Now
                 </Button>
-            </Grid>
+            </div>
             {isFinding && <AnimatedLoading size={100} text="Finding" />}
         </Grid>
     );

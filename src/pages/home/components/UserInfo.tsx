@@ -27,8 +27,8 @@ const UserInfo = () => {
     };
 
     return (
-        <div className="flex flex-col flex-1 items-center">
-            <div className="mb-auto relative">
+        <div className="h-full flex flex-col flex-1 items-center">
+            <div className="my-auto relative">
                 <Avatar src={user.avatar} className="w-[100px] h-[100px]" />
                 {!isLoggedIn && (
                     <IconButton
@@ -48,7 +48,7 @@ const UserInfo = () => {
                     </IconButton>
                 )}
             </div>
-            <div className="mb-auto">
+            <div className="my-auto">
                 <CssTextField
                     size="small"
                     label={`Nickname* ${user.name.length}/30`}

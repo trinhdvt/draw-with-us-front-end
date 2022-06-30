@@ -30,20 +30,17 @@ const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
     return (
         <Grid
             item
-            container
-            className={clsx("scrollBar justify-center", styles.samplePanel)}
+            className={clsx(
+                "w-full grid grid-cols-4 gap-1 auto-rows-[128px] scrollBar px-1",
+                styles.samplePanel
+            )}
             {...others}
             ref={containerRef}
         >
             {data?.pages?.map(({data: samples}, i) => (
                 <React.Fragment key={i}>
                     {samples.map(({id, strokes}) => (
-                        <DrawSample
-                            md={2.8}
-                            xs={2.8}
-                            key={id}
-                            strokes={strokes}
-                        />
+                        <DrawSample key={id} strokes={strokes} />
                     ))}
                 </React.Fragment>
             ))}

@@ -69,9 +69,6 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
 
     return (
         <Grid
-            item
-            md={7.8}
-            xs={7.8}
             className="w-full grid auto-rows-auto gap-y-2 ml-auto"
             {...others}
         >

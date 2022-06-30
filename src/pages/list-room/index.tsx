@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {Button} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
@@ -12,6 +12,7 @@ import {useRooms} from "../../api/services/RoomServices";
 import SearchField from "../../components/SearchField";
 import {useSocket} from "../../store/SocketStore";
 import TopTooltip from "../../components/TopTooltip";
+import useSearch from "../../hooks/useSearch";
 
 import RoomCard, {RoomDefault, RoomProps} from "./components/RoomCard";
 import ShowModeSelector from "./components/ShowModeSelector";
@@ -27,6 +28,9 @@ const RoomHome = () => {
     const {data} = useRooms();
     const queryClient = useQueryClient();
     const {joinRoom} = useJoinRoom();
+    const combinedRooms = React.useMemo(() => {
+        return [...(data ?? []), ...defaultRooms];
+    }, [data, defaultRooms]);
 
     React.useEffect(() => {
         socket?.on("list-room:update", async () => {
@@ -37,6 +41,18 @@ const RoomHome = () => {
         };
     }, [queryClient, socket]);
 
+    const [filtered, debouncedSearch] = useSearch({
+        data: combinedRooms,
+        keys: ["id", "name", "collectionName"],
+    });
+
+    const onSearch = React.useCallback(
+        (e: ChangeEvent<HTMLTextAreaElement>) => {
+            const keyword = e.target.value;
+            debouncedSearch(keyword);
+        },
+        [debouncedSearch]
+    );
     const onRoomSelect = (room: RoomProps) => setSelectedRoom(room);
     const onJoinRoom = async () => {
         if (!selectedRoom) return;
@@ -51,7 +67,11 @@ const RoomHome = () => {
         <RoomLayout
             title="Room List"
             headerChildren={
-                <SearchField className="w-[130px]" placeholder="Room's ID" />
+                <SearchField
+                    className="w-[130px]"
+                    placeholder="Room's ID"
+                    onChange={onSearch}
+                />
             }
             endChildren={<ShowModeSelector />}
         >
@@ -61,7 +81,7 @@ const RoomHome = () => {
                     "w-full max-w-full grid grid-cols-4 gap-2 px-2 scrollBar"
                 )}
             >
-                {[...(data ?? []), ...defaultRooms].map(room => (
+                {(filtered?.length ? filtered : combinedRooms).map(room => (
                     <RoomCard
                         {...room}
                         key={room.eid}

@@ -20,4 +20,4 @@ const SearchField = (props?: TextFieldProps) => (
     />
 );
 
-export default React.memo(SearchField);
+export default SearchField;

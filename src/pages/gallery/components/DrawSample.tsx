@@ -35,13 +35,7 @@ const DrawSample = ({strokes, ...others}: Props & GridProps) => {
     };
 
     return (
-        <Grid
-            item
-            width={SAMPLE_SIZE}
-            height={SAMPLE_SIZE}
-            className="mb-2 ml-2"
-            {...others}
-        >
+        <Grid item width={SAMPLE_SIZE} height={SAMPLE_SIZE} {...others}>
             <svg className="w-full h-full">{strokes && drawPaths()}</svg>
         </Grid>
     );

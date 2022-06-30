@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {
     Autocomplete,
     Button,
@@ -25,6 +25,7 @@ import TopTooltip from "../../components/TopTooltip";
 import {useUser} from "../../store/UserStore";
 import {useCreateCollection} from "../../api/services/CollectionServices";
 import {ICollectionRequest} from "../../api/@types/Collection";
+import useSearch from "../../hooks/useSearch";
 
 import TopicSampleModal from "./components/TopicSampleModal";
 
@@ -51,6 +52,19 @@ const CreateCollection = () => {
         }
     }, [loading]);
 
+    const [filtered, debouncedSearch] = useSearch({
+        data: addTopics,
+        keys: ["nameVi"],
+    });
+
+    const onSearch = React.useCallback(
+        (e: ChangeEvent<HTMLTextAreaElement>) => {
+            const keyword = e.target.value;
+            debouncedSearch(keyword);
+        },
+        [debouncedSearch]
+    );
+
     const onTopicSelect = (_: React.SyntheticEvent, value_: unknown) => {
         const value = value_ as ITopic;
         setCurrentTopic(value);
@@ -74,6 +88,7 @@ const CreateCollection = () => {
         setTopics(prev =>
             [...prev, topic].sort((a, b) => a.nameVi.localeCompare(b.nameVi))
         );
+        debouncedSearch("");
     };
 
     const handleOpenPreview = () => setOpenPreview(true);
@@ -103,14 +118,24 @@ const CreateCollection = () => {
 
     return (
         <RoomLayout title="New Collection">
-            <Grid container className={styles.subContainer}>
+            <Grid
+                className={clsx(
+                    styles.subContainer,
+                    "w-full grid grid-cols-[1fr_2fr] gap-x-2"
+                )}
+            >
                 <Grid
-                    item
-                    md={4}
-                    xs={4}
-                    className={clsx(styles.sidePanel, "flex flex-col")}
+                    className={clsx(
+                        styles.sidePanel,
+                        "w-full grid grid-rows-[auto_auto_auto_auto]"
+                    )}
+                    onKeyDown={e => {
+                        if (e.key === "Enter" && currentTopic) {
+                            onTopicAdd();
+                        }
+                    }}
                 >
-                    <Grid item className="flex flex-col mb-2.5">
+                    <div className="w-full flex flex-col justify-between">
                         <Typography className={styles.requiredInput}>
                             1. Collection name <span>*</span>
                         </Typography>
@@ -121,70 +146,60 @@ const CreateCollection = () => {
                             value={collectionName}
                             onChange={e => setCollectionName(e.target.value)}
                         />
-                    </Grid>
-                    <Grid item className="flex items-center mb-2.5">
+                    </div>
+                    <div className="w-full grid grid-cols-[auto_1fr] items-center">
                         <Typography className="capitalize">
                             2. Share with others
                         </Typography>
                         <Checkbox
+                            className="mr-auto"
                             checked={isPublic}
                             onClick={() => setPublic(!isPublic)}
                         />
-                    </Grid>
-                    <Grid item className="flex flex-col">
-                        <Grid item>
-                            <Typography className={styles.requiredInput}>
-                                3. Select topic below <span>*</span>
-                            </Typography>
-                        </Grid>
-                        <Grid
-                            item
-                            md
-                            className="flex items-center justify-between"
+                    </div>
+                    <div className="w-full grid grid-rows-3  grid-cols-[4fr_1fr] gap-x-2 items-center">
+                        <Typography
+                            className={clsx(styles.requiredInput, "col-span-2")}
                         >
-                            <Grid item md={8} xs={8}>
-                                <Autocomplete
-                                    open={open}
-                                    value={null}
-                                    onOpen={() => setOpen(true)}
-                                    onClose={() => setOpen(false)}
-                                    inputValue={currentTopicText}
-                                    onChange={onTopicSelect}
-                                    options={topics}
-                                    loading={loading}
-                                    isOptionEqualToValue={(option, value) =>
-                                        option.id == value.id
+                            3. Select topic below <span>*</span>
+                        </Typography>
+                        <Autocomplete
+                            className="w-full"
+                            open={open}
+                            value={null}
+                            onOpen={() => setOpen(true)}
+                            onClose={() => setOpen(false)}
+                            inputValue={currentTopicText}
+                            onChange={onTopicSelect}
+                            options={topics}
+                            loading={loading}
+                            isOptionEqualToValue={(option, value) =>
+                                option.id == value.id
+                            }
+                            clearOnBlur={false}
+                            getOptionLabel={option => option.nameVi}
+                            sx={{"& input": {maxWidth: "80%"}}}
+                            renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    size="small"
+                                    label="Topic"
+                                    onChange={e =>
+                                        setTextCrtTopic(e.target.value)
                                     }
-                                    clearOnBlur={false}
-                                    getOptionLabel={option => option.nameVi}
-                                    sx={{"& input": {maxWidth: "80%"}}}
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            size="small"
-                                            label="Topic"
-                                            onChange={e =>
-                                                setTextCrtTopic(e.target.value)
-                                            }
-                                        />
-                                    )}
                                 />
-                            </Grid>
-                            <Grid item md={3.5} xs={3.5}>
-                                <Button
-                                    startIcon={<AddIcon />}
-                                    variant="contained"
-                                    className="w-[90%]"
-                                    disabled={!currentTopic}
-                                    onClick={onTopicAdd}
-                                >
-                                    Add
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item className="mt-1">
+                            )}
+                        />
                         <Button
+                            startIcon={<AddIcon />}
+                            variant="contained"
+                            disabled={!currentTopic}
+                            onClick={onTopicAdd}
+                        >
+                            Add
+                        </Button>
+                        <Button
+                            className="mr-auto"
                             endIcon={<VisibilityIcon />}
                             size="small"
                             disabled={!currentTopic}
@@ -192,8 +207,8 @@ const CreateCollection = () => {
                         >
                             Preview
                         </Button>
-                    </Grid>
-                    <Grid item className="mt-auto mx-auto">
+                    </div>
+                    <div className="mt-auto mx-auto">
                         <TopTooltip title={tooltipText}>
                             <span>
                                 <Button
@@ -206,13 +221,10 @@ const CreateCollection = () => {
                                 </Button>
                             </span>
                         </TopTooltip>
-                    </Grid>
+                    </div>
                 </Grid>
                 <Grid
-                    item
-                    md={7.9}
-                    xs={7.9}
-                    className={clsx(styles.searchBar, "flex flex-col")}
+                    className={clsx(styles.searchBar, "w-full flex flex-col")}
                 >
                     <Grid item className="flex items-center ">
                         <Typography>
@@ -220,7 +232,8 @@ const CreateCollection = () => {
                         </Typography>
                         <SearchField
                             className="ml-auto w-[150px]"
-                            placeholder="Topic name"
+                            placeholder="Topic's name"
+                            onChange={onSearch}
                         />
                     </Grid>
                     <Grid
@@ -238,13 +251,15 @@ const CreateCollection = () => {
                                 You haven&apos;t select any topics yet
                             </Typography>
                         ) : (
-                            addTopics.map(topic => (
-                                <Tag
-                                    label={topic.nameVi}
-                                    key={topic.id}
-                                    onDelete={() => removeTopic(topic)}
-                                />
-                            ))
+                            (filtered?.length ? filtered : addTopics).map(
+                                topic => (
+                                    <Tag
+                                        label={topic.nameVi}
+                                        key={topic.id}
+                                        onDelete={() => removeTopic(topic)}
+                                    />
+                                )
+                            )
                         )}
                     </Grid>
                 </Grid>

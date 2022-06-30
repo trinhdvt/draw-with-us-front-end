@@ -40,7 +40,7 @@ const RoomCard = ({
                 styles.gameRoom,
                 selected && styles.selected,
                 isFull && "hover:cursor-not-allowed",
-                "grid max-w-full auto-rows-auto rounded-xl cursor-pointer"
+                "grid max-w-full max-h-[161px] auto-rows-auto rounded-xl cursor-pointer"
             )}
             onClick={isFull ? undefined : onClick}
             {...others}

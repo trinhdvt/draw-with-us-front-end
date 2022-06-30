@@ -1,5 +1,5 @@
 import React from "react";
-import {Divider, Grid, Typography} from "@mui/material";
+import {Divider, Typography} from "@mui/material";
 
 import {useUser} from "../../store/UserStore";
 
@@ -15,20 +15,13 @@ const HomePage = () => {
     const isLoggedIn = !!token;
 
     return (
-        <Grid
-            container
-            className="h-[270px] justify-evenly bg-white rounded-xl pb-2"
-        >
-            <PlayNowPanel item container md={5} xs={5} />
+        <div className="w-full grid grid-cols-[1fr_auto_1fr] h-[270px] justify-evenly bg-white rounded-xl p-2">
+            <PlayNowPanel />
             <Divider orientation="vertical" flexItem variant="middle">
                 <Typography>OR</Typography>
             </Divider>
-            {isLoggedIn ? (
-                <ListCreatedCollection item container md={5} xs={5} />
-            ) : (
-                <LoginPanel item container md={5} xs={5} />
-            )}
-        </Grid>
+            {isLoggedIn ? <ListCreatedCollection /> : <LoginPanel />}
+        </div>
     );
 };
 

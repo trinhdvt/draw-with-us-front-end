@@ -34,7 +34,7 @@ const CollectionCard = ({
         <Grid
             item
             className={clsx(
-                "grid auto-rows-auto items-center cursor-pointer rounded-xl ",
+                "grid auto-rows-auto max-h-[136px] items-center cursor-pointer rounded-xl ",
                 styles.gameCollection,
                 selected && styles.selected
             )}

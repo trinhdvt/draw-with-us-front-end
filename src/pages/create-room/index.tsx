@@ -63,115 +63,88 @@ const CreateRoom = () => {
 
     return (
         <RoomLayout title="Create Room">
-            <Grid container className={styles.subContainer}>
+            <Grid
+                className={clsx(
+                    styles.subContainer,
+                    "grid grid-cols-[1fr_2fr] gap-x-2"
+                )}
+            >
                 <Grid
-                    item
-                    md={4}
-                    xs={4}
-                    className={clsx("flex flex-col", styles.sidePanel)}
+                    className={clsx(
+                        "w-full grid grid-rows-6",
+                        styles.sidePanel
+                    )}
                 >
-                    <Grid
-                        item
-                        container
-                        className="items-center justify-center mb-2.5"
-                    >
-                        <Grid item md={1} xs={1} className="mr-1">
-                            <MdOutlineDriveFileRenameOutline className="primary-icon" />
-                        </Grid>
-                        <Grid item md={3.5} xs={3.5} className="mr-1">
-                            <Typography>Name</Typography>
-                        </Grid>
-                        <Grid item md xs>
-                            <CssTextField
-                                value={payload.name}
+                    <div className="grid grid-cols-[auto_1fr_2fr] items-center">
+                        <MdOutlineDriveFileRenameOutline className="primary-icon mr-1" />
+                        <Typography>Name</Typography>
+                        <CssTextField
+                            value={payload.name}
+                            onChange={e =>
+                                setPayload({
+                                    ...payload,
+                                    name: e.target.value,
+                                })
+                            }
+                            placeholder={user.name}
+                            autoComplete="off"
+                            size="small"
+                        />
+                    </div>
+                    <div className="grid grid-cols-[auto_2fr_1fr] items-center">
+                        <FaRegUser className="primary-icon mr-1" />
+                        <Typography>Max User</Typography>
+                        <CssSelect
+                            value={payload.maxUsers}
+                            className={styles.selectBox}
+                            onChange={e => {
+                                const value = Number(e.target.value);
+                                setPayload({...payload, maxUsers: value});
+                            }}
+                        >
+                            {createConfig?.maxUsers?.map(m => (
+                                <MenuItem key={m} value={m}>
+                                    {m}
+                                </MenuItem>
+                            ))}
+                        </CssSelect>
+                    </div>
+                    <div className="grid grid-cols-[auto_2fr_1fr] items-center">
+                        <GiEmptyHourglass className="primary-icon mr-1" />
+                        <Typography>Timeout (sec)</Typography>
+                        <CssSelect
+                            value={payload.timeOut}
+                            className={styles.selectBox}
+                            onChange={e => {
+                                const value = Number(e.target.value);
+                                setPayload({...payload, timeOut: value});
+                            }}
+                        >
+                            {createConfig?.timeOut?.map(time => (
+                                <MenuItem value={time} key={time}>
+                                    {time}
+                                </MenuItem>
+                            ))}
+                        </CssSelect>
+                    </div>
+                    {isLoggedIn && (
+                        <div className="grid grid-cols-[auto_1fr_2fr] items-center">
+                            <VscShield className="primary-icon text-red-700 mr-1" />
+                            <TopTooltip title="Password for your room. Please remember it!">
+                                <Typography>Password</Typography>
+                            </TopTooltip>
+                            <PasswordField
+                                value={payload.password}
                                 onChange={e =>
                                     setPayload({
                                         ...payload,
-                                        name: e.target.value,
+                                        password: e.target.value,
                                     })
                                 }
-                                placeholder={user.name}
-                                autoComplete="off"
-                                size="small"
                             />
-                        </Grid>
-                    </Grid>
-                    <Grid item container className="items-center mb-2.5">
-                        <Grid item md={1} xs={1} className="mr-1">
-                            <FaRegUser className="primary-icon" />
-                        </Grid>
-                        <Grid item md xs>
-                            <Typography>Max User</Typography>
-                        </Grid>
-                        <Grid item md={4} xs={4}>
-                            <CssSelect
-                                value={payload.maxUsers}
-                                className={styles.selectBox}
-                                onChange={e => {
-                                    const value = Number(e.target.value);
-                                    setPayload({...payload, maxUsers: value});
-                                }}
-                            >
-                                {createConfig?.maxUsers?.map(m => (
-                                    <MenuItem key={m} value={m}>
-                                        {m}
-                                    </MenuItem>
-                                ))}
-                            </CssSelect>
-                        </Grid>
-                    </Grid>
-                    <Grid item container className="items-center mb-2.5">
-                        <Grid item md={1} xs={1} className="mr-1">
-                            <GiEmptyHourglass className="primary-icon" />
-                        </Grid>
-                        <Grid item md xs>
-                            <Typography>Timeout (sec)</Typography>
-                        </Grid>
-                        <Grid item md={4} xs={4}>
-                            <CssSelect
-                                value={payload.timeOut}
-                                className={styles.selectBox}
-                                onChange={e => {
-                                    const value = Number(e.target.value);
-                                    setPayload({...payload, timeOut: value});
-                                }}
-                            >
-                                {createConfig?.timeOut?.map(time => (
-                                    <MenuItem value={time} key={time}>
-                                        {time}
-                                    </MenuItem>
-                                ))}
-                            </CssSelect>
-                        </Grid>
-                    </Grid>
-                    {isLoggedIn && (
-                        <Grid
-                            item
-                            container
-                            className="items-center justify-center"
-                        >
-                            <Grid item md={1} xs={1} className="mr-1">
-                                <VscShield className="primary-icon text-red-700" />
-                            </Grid>
-                            <Grid item md={3.5} xs={3.5} className="mr-1">
-                                <TopTooltip title="Password for your room. Please remember it!">
-                                    <Typography>Password</Typography>
-                                </TopTooltip>
-                            </Grid>
-                            <Grid item md xs>
-                                <PasswordField
-                                    value={payload.password}
-                                    onChange={e =>
-                                        setPayload({
-                                            ...payload,
-                                            password: e.target.value,
-                                        })
-                                    }
-                                />
-                            </Grid>
-                        </Grid>
+                        </div>
                     )}
-                    <Grid item container className="justify-center mt-auto">
+                    <div className="w-full row-[5/7] flex justify-center mt-auto">
                         <TopTooltip title={tooltipText}>
                             <span>
                                 <Button
@@ -184,7 +157,7 @@ const CreateRoom = () => {
                                 </Button>
                             </span>
                         </TopTooltip>
-                    </Grid>
+                    </div>
                 </Grid>
                 <ListCollection onCollectionSelect={onSelect} />
             </Grid>

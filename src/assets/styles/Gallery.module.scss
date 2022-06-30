@@ -5,7 +5,7 @@
   background-color: $blue-light;
   scroll-behavior: smooth;
   border: 2px $blue-sky solid;
-  @apply p-[3px] rounded-[10px] ml-auto rounded-[10px] h-[350px] max-h-[350px] content-start pt-[10px];
+  @apply rounded-[10px] ml-auto h-[350px] max-h-[350px] ;
 }
 
 .topicSelectPanel {

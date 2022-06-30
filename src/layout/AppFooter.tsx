@@ -32,6 +32,14 @@ const AppFooter = () => (
             >
                 <FooterText>Privacy Policy</FooterText>
             </Link>
+            <a
+                href="https://status.draw-with.trinhdvt.tech/"
+                target="_blank"
+                className="no-underline"
+                rel="noreferrer"
+            >
+                <FooterText>Status</FooterText>
+            </a>
         </Stack>
     </footer>
 );

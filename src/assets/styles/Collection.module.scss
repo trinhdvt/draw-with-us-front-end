@@ -9,11 +9,10 @@
 
 .searchBar {
   @extend .white-rounded;
-  @apply ml-auto;
 }
 
 .requiredInput {
-  @apply mb-[10px] capitalize;
+  @apply capitalize;
 
   span {
     @apply text-red-600;

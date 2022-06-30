@@ -17,6 +17,7 @@ $max-height: 330px;
   border-bottom: 10px solid $blue-light;
   border-top: 10px solid $blue-light;
   max-height: $max-height;
+  min-height: calc($max-height - 30px);
   @apply rounded-[10px] overflow-y-auto;
 }
 
