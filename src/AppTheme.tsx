@@ -18,14 +18,14 @@ export const appTheme = createTheme({
         h2: {
             fontSize: "2rem",
             fontWeight: 400,
-            fontFamily: '"Mali", "He"\"Mali\", \"Helvetica\", \"Arial\", sans-serif"  lineHeight: "1.2",
+            fontFamily: '"Mali", "Helvetica", "Arial", sans-serif',
+            lineHeight: "1.2",
             letterSpacing: "0.00714em",
         },
         h3: {
             fontSize: "1.5rem",
             fontWeight: 400,
-            fontFamily: "\"Mali\", \"Helvetica\", \"Arial\", sans-serif",
-            lineHeight: "1.167",
+            fontFamily: '"Mali"\"Mali\", \"Helvetica\", \"Arial\", sans-serif"        lineHeight: "1.167",
             letterSpacing: "0.00457em",
         },
         h4: {
