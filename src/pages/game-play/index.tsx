@@ -78,7 +78,14 @@ const Game = () => {
             <Grid item md={6} xs={6} className="mb-2.5 mx-auto">
                 {isPlaying && !gameState.isEndTurn && !gameState.isDone && (
                     <Typography variant="h4">
-                        Let&apos;s draw: <b>{gameState.target?.nameVi}</b>
+                        Let&apos;s draw:&nbsp;
+                        <Typography
+                            variant="h6"
+                            component="span"
+                            className="font-bold text-2xl"
+                        >
+                            {gameState.target?.nameVi}
+                        </Typography>
                     </Typography>
                 )}
             </Grid>

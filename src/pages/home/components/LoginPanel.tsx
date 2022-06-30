@@ -50,7 +50,7 @@ const LoginPanel = (props: GridProps) => (
                 flexItem
                 sx={{"&::before": {top: "0%"}, "&::after": {top: "0%"}}}
             >
-                <Typography variant="h5">Login With</Typography>
+                <Typography variant="body1">Login With</Typography>
             </Divider>
             <div className="w-2/3 flex justify-center mt-1 mx-auto">
                 <FbLoginBtn fullWidth />

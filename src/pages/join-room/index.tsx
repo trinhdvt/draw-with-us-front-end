@@ -15,6 +15,7 @@ import {usePreviewRoom} from "../../api/services/RoomServices";
 import {AnimatedLoading} from "../../components/LoadingScreen";
 import AppLayout from "../../layout/AppLayout";
 import useJoinRoom from "../list-room/hooks/useJoinRoom";
+import TopTooltip from "../../components/TopTooltip";
 
 const TextContent = ({children}: {children: React.ReactNode}) => (
     <Typography
@@ -27,9 +28,7 @@ const TextContent = ({children}: {children: React.ReactNode}) => (
 );
 
 const RoomInfoDiv = ({children}: {children: React.ReactNode}) => (
-    <div className="flex flex-col ml-1 flex-1 items-center justify-center">
-        {children}
-    </div>
+    <div className="ml-1 grid grid-rows-2 justify-items-center">{children}</div>
 );
 
 const JoinRoom = () => {
@@ -100,7 +99,13 @@ const JoinRoom = () => {
                                     <Typography className="capitalize">
                                         Room Master
                                     </Typography>
-                                    <TextContent>{data?.host.name}</TextContent>
+                                    <TopTooltip title={data?.host.name ?? ""}>
+                                        <span>
+                                            <TextContent>
+                                                {data?.host.name}
+                                            </TextContent>
+                                        </span>
+                                    </TopTooltip>
                                 </RoomInfoDiv>
                             </div>
                             <div className="flex items-center">
@@ -114,7 +119,13 @@ const JoinRoom = () => {
                                     <Typography className="capitalize">
                                         Room&lsquo;s name
                                     </Typography>
-                                    <TextContent>{data?.name}</TextContent>
+                                    <TopTooltip title={data?.name ?? ""}>
+                                        <span>
+                                            <TextContent>
+                                                {data?.name}
+                                            </TextContent>
+                                        </span>
+                                    </TopTooltip>
                                 </RoomInfoDiv>
                             </div>
                             <div className="flex items-center">
@@ -134,7 +145,7 @@ const JoinRoom = () => {
                                 </div>
                                 <RoomInfoDiv>
                                     <Typography className="capitalize">
-                                        Timeout per turn
+                                        Time per turn
                                     </Typography>
                                     <TextContent>{data?.timeOut}s</TextContent>
                                 </RoomInfoDiv>
