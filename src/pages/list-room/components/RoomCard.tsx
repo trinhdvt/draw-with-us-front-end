@@ -36,17 +36,16 @@ const RoomCard = ({
     return (
         <Grid
             item
-            container
             className={clsx(
                 styles.gameRoom,
                 selected && styles.selected,
                 isFull && "hover:cursor-not-allowed",
-                "flex-col items-center rounded-xl mb-2 ml-2 cursor-pointer"
+                "grid max-w-full auto-rows-auto rounded-xl cursor-pointer"
             )}
             onClick={isFull ? undefined : onClick}
             {...others}
         >
-            <Grid item md className="relative">
+            <div className="flex justify-center items-center relative">
                 {image ? (
                     <Avatar className="w-[51px] h-[51px]" src={image} />
                 ) : (
@@ -58,13 +57,13 @@ const RoomCard = ({
                 )}
                 {isPrivate && (
                     <TopTooltip title={"This is a private room"}>
-                        <span className="absolute top-9 left-3 rounded-xl ">
+                        <span className="absolute top-[70%] left-[43%] rounded-xl bg-[rgba(255,255,255,0.8)] ">
                             <FcPrivacy className="primary-icon text-red-500" />
                         </span>
                     </TopTooltip>
                 )}
-            </Grid>
-            <Grid item md className="pr-1 max-w-full">
+            </div>
+            <div className="text-center max-w-[190px]">
                 <TopTooltip title={roomLabel}>
                     <Typography
                         noWrap={true}
@@ -74,9 +73,9 @@ const RoomCard = ({
                         {roomLabel}
                     </Typography>
                 </TopTooltip>
-            </Grid>
-            <Grid item container className="mt-1">
-                <div className="flex flex-col justify-center items-center flex-1">
+            </div>
+            <div className="grid grid-cols-4 w-full mt-1">
+                <div className="flex flex-col  items-center ">
                     <TopTooltip title="Max players">
                         <span>
                             <FaRegUser
@@ -91,7 +90,7 @@ const RoomCard = ({
                         {currentUsers}/{maxUsers}
                     </Typography>
                 </div>
-                <div className="flex flex-col justify-center items-center flex-1">
+                <div className="flex flex-col col-span-2 items-center">
                     <TopTooltip title="Room's ID">
                         <span>
                             <BiHash className="primary-icon" />
@@ -101,7 +100,7 @@ const RoomCard = ({
                         {id}
                     </Typography>
                 </div>
-                <div className="flex flex-col justify-center items-center flex-1">
+                <div className="flex flex-col items-center">
                     <TopTooltip title="Timeout per turn">
                         <span>
                             <GiEmptyHourglass className="primary-icon" />
@@ -111,7 +110,7 @@ const RoomCard = ({
                         {timeOut}s
                     </Typography>
                 </div>
-            </Grid>
+            </div>
         </Grid>
     );
 };

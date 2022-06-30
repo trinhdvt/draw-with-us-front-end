@@ -44,12 +44,17 @@ class Player extends React.Component<IPlayer & GridProps> {
                 className={styles.playerCard}
                 {...others}
             >
-                <Grid item md={3} className="flex flex-col items-center pr-2.5">
+                <Grid
+                    item
+                    md={3}
+                    xs={3}
+                    className="flex flex-col items-center pr-2.5"
+                >
                     <PlayerAvatar />
                     <PlayerBadge />
                 </Grid>
 
-                <Grid item md={9} className="flex flex-col">
+                <Grid item md={9} xs={9} className="flex flex-col">
                     <div className="flex items-center">
                         {isMe && <HowToRegIcon color="primary" />}
                         <Typography
@@ -75,11 +80,11 @@ const PlayerSkeleton = () => {
 
     return (
         <Grid container alignItems="center" className={styles.playerCard}>
-            <Grid item md={3} className="pr-2.5">
+            <Grid item md={3} xs={3} className="pr-2.5">
                 <Avatar className="avatar" />
             </Grid>
 
-            <Grid item md={9}>
+            <Grid item md={9} xs={9}>
                 {isPlaying && (
                     <Typography className="font-thin">Waiting...</Typography>
                 )}

@@ -67,6 +67,7 @@ const CreateRoom = () => {
                 <Grid
                     item
                     md={4}
+                    xs={4}
                     className={clsx("flex flex-col", styles.sidePanel)}
                 >
                     <Grid
@@ -74,13 +75,13 @@ const CreateRoom = () => {
                         container
                         className="items-center justify-center mb-2.5"
                     >
-                        <Grid item md={1} className="mr-1">
+                        <Grid item md={1} xs={1} className="mr-1">
                             <MdOutlineDriveFileRenameOutline className="primary-icon" />
                         </Grid>
-                        <Grid item md={3.5} className="mr-1">
+                        <Grid item md={3.5} xs={3.5} className="mr-1">
                             <Typography>Name</Typography>
                         </Grid>
-                        <Grid item md>
+                        <Grid item md xs>
                             <CssTextField
                                 value={payload.name}
                                 onChange={e =>
@@ -96,13 +97,13 @@ const CreateRoom = () => {
                         </Grid>
                     </Grid>
                     <Grid item container className="items-center mb-2.5">
-                        <Grid item md={1} className="mr-1">
+                        <Grid item md={1} xs={1} className="mr-1">
                             <FaRegUser className="primary-icon" />
                         </Grid>
-                        <Grid item md>
+                        <Grid item md xs>
                             <Typography>Max User</Typography>
                         </Grid>
-                        <Grid item md={4}>
+                        <Grid item md={4} xs={4}>
                             <CssSelect
                                 value={payload.maxUsers}
                                 className={styles.selectBox}
@@ -120,13 +121,13 @@ const CreateRoom = () => {
                         </Grid>
                     </Grid>
                     <Grid item container className="items-center mb-2.5">
-                        <Grid item md={1} className="mr-1">
+                        <Grid item md={1} xs={1} className="mr-1">
                             <GiEmptyHourglass className="primary-icon" />
                         </Grid>
-                        <Grid item md>
+                        <Grid item md xs>
                             <Typography>Timeout (sec)</Typography>
                         </Grid>
-                        <Grid item md={4}>
+                        <Grid item md={4} xs={4}>
                             <CssSelect
                                 value={payload.timeOut}
                                 className={styles.selectBox}
@@ -149,15 +150,15 @@ const CreateRoom = () => {
                             container
                             className="items-center justify-center"
                         >
-                            <Grid item md={1} className="mr-1">
+                            <Grid item md={1} xs={1} className="mr-1">
                                 <VscShield className="primary-icon text-red-700" />
                             </Grid>
-                            <Grid item md={3.5} className="mr-1">
+                            <Grid item md={3.5} xs={3.5} className="mr-1">
                                 <TopTooltip title="Password for your room. Please remember it!">
                                     <Typography>Password</Typography>
                                 </TopTooltip>
                             </Grid>
-                            <Grid item md>
+                            <Grid item md xs>
                                 <PasswordField
                                     value={payload.password}
                                     onChange={e =>

@@ -1,9 +1,10 @@
 import React from "react";
-import {Button, Grid} from "@mui/material";
+import {Button} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
 import {useQueryClient} from "react-query";
+import clsx from "clsx";
 
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
@@ -54,18 +55,22 @@ const RoomHome = () => {
             }
             endChildren={<ShowModeSelector />}
         >
-            <Grid item container className={styles.mainPanel}>
+            <div
+                className={clsx(
+                    styles.mainPanel,
+                    "w-full max-w-full grid grid-cols-4 gap-2 px-2 scrollBar"
+                )}
+            >
                 {[...(data ?? []), ...defaultRooms].map(room => (
                     <RoomCard
-                        md={2.85}
                         {...room}
                         key={room.eid}
                         selected={room.eid == selectedRoom?.eid}
                         onClick={() => onRoomSelect(room)}
                     />
                 ))}
-            </Grid>
-            <Grid item container className="justify-center mt-2.5 px-2">
+            </div>
+            <div className="w-full flex justify-center mt-2 px-2">
                 <Button
                     className="mr-2"
                     startIcon={<MeetingRoomIcon />}
@@ -87,7 +92,7 @@ const RoomHome = () => {
                         </Button>
                     </span>
                 </TopTooltip>
-            </Grid>
+            </div>
         </RoomLayout>
     );
 };

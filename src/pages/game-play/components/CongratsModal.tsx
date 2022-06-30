@@ -42,6 +42,7 @@ const CongratsModal = () => {
                             <Grid
                                 item
                                 md={2.5}
+                                xs={2.5}
                                 className="flex flex-col items-center "
                             >
                                 <Avatar
@@ -53,7 +54,7 @@ const CongratsModal = () => {
                                     className={RankingBgColor[idx]}
                                 />
                             </Grid>
-                            <Grid item md={9.5} className="pl-2">
+                            <Grid item md={9.5} xs={9.5} className="pl-2">
                                 <Typography variant="h4" noWrap={true}>
                                     {name}
                                 </Typography>

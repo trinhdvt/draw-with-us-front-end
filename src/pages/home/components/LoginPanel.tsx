@@ -1,13 +1,13 @@
 import React from "react";
-import {Divider, Grid, Typography} from "@mui/material";
+import {Divider, Grid, GridProps, Typography} from "@mui/material";
 import {FaUserLock} from "react-icons/fa";
 import {MdOutlinePrivacyTip} from "react-icons/md";
 
 import FbLoginBtn from "./FbLoginBtn";
 import GoogleLoginBtn from "./GoogleLoginBtn";
 
-const LoginPanel = () => (
-    <Grid item container md={5} className="flex-col items-center mt-1">
+const LoginPanel = (props: GridProps) => (
+    <Grid className="flex-col items-center mt-1" {...props}>
         <Typography variant="h2" className="uppercase text-center">
             Login Here
         </Typography>
@@ -40,7 +40,7 @@ const LoginPanel = () => (
         </Divider>
         <div className="flex justify-evenly mt-2">
             <FbLoginBtn className="flex-1" />
-            <div className="mx-4" />
+            <div className="mx-2" />
             <GoogleLoginBtn className="flex-1" />
         </div>
     </Grid>

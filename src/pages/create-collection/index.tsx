@@ -102,11 +102,12 @@ const CreateCollection = () => {
     };
 
     return (
-        <RoomLayout title="Create Collection">
+        <RoomLayout title="New Collection">
             <Grid container className={styles.subContainer}>
                 <Grid
                     item
                     md={4}
+                    xs={4}
                     className={clsx(styles.sidePanel, "flex flex-col")}
                 >
                     <Grid item className="flex flex-col mb-2.5">
@@ -141,7 +142,7 @@ const CreateCollection = () => {
                             md
                             className="flex items-center justify-between"
                         >
-                            <Grid item md={8}>
+                            <Grid item md={8} xs={8}>
                                 <Autocomplete
                                     open={open}
                                     value={null}
@@ -169,7 +170,7 @@ const CreateCollection = () => {
                                     )}
                                 />
                             </Grid>
-                            <Grid item md={3.5}>
+                            <Grid item md={3.5} xs={3.5}>
                                 <Button
                                     startIcon={<AddIcon />}
                                     variant="contained"
@@ -210,6 +211,7 @@ const CreateCollection = () => {
                 <Grid
                     item
                     md={7.9}
+                    xs={7.9}
                     className={clsx(styles.searchBar, "flex flex-col")}
                 >
                     <Grid item className="flex items-center ">

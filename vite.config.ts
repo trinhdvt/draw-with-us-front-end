@@ -39,8 +39,8 @@ export default defineConfig({
         }),
         splitVendorChunkPlugin(),
     ],
-    preview: {
+    server: {
+        host: true,
         port: 3000,
-        host: "localhost",
     },
 });

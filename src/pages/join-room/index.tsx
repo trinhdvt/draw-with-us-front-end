@@ -57,6 +57,7 @@ const JoinRoom = () => {
                         item
                         container
                         md={5.7}
+                        xs={5.7}
                         direction="column"
                         className={clsx(
                             styles.subPanel,
@@ -76,6 +77,7 @@ const JoinRoom = () => {
                         item
                         container
                         md={5.7}
+                        xs={5.7}
                         direction="column"
                         className={clsx(
                             styles.subPanel,
@@ -141,7 +143,7 @@ const JoinRoom = () => {
                     </Grid>
                 </Grid>
                 <Grid container className="justify-center mt-4">
-                    <Grid item md={2}>
+                    <Grid item md={2} xs={2}>
                         <Button
                             variant="contained"
                             startIcon={<SportsEsportsIcon />}
@@ -152,7 +154,7 @@ const JoinRoom = () => {
                         </Button>
                     </Grid>
                     <div className="mx-2"></div>
-                    <Grid item md={2}>
+                    <Grid item md={2} xs={2}>
                         <Button
                             variant="outlined"
                             startIcon={<LogoutIcon />}

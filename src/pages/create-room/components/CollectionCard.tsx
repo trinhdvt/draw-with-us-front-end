@@ -34,16 +34,16 @@ const CollectionCard = ({
         <Grid
             item
             className={clsx(
-                "flex flex-col items-center cursor-pointer rounded-xl mx-1 mb-2 max-h-[141px]",
+                "grid auto-rows-auto items-center cursor-pointer rounded-xl ",
                 styles.gameCollection,
                 selected && styles.selected
             )}
             {...others}
         >
-            <Grid item md>
+            <div className="flex justify-center">
                 <StyledAvatar src={thumbnail} alt="topic_avatar" />
-            </Grid>
-            <Grid item md className="max-w-full mb-1 mt-1">
+            </div>
+            <div className="max-w-[160px] text-center my-1">
                 <TopTooltip title={name}>
                     <Typography
                         variant="h5"
@@ -53,8 +53,8 @@ const CollectionCard = ({
                         {name}
                     </Typography>
                 </TopTooltip>
-            </Grid>
-            <Grid item md className="flex mt-1">
+            </div>
+            <div className="w-full grid grid-cols-3 ">
                 <div className="flex flex-col items-center flex-1">
                     <TopTooltip title="Played times">
                         <span>
@@ -85,7 +85,7 @@ const CollectionCard = ({
                         {numberOfTopics}
                     </Typography>
                 </div>
-            </Grid>
+            </div>
         </Grid>
     );
 };

@@ -1,9 +1,7 @@
 import React from "react";
-import {Button, Grid, GridProps, Typography} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {useNavigate} from "react-router-dom";
-
-import styles from "../assets/styles/Room.module.scss";
 
 interface HeaderProps {
     title: string;
@@ -11,18 +9,12 @@ interface HeaderProps {
     endChildren?: React.ReactNode;
 }
 
-const RoomHeader = (props: HeaderProps & GridProps) => {
+const RoomHeader = ({title, headerChildren, endChildren}: HeaderProps) => {
     const navigate = useNavigate();
-    const {title, headerChildren, endChildren, ...others} = props;
 
     return (
-        <Grid
-            container
-            alignItems="center"
-            className={styles.header}
-            {...others}
-        >
-            <Grid item container md={5} alignItems="center">
+        <div className="grid grid-cols-3 w-full mb-2.5">
+            <div className="flex items-center">
                 <Button
                     startIcon={<ArrowBackIcon />}
                     className="mr-2.5 rounded-xl border-[2px] border-solid border-[#9fbdca]"
@@ -31,14 +23,14 @@ const RoomHeader = (props: HeaderProps & GridProps) => {
                     Back
                 </Button>
                 {headerChildren}
-            </Grid>
-            <Grid item container md>
-                <Typography variant="h3" className="uppercase">
+            </div>
+            <div className="flex justify-center items-center ">
+                <Typography variant="h2" className="uppercase">
                     {title}
                 </Typography>
-            </Grid>
-            <Grid item>{endChildren}</Grid>
-        </Grid>
+            </div>
+            <div className="ml-auto">{endChildren}</div>
+        </div>
     );
 };
 

@@ -74,8 +74,8 @@ const Game = () => {
 
     return (
         <Grid container>
-            <Grid item md={3.5} />
-            <Grid item md={6} className="mb-2.5 mx-auto">
+            <Grid item md={3.5} xs={3.5} />
+            <Grid item md={6} xs={6} className="mb-2.5 mx-auto">
                 {isPlaying && !gameState.isEndTurn && !gameState.isDone && (
                     <Typography variant="h4">
                         Let&apos;s draw: <b>{gameState.target?.nameVi}</b>
@@ -83,13 +83,14 @@ const Game = () => {
                 )}
             </Grid>
             <Grid item container className="pb-2">
-                <Grid item md={3.5} className="flex flex-col">
+                <Grid item md={3.5} xs={4.5} className="flex flex-col">
                     <RoomPlayers />
                     <GameSupportController />
                 </Grid>
                 <Grid
                     item
                     md={6}
+                    xs={6}
                     className="flex flex-col justify-between mx-auto"
                 >
                     {GameWaitingScreen() ?? (
@@ -98,7 +99,12 @@ const Game = () => {
                                 <DrawBoard className="max-h-[320px]" />
                             )}
                             {data && (
-                                <Grid item md className="my-auto max-h-[30px]">
+                                <Grid
+                                    item
+                                    md
+                                    xs
+                                    className="my-auto max-h-[30px]"
+                                >
                                     <CountdownTimer maxTime={data.timeOut} />
                                 </Grid>
                             )}

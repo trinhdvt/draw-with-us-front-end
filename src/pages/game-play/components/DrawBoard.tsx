@@ -56,8 +56,8 @@ const DrawBoard = ({...others}: GridProps) => {
     };
 
     return (
-        <Grid container item md {...others}>
-            <Grid item md={8.5}>
+        <Grid container item md xs {...others}>
+            <Grid item md={8.5} xs={8.5}>
                 <ReactSketchCanvas
                     ref={canvasRef}
                     height="300px"

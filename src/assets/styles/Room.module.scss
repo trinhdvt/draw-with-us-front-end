@@ -1,7 +1,7 @@
 @import "Common";
 
 $container-max-height: 465px;
-$max-height: 350px;
+$max-height: 330px;
 
 .container {
   @extend .white-rounded;
@@ -17,11 +17,7 @@ $max-height: 350px;
   border-bottom: 10px solid $blue-light;
   border-top: 10px solid $blue-light;
   max-height: $max-height;
-  @apply rounded-[10px] overflow-y-scroll;
-}
-
-.header {
-  @apply mb-[10px];
+  @apply rounded-[10px] overflow-y-auto;
 }
 
 .backBtn {

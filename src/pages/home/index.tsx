@@ -19,11 +19,15 @@ const HomePage = () => {
             container
             className="h-[270px] justify-evenly bg-white rounded-xl pb-2"
         >
-            <PlayNowPanel />
+            <PlayNowPanel item container md={5} xs={5} />
             <Divider orientation="vertical" flexItem variant="middle">
                 <Typography>OR</Typography>
             </Divider>
-            {isLoggedIn ? <ListCreatedCollection /> : <LoginPanel />}
+            {isLoggedIn ? (
+                <ListCreatedCollection item container md={5} xs={5} />
+            ) : (
+                <LoginPanel item container md={5} xs={5} />
+            )}
         </Grid>
     );
 };

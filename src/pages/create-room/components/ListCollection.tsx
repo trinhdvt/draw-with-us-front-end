@@ -68,40 +68,47 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
     };
 
     return (
-        <Grid item md={7.8} className="flex flex-col ml-auto" {...others}>
-            <Grid
-                item
-                className={clsx(styles.selectPanel, "flex items-center")}
-            >
-                <Grid item md={5}>
-                    <Typography>Select one topic</Typography>
-                </Grid>
-                <Grid item md className="flex justify-evenly items-center">
-                    <Grid item md={4}>
+        <Grid
+            item
+            md={7.8}
+            xs={7.8}
+            className="w-full grid auto-rows-auto gap-y-2 ml-auto"
+            {...others}
+        >
+            <Grid item className={clsx(styles.selectPanel, "grid grid-cols-3")}>
+                <div className="flex items-center">
+                    <Typography className="capitalize">
+                        Select one topic
+                    </Typography>
+                </div>
+                <div className="flex col-span-2 justify-end items-center">
+                    <div className="mr-2">
                         <CollectionFilter />
-                    </Grid>
-                    <Grid item>
-                        <LightTooltip title={tooltipTitle()}>
-                            <span>
-                                <Button
-                                    startIcon={<AddIcon />}
-                                    variant="contained"
-                                    disabled={!isLogin}
-                                    onClick={() => navigate("/collection")}
-                                >
-                                    New Collection
-                                </Button>
-                            </span>
-                        </LightTooltip>
-                    </Grid>
-                </Grid>
+                    </div>
+                    <LightTooltip title={tooltipTitle()}>
+                        <div>
+                            <Button
+                                startIcon={<AddIcon />}
+                                variant="contained"
+                                disabled={!isLogin}
+                                onClick={() => navigate("/collection")}
+                            >
+                                New Collection
+                            </Button>
+                        </div>
+                    </LightTooltip>
+                </div>
             </Grid>
-            <Grid item container className={styles.collectionPanel}>
+            <div
+                className={clsx(
+                    styles.collectionPanel,
+                    "w-full grid grid-cols-3 gap-2 px-1 mt-0 scrollBar"
+                )}
+            >
                 {filteredData?.map(item => (
                     <CollectionCard
                         {...item}
                         key={item.id}
-                        md={3.7}
                         selected={selected === item.id}
                         onClick={() => {
                             setSelected(item.id);
@@ -109,7 +116,7 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
                         }}
                     />
                 ))}
-            </Grid>
+            </div>
         </Grid>
     );
 };

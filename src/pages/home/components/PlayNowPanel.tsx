@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Grid, Typography} from "@mui/material";
+import {Button, Grid, GridProps, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useMutation} from "react-query";
@@ -12,7 +12,7 @@ import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 
 import UserInfo from "./UserInfo";
 
-const PlayNowPanel = () => {
+const PlayNowPanel = (props: GridProps) => {
     const navigate = useNavigate();
     const socket = useSocket();
     const [isFinding, setFinding] = React.useState(false);
@@ -45,12 +45,12 @@ const PlayNowPanel = () => {
     };
 
     return (
-        <Grid item container md={5} className="flex-col items-center mt-1">
+        <Grid className="flex-col items-center mt-1" {...props}>
             <Typography variant="h2" className="uppercase mb-3">
                 Play now
             </Typography>
             <UserInfo />
-            <Grid container justifyContent="space-evenly">
+            <Grid container className="justify-center">
                 <Button
                     startIcon={<MeetingRoomIcon />}
                     variant="contained"
@@ -58,6 +58,7 @@ const PlayNowPanel = () => {
                 >
                     Find Room
                 </Button>
+                <div className="mx-2" />
                 <Button
                     startIcon={<SportsEsportsIcon />}
                     variant="contained"

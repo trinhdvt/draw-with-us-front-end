@@ -31,14 +31,19 @@ const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
         <Grid
             item
             container
-            className={clsx("scrollBar", styles.samplePanel)}
+            className={clsx("scrollBar justify-center", styles.samplePanel)}
             {...others}
             ref={containerRef}
         >
             {data?.pages?.map(({data: samples}, i) => (
                 <React.Fragment key={i}>
                     {samples.map(({id, strokes}) => (
-                        <DrawSample md={2.8} key={id} strokes={strokes} />
+                        <DrawSample
+                            md={2.8}
+                            xs={2.8}
+                            key={id}
+                            strokes={strokes}
+                        />
                     ))}
                 </React.Fragment>
             ))}
