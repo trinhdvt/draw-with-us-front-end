@@ -26,7 +26,7 @@ class Player extends React.Component<IPlayer & GridProps> {
         const PlayerBadge = () => {
             if (topk) {
                 const bgColor = RankingBgColor[topk - 1];
-                return <SmallChip label={`Top${topk}`} className={bgColor} />;
+                return <SmallChip label={`No.${topk}`} className={bgColor} />;
             }
             if (isHost)
                 return <SmallChip label="Host" className="bg-cyan-500" />;

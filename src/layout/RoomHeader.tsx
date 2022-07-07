@@ -13,7 +13,7 @@ const RoomHeader = ({title, headerChildren, endChildren}: HeaderProps) => {
     const navigate = useNavigate();
 
     return (
-        <div className="grid grid-cols-3 w-full mb-2.5">
+        <div className="grid grid-cols-[1fr_auto_1fr] w-full mb-2.5">
             <div className="flex items-center">
                 <Button
                     startIcon={<ArrowBackIcon />}

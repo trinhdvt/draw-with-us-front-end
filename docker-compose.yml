@@ -1,0 +1,75 @@
+version: '3.9'
+
+services:
+
+  frontend:
+    image: trinhvideo123/draw-with-us:frontend
+    ports:
+      - "8090:80"
+    networks:
+      DRAW_WITH_US:
+        aliases:
+          - FRONT_END
+
+  backend:
+    image: trinhvideo123/draw-with-us:backend
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    restart: unless-stopped
+    networks:
+      DRAW_WITH_US:
+        aliases:
+          - BACKEND
+
+  redis:
+    container_name: game-database
+    image: redis/redis-stack-server:latest
+    restart: unless-stopped
+    volumes:
+      - game_data:/data
+    networks:
+      DRAW_WITH_US:
+        aliases:
+          - GAME_DB
+
+  mysql:
+    container_name: app-database
+    image: trinhvideo123/draw-with-us:app-db
+    cap_add:
+      - SYS_NICE
+    restart: unless-stopped
+    volumes:
+      - app_data:/var/lib/mysql
+    networks:
+      DRAW_WITH_US:
+        aliases:
+          - APP_DB
+
+  Model_Server:
+    image: trinhvideo123/draw-with-us:ai-server
+    ulimits:
+      memlock: -1
+    restart: unless-stopped
+    networks:
+      DRAW_WITH_US:
+        aliases:
+          - MODEL_SERVER
+
+  Model_Server_Proxy:
+    image: trinhvideo123/draw-with-us:ai-proxy
+    restart: unless-stopped
+    networks:
+      DRAW_WITH_US:
+        aliases:
+          - MODEL_SERVER_PROXY
+    depends_on:
+      - Model_Server
+
+networks:
+  DRAW_WITH_US:
+
+volumes:
+  game_data:
+  app_data:

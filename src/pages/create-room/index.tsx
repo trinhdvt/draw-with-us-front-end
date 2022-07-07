@@ -77,7 +77,7 @@ const CreateRoom = () => {
                 >
                     <div className="grid grid-cols-[auto_1fr_2fr] items-center">
                         <MdOutlineDriveFileRenameOutline className="primary-icon mr-1" />
-                        <Typography>Name</Typography>
+                        <Typography className="mr-1">Name</Typography>
                         <CssTextField
                             value={payload.name}
                             onChange={e =>
@@ -131,7 +131,9 @@ const CreateRoom = () => {
                         <div className="grid grid-cols-[auto_1fr_2fr] items-center">
                             <VscShield className="primary-icon text-red-700 mr-1" />
                             <TopTooltip title="Password for your room. Please remember it!">
-                                <Typography>Password</Typography>
+                                <Typography className="mr-1">
+                                    Password
+                                </Typography>
                             </TopTooltip>
                             <PasswordField
                                 value={payload.password}

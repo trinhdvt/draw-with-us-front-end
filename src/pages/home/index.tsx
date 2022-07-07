@@ -15,7 +15,7 @@ const HomePage = () => {
     const isLoggedIn = !!token;
 
     return (
-        <div className="w-full grid grid-cols-[1fr_auto_1fr] h-[270px] justify-evenly bg-white rounded-xl p-2">
+        <div className="grid grid-cols-[1fr_auto_1fr] h-[270px] justify-evenly bg-white rounded-xl p-2">
             <PlayNowPanel />
             <Divider orientation="vertical" flexItem variant="middle">
                 <Typography>OR</Typography>
