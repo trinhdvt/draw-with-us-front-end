@@ -52,9 +52,7 @@ const Wrapper = ({children}: {children: React.ReactNode}) => {
             if (onMiddleGame) {
                 dispatch({type: GameActionType.DONE, payload: true});
             }
-            alertWelcome().then(
-                () => (document.title = `Playing - Draw With Us`)
-            );
+            alertWelcome().then(() => (document.title = `Draw With Us 🎮`));
         }
     }, [dispatch, isSuccess, onMiddleGame, roomId]);
 

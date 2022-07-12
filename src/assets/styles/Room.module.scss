@@ -63,13 +63,13 @@ $max-height: 330px;
 }
 
 .joinRoomMain {
-  @apply h-[250px] rounded-xl ;
+  @apply h-[250px] rounded-xl w-full grid grid-cols-[1fr_auto_1fr] px-2 ;
   background-color: $blue-light;
   border-bottom: 10px solid $blue-light;
   border-top: 10px solid $blue-light;
 }
 
 .subPanel {
-  @apply rounded-xl;
+  @apply rounded-xl w-full flex flex-col items-center mx-auto;
   background-color: $white;
 }

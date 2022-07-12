@@ -34,7 +34,11 @@ const Game = () => {
 
     React.useEffect(() => {
         socket?.on("game:nextTurn", (topic: ITopic) => {
-            dispatch({type: GameActionType.NEXT_TURN, payload: topic});
+            const name = i18n.language == "vi" ? topic.nameVi : topic.nameEn;
+            dispatch({
+                type: GameActionType.NEXT_TURN,
+                payload: {...topic, name},
+            });
         });
         socket?.on("game:endTurn", async () => {
             dispatch({type: GameActionType.END_TURN});
@@ -55,7 +59,7 @@ const Game = () => {
             socket?.off("game:endTurn");
             socket?.off("game:finish");
         };
-    }, [gameState.isDone, socket, dispatch, isPlaying]);
+    }, [gameState.isDone, socket, dispatch, isPlaying, i18n.language]);
 
     const GameWaitingScreen = () => {
         if (isPlaying) return;
@@ -74,15 +78,9 @@ const Game = () => {
         return;
     };
 
-    const drawTopic = i18n.language
-        ? gameState.target?.nameVi
-        : gameState.target?.nameEn;
-
     return (
         <Grid container>
-            <Grid item md={3.5} xs={3.5}>
-                <GameSupportController />
-            </Grid>
+            <Grid item md={3.5} xs={3.5} />
             <Grid item md={6} xs={6} className="mb-2.5 mx-auto">
                 {isPlaying && !gameState.isEndTurn && !gameState.isDone && (
                     <Typography variant="h4">
@@ -90,9 +88,9 @@ const Game = () => {
                         <Typography
                             variant="h6"
                             component="span"
-                            className="font-bold text-2xl"
+                            className="font-bold text-2xl capitalize"
                         >
-                            {drawTopic}
+                            {gameState?.target?.name}
                         </Typography>
                     </Typography>
                 )}

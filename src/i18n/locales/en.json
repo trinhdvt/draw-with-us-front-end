@@ -112,6 +112,20 @@
                 "welcome_content": "Draw an image about the given topic to get the points!"
             },
             "draw_topic_prefix": "Let's draw: "
+        },
+        "message_panel": {
+            "place_holder": "Type a message ..."
+        },
+        "join_room": {
+            "title": "Join Room",
+            "your_info": "Your information",
+            "room_info": "Room Information",
+            "room_master": "Room Master",
+            "room_collection": "Collection",
+            "max_player": "Nums of Players",
+            "timeout": "Time per turn",
+            "join_now": "Join Now",
+            "cancel": "Cancel"
         }
     }
 }
