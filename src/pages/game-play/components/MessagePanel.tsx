@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import CssTextField from "../../../components/CssTextField";
 import {useSocket} from "../../../store/SocketStore";
@@ -21,11 +22,17 @@ const MessageColorPalette = {
     error: "#f44336",
 };
 
-type IMessage = {
+type ISimpleMessage = {
     from?: string;
     message: string;
+};
+type I18nMessage = {
+    [locale in "en" | "vi"]: ISimpleMessage;
+};
+type IMessage = ISimpleMessage & {
     type?: keyof typeof MessageColorPalette;
     id?: string;
+    i18n?: I18nMessage;
 };
 
 const Message = ({from, message, type}: IMessage) => {
@@ -42,7 +49,7 @@ const Message = ({from, message, type}: IMessage) => {
             >
                 {from}
             </Typography>
-            <Typography component="span" className=" break-all" color={color}>
+            <Typography component="span" className="break-words" color={color}>
                 {message}
             </Typography>
         </Typography>
@@ -50,6 +57,7 @@ const Message = ({from, message, type}: IMessage) => {
 };
 
 const MessagePanel = (props: GridProps) => {
+    const {t, i18n} = useTranslation();
     const socket = useSocket();
     const {
         gameState: {roomId},
@@ -62,12 +70,21 @@ const MessagePanel = (props: GridProps) => {
 
     React.useEffect(() => {
         socket?.on("room:msg", payload => {
-            setRoomMsg(prev => [...prev, payload]);
+            const i18nMsg = payload.i18n;
+            let {message, from} = payload;
+            if (i18nMsg) {
+                const i18nPayload =
+                    i18n.language == "vi" ? i18nMsg.vi : i18nMsg.en;
+                message = i18nPayload.message;
+                from = i18nPayload.from;
+            }
+
+            setRoomMsg(prev => [...prev, {...payload, message, from}]);
         });
         return () => {
             socket?.off("room:msg");
         };
-    }, [socket]);
+    }, [i18n.language, socket]);
 
     React.useEffect(() => {
         containerRef.current?.scrollTo({
@@ -110,7 +127,7 @@ const MessagePanel = (props: GridProps) => {
                 size="small"
                 label={myMsg ? `${myMsg.length}/${MAX_MSG_LENGTH}` : ""}
                 autoComplete="off"
-                placeholder="Type a message..."
+                placeholder={t("message_panel.place_holder")}
                 onKeyDown={e => {
                     if (e.key === "Enter") {
                         onMsgSend();

@@ -4,15 +4,21 @@ import {BackendAPI} from "../HttpClient";
 import ITopic from "../@types/Topic";
 import ISample from "../@types/Sample";
 
-const fetchAllTopics = async (): Promise<ITopic[]> => {
-    const {data} = await BackendAPI.get("/api/topics");
+const fetchAllTopics = async (locale = "vi"): Promise<ITopic[]> => {
+    const {data} = await BackendAPI.get("/api/topics", {
+        params: {locale},
+    });
     return data;
 };
 
-const useTopics = () => {
-    return useQuery("topics", fetchAllTopics, {
-        staleTime: Infinity,
-    });
+const useTopics = (locale: string) => {
+    return useQuery(
+        ["topics", locale],
+        async () => await fetchAllTopics(locale),
+        {
+            staleTime: Infinity,
+        }
+    );
 };
 
 const useSamples = (topicId?: string) => {

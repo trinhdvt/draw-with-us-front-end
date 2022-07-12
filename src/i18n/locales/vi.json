@@ -76,7 +76,7 @@
             "waiting_screen": {
                 "wait_other": "Đang chờ người chơi khác",
                 "wait_host": "Đang chờ chủ phòng bắt đầu",
-                "wait_end_turn": "Chờ người chơi khác hoàn thành nào!",
+                "wait_end_turn": "Chờ người chơi khác hoàn thành!",
                 "wait_next_turn": "Nghỉ ngơi một chút nào!",
                 "ready_to_start": "Sẵn sàng bắt đầu!"
             },
@@ -112,6 +112,20 @@
                 "welcome_content": "Hãy cạnh tranh với các người chơi khác bằng bút vẽ của bạn nào!"
             },
             "draw_topic_prefix": "Chủ đề: "
+        },
+        "message_panel": {
+            "place_holder": "Nhập tin nhắn ..."
+        },
+        "join_room": {
+            "title": "Tham gia phòng",
+            "your_info": "Thông tin của bạn",
+            "room_info": "Thông tin phòng",
+            "room_master": "Chủ phòng",
+            "room_collection": "Bộ sưu tập",
+            "max_player": "Số người chơi",
+            "timeout": "Thời gian",
+            "join_now": "Vào ngay",
+            "cancel": "Hủy"
         }
     }
 }

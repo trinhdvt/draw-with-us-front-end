@@ -3,8 +3,6 @@ import {Divider, Stack, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 
-import i18n from "../i18n/config";
-
 const FooterText = ({children}: {children: React.ReactNode}) => (
     <Typography variant="body2" align="center" color="textSecondary">
         {children}
@@ -12,6 +10,7 @@ const FooterText = ({children}: {children: React.ReactNode}) => (
 );
 
 const I18nSelector = () => {
+    const {i18n} = useTranslation();
     const [locale, setLocale] = React.useState("en");
 
     const onLocaleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {

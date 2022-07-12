@@ -7,6 +7,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {Navigate, useNavigate, useSearchParams} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 import RoomLayout from "../../layout/RoomLayout";
 import styles from "../../assets/styles/Room.module.scss";
@@ -32,6 +33,7 @@ const RoomInfoDiv = ({children}: {children: React.ReactNode}) => (
 );
 
 const JoinRoom = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const roomId = searchParams.get("rid");
@@ -50,41 +52,21 @@ const JoinRoom = () => {
 
     return (
         <AppLayout>
-            <RoomLayout title="Join Room">
-                <Grid container className={styles.joinRoomMain}>
-                    <Grid
-                        item
-                        container
-                        md={5.7}
-                        xs={5.7}
-                        direction="column"
-                        className={clsx(
-                            styles.subPanel,
-                            "items-center mx-auto"
-                        )}
-                    >
+            <RoomLayout title={t("join_room.title")}>
+                <div className={styles.joinRoomMain}>
+                    <div className={styles.subPanel}>
                         <Typography
                             variant="h3"
-                            className="uppercase mt-[15px] mb-3"
+                            className="uppercase mt-5 mb-3"
                         >
-                            Your information
+                            {t("join_room.your_info")}
                         </Typography>
                         <UserInfo />
-                    </Grid>
-                    <Divider orientation="vertical" flexItem />
-                    <Grid
-                        item
-                        container
-                        md={5.7}
-                        xs={5.7}
-                        direction="column"
-                        className={clsx(
-                            styles.subPanel,
-                            "items-center mx-auto"
-                        )}
-                    >
+                    </div>
+                    <Divider orientation="vertical" flexItem className="mx-2" />
+                    <div className={styles.subPanel}>
                         <Typography variant="h3" className="uppercase my-auto">
-                            Room Information
+                            {t("join_room.room_info")}
                         </Typography>
                         <div className="grid grid-cols-2 gap-x-2 gap-y-8 my-auto">
                             <div className="flex items-center">
@@ -97,7 +79,7 @@ const JoinRoom = () => {
                                 />
                                 <RoomInfoDiv>
                                     <Typography className="capitalize">
-                                        Room Master
+                                        {t("join_room.room_master")}
                                     </Typography>
                                     <TopTooltip title={data?.host.name ?? ""}>
                                         <span>
@@ -117,12 +99,14 @@ const JoinRoom = () => {
                                 </div>
                                 <RoomInfoDiv>
                                     <Typography className="capitalize">
-                                        Room&lsquo;s name
+                                        {t("join_room.room_collection")}
                                     </Typography>
-                                    <TopTooltip title={data?.name ?? ""}>
+                                    <TopTooltip
+                                        title={data?.collectionName ?? ""}
+                                    >
                                         <span>
                                             <TextContent>
-                                                {data?.name}
+                                                {data?.collectionName}
                                             </TextContent>
                                         </span>
                                     </TopTooltip>
@@ -134,7 +118,7 @@ const JoinRoom = () => {
                                 </div>
                                 <RoomInfoDiv>
                                     <Typography className="capitalize">
-                                        Nums of Players
+                                        {t("join_room.max_player")}
                                     </Typography>
                                     <TextContent>{`${data?.currentUsers}/${data?.maxUsers}`}</TextContent>
                                 </RoomInfoDiv>
@@ -145,14 +129,14 @@ const JoinRoom = () => {
                                 </div>
                                 <RoomInfoDiv>
                                     <Typography className="capitalize">
-                                        Time per turn
+                                        {t("join_room.timeout")}
                                     </Typography>
                                     <TextContent>{data?.timeOut}s</TextContent>
                                 </RoomInfoDiv>
                             </div>
                         </div>
-                    </Grid>
-                </Grid>
+                    </div>
+                </div>
                 <Grid container className="justify-center mt-4">
                     <Grid item md={2} xs={2}>
                         <Button
@@ -161,10 +145,10 @@ const JoinRoom = () => {
                             fullWidth
                             onClick={onJoinRoom}
                         >
-                            Join Now
+                            {t("join_room.join_now")}
                         </Button>
                     </Grid>
-                    <div className="mx-2"></div>
+                    <div className="mx-2" />
                     <Grid item md={2} xs={2}>
                         <Button
                             variant="outlined"
@@ -173,7 +157,7 @@ const JoinRoom = () => {
                             fullWidth
                             onClick={() => navigate("/", {replace: true})}
                         >
-                            Cancel
+                            {t("join_room.cancel")}
                         </Button>
                     </Grid>
                 </Grid>

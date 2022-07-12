@@ -12,12 +12,12 @@ import useSearch from "../../hooks/useSearch";
 import SamplePanel from "./components/SamplePanel";
 
 const Gallery = () => {
-    const {t} = useTranslation();
-    const {data} = useTopics();
+    const {t, i18n} = useTranslation();
+    const {data} = useTopics(i18n.language);
     const [selectedId, setSelectId] = React.useState<string | undefined>();
     const [filtered, debouncedSearch] = useSearch({
         data: data,
-        keys: ["nameVi"],
+        keys: ["name"],
     });
 
     const onSearch = React.useCallback(
@@ -31,7 +31,7 @@ const Gallery = () => {
     return (
         <RoomLayout
             title={t("gallery.title")}
-            headerChildren={
+            endChildren={
                 <SearchField
                     className="w-[150px]"
                     placeholder={t("gallery.search_place_holder")}
@@ -47,7 +47,7 @@ const Gallery = () => {
                         className="min-w-[195px]"
                     >
                         {(filtered?.length ? filtered : data)?.map(
-                            ({id, nameVi}) => (
+                            ({id, name}) => (
                                 <Button
                                     key={id}
                                     className={clsx(
@@ -56,7 +56,7 @@ const Gallery = () => {
                                     )}
                                     onClick={() => setSelectId(id)}
                                 >
-                                    {nameVi}
+                                    {name}
                                 </Button>
                             )
                         )}

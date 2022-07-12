@@ -77,7 +77,7 @@ const DrawBoard = ({...others}: GridProps) => {
             <Stack
                 spacing={3}
                 divider={<Divider orientation="horizontal" flexItem />}
-                className="items-center ml-auto my-auto"
+                className="items-center ml-auto my-auto min-w-[116px]"
             >
                 <LoadingButton
                     isLoading={isPredicting}
@@ -107,6 +107,7 @@ const DrawBoard = ({...others}: GridProps) => {
                                 canvasRef.current?.eraseMode(!eraseMode);
                                 setEraseMode(!eraseMode);
                             }}
+                    
                         />
                     }
                     label={
