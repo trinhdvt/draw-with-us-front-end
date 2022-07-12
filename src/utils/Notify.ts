@@ -1,5 +1,7 @@
 import Swal, {SweetAlertOptions} from "sweetalert2";
+
 import "sweetalert2/dist/sweetalert2.min.css";
+import i18n from "../i18n/config";
 
 const defaultOption: SweetAlertOptions = {
     icon: "success",
@@ -19,7 +21,7 @@ const notify = ({title, text, ...otherOptions}: SweetAlertOptions) =>
 const noRoomNotify = async () => {
     return await notify({
         title: "Oops!",
-        text: "There is no room available! Let's create one!",
+        text: i18n.t("no_room"),
         icon: "warning",
         showConfirmButton: true,
         timer: undefined,
@@ -28,8 +30,8 @@ const noRoomNotify = async () => {
 
 const confirmJoinRoomNotify = async () => {
     return await notify({
-        title: "Join now!",
-        text: "We found the room! Do you want to join now?",
+        title: i18n.t("found_room.title"),
+        text: i18n.t("found_room.content"),
         icon: "question",
         showConfirmButton: true,
         showCancelButton: true,

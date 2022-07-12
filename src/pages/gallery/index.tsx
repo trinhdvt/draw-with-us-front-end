@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from "react";
 import {Button, Divider, Grid, Stack} from "@mui/material";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import styles from "../../assets/styles/Gallery.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
@@ -11,6 +12,7 @@ import useSearch from "../../hooks/useSearch";
 import SamplePanel from "./components/SamplePanel";
 
 const Gallery = () => {
+    const {t} = useTranslation();
     const {data} = useTopics();
     const [selectedId, setSelectId] = React.useState<string | undefined>();
     const [filtered, debouncedSearch] = useSearch({
@@ -28,11 +30,11 @@ const Gallery = () => {
 
     return (
         <RoomLayout
-            title="Gallery"
+            title={t("gallery.title")}
             headerChildren={
                 <SearchField
                     className="w-[150px]"
-                    placeholder="Topic's name"
+                    placeholder={t("gallery.search_place_holder")}
                     onChange={onSearch}
                 />
             }

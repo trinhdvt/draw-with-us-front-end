@@ -1,5 +1,6 @@
 import React from "react";
 import {Divider, Typography} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 import {useUser} from "../../store/UserStore";
 
@@ -8,6 +9,8 @@ import LoginPanel from "./components/LoginPanel";
 import ListCreatedCollection from "./components/ListCreatedCollection";
 
 const HomePage = () => {
+    const {t} = useTranslation();
+
     React.useEffect(() => {
         document.title = "Draw With Us";
     }, []);
@@ -18,7 +21,7 @@ const HomePage = () => {
         <div className="grid grid-cols-[1fr_auto_1fr] h-[270px] justify-evenly bg-white rounded-xl p-2">
             <PlayNowPanel />
             <Divider orientation="vertical" flexItem variant="middle">
-                <Typography>OR</Typography>
+                <Typography className="uppercase">{t("or")}</Typography>
             </Divider>
             {isLoggedIn ? <ListCreatedCollection /> : <LoginPanel />}
         </div>

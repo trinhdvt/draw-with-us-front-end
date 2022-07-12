@@ -1,6 +1,7 @@
 import React from "react";
 import {Grid, Typography} from "@mui/material";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import {RoomStatus} from "../../api/@types/Room";
 import {useRoom} from "../../api/services/RoomServices";
@@ -25,6 +26,7 @@ import GameSupportController from "./components/GameSupportController";
 import CongratsModal from "./components/CongratsModal";
 
 const Game = () => {
+    const {t, i18n} = useTranslation();
     const socket = useSocket();
     const {gameState, dispatch} = useGame();
     const {data} = useRoom(gameState.roomId);
@@ -72,19 +74,25 @@ const Game = () => {
         return;
     };
 
+    const drawTopic = i18n.language
+        ? gameState.target?.nameVi
+        : gameState.target?.nameEn;
+
     return (
         <Grid container>
-            <Grid item md={3.5} xs={3.5} />
+            <Grid item md={3.5} xs={3.5}>
+                <GameSupportController />
+            </Grid>
             <Grid item md={6} xs={6} className="mb-2.5 mx-auto">
                 {isPlaying && !gameState.isEndTurn && !gameState.isDone && (
                     <Typography variant="h4">
-                        Let&apos;s draw:&nbsp;
+                        {t("game_play.draw_topic_prefix")}
                         <Typography
                             variant="h6"
                             component="span"
                             className="font-bold text-2xl"
                         >
-                            {gameState.target?.nameVi}
+                            {drawTopic}
                         </Typography>
                     </Typography>
                 )}

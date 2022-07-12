@@ -4,6 +4,7 @@ import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useMutation} from "react-query";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 import {fetchRandom} from "../../../api/services/RoomServices";
 import {AnimatedLoading} from "../../../components/LoadingScreen";
@@ -13,6 +14,7 @@ import {confirmJoinRoomNotify, noRoomNotify} from "../../../utils/Notify";
 import UserInfo from "./UserInfo";
 
 const PlayNowPanel = (props: GridProps) => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const socket = useSocket();
     const [isFinding, setFinding] = React.useState(false);
@@ -50,7 +52,7 @@ const PlayNowPanel = (props: GridProps) => {
             {...props}
         >
             <Typography variant="h2" className="uppercase text-center">
-                Play now
+                {t("play_now")}
             </Typography>
             <UserInfo />
             <div className="w-full flex justify-center">
@@ -59,7 +61,7 @@ const PlayNowPanel = (props: GridProps) => {
                     variant="contained"
                     onClick={() => navigate("/room")}
                 >
-                    Find Room
+                    {t("find_room")}
                 </Button>
                 <div className="mx-2" />
                 <Button
@@ -67,10 +69,12 @@ const PlayNowPanel = (props: GridProps) => {
                     variant="contained"
                     onClick={playGame}
                 >
-                    Play Now
+                    {t("play_now")}
                 </Button>
             </div>
-            {isFinding && <AnimatedLoading size={100} text="Finding" />}
+            {isFinding && (
+                <AnimatedLoading size={100} text={t("home.finding")} />
+            )}
         </Grid>
     );
 };

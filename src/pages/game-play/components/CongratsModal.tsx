@@ -2,6 +2,7 @@ import React from "react";
 import {Avatar, Grid, Typography} from "@mui/material";
 import clsx from "clsx";
 import {motion} from "framer-motion";
+import {useTranslation} from "react-i18next";
 
 import styles from "../../../assets/styles/Game.module.scss";
 import {useGame} from "../context/GameContext";
@@ -11,6 +12,7 @@ import {Congrats} from "../utils/GameNotify";
 import {RankingBgColor, SmallChip} from "./Player";
 
 const CongratsModal = () => {
+    const {t} = useTranslation();
     const {gameState} = useGame();
     const {data} = usePlayers(gameState.roomId);
 
@@ -30,7 +32,9 @@ const CongratsModal = () => {
                         "p-4 items-center justify-center rounded-xl"
                 )}
             >
-                <Typography variant="h2">🎉 Congratulation 🎉</Typography>
+                <Typography variant="h2">
+                    🎉 {t("game_play.congrats")} 🎉
+                </Typography>
                 <Grid item container className="flex-col mt-4 max-w-[300px]">
                     {data?.slice(0, 3).map(({avatar, eid, name}, idx) => (
                         <Grid

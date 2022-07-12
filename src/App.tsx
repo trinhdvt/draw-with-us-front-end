@@ -2,6 +2,7 @@ import React, {Suspense} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {GoogleOAuthProvider} from "@react-oauth/google";
+import "./i18n/config";
 
 import {AnimatedLoading} from "./components/LoadingScreen";
 import GameWrapper from "./pages/game-play";

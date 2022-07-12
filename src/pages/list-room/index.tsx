@@ -5,6 +5,7 @@ import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
 import {useQueryClient} from "react-query";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import styles from "../../assets/styles/Room.module.scss";
 import RoomLayout from "../../layout/RoomLayout";
@@ -19,6 +20,7 @@ import ShowModeSelector from "./components/ShowModeSelector";
 import useJoinRoom from "./hooks/useJoinRoom";
 
 const RoomHome = () => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const [selectedRoom, setSelectedRoom] = React.useState<RoomProps>();
     const [defaultRooms] = React.useState(() => {
@@ -61,15 +63,17 @@ const RoomHome = () => {
     };
 
     const isDisable = !selectedRoom;
-    const tooltipText = isDisable ? "Please select a room" : "Join now";
+    const tooltipText = isDisable
+        ? t("list_room.play_tooltip.disable")
+        : t("list_room.play_tooltip.enable");
 
     return (
         <RoomLayout
-            title="Room List"
+            title={t("list_room.title")}
             headerChildren={
                 <SearchField
                     className="w-[130px]"
-                    placeholder="Room's ID"
+                    placeholder={t("list_room.search_place_holder")}
                     onChange={onSearch}
                 />
             }
@@ -97,7 +101,7 @@ const RoomHome = () => {
                     variant="contained"
                     onClick={() => navigate("/create")}
                 >
-                    New Room
+                    {t("list_room.new_room")}
                 </Button>
                 <TopTooltip title={tooltipText}>
                     <span>
@@ -108,7 +112,7 @@ const RoomHome = () => {
                             className="w-[135px]"
                             onClick={onJoinRoom}
                         >
-                            Play
+                            {t("list_room.play")}
                         </Button>
                     </span>
                 </TopTooltip>

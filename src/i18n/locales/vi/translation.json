@@ -1,0 +1,117 @@
+{
+    "common": {
+        "home": {
+            "finding": "Đang tìm ..."
+        },
+        "play_now": "Chơi ngay",
+        "find_room": "Tìm phòng",
+        "or": "Hoặc",
+        "login_here": "Đăng nhập",
+        "create_private_room": "Tạo phòng riêng tư",
+        "create_collection": "Tạo bộ sưu tập của riêng bạn",
+        "get_in_hall_of_fame": "Khắc tên lên bảng danh vọng",
+        "login_with": "Đăng nhập với",
+        "no_room": "Không có phòng sẵn sàng! Hãy tạo phòng mới nào!",
+        "found_room": {
+            "title": "Tham gia ngay!",
+            "content": "Tìm thấy phòng sẵn sàng! Gét gô ngay nào!"
+        },
+        "back": "Quay lại",
+        "list_room": {
+            "title": "Danh sách phòng",
+            "search_place_holder": "ID, Tên...",
+            "selector": {
+                "name": "Tên phòng",
+                "collection": "Tên bộ sưu tập"
+            },
+            "tooltip": {
+                "private_room": "Phòng riêng tư",
+                "max_player": "Số người chơi tối đa",
+                "room_id": "ID Phòng",
+                "time_out": "Thời gian mỗi lượt chơi"
+            },
+            "new_room": "Tạo phòng",
+            "play": "Vào chơi",
+            "play_tooltip": {
+                "disable": "Vui lòng chọn phòng!",
+                "enable": "Vào ngay!"
+            },
+            "room_full": "Phòng đã đầy!"
+        },
+        "password_prompt": {
+            "title": "Nhập mật khẩu phòng",
+            "place_holder": "Mật khẩu ..."
+        },
+        "create_room": {
+            "title": "Tạo phòng",
+            "name": "Tên",
+            "collection": "Collection's Name",
+            "password": "Mật khẩu",
+            "max_player": "Số người chơi",
+            "time_out": "Thời gian mỗi lượt",
+            "create": "Tạo phòng",
+            "password_tooltip": "Mật khẩu cho phòng chơi! Vui lòng ghi nhớ!",
+            "select_collection": "Chọn một bộ sưu tập",
+            "new_collection": "Bộ sưu tập mới",
+            "login_require_tooltip": {
+                "link_text": "Đăng nhập",
+                "content": " để tạo bộ sưu tập của bạn!"
+            },
+            "privacy": "Quyền riêng tư",
+            "played_times": "Số lần chơi",
+            "number_of_topics": "Số lượng chủ đề",
+            "create_disable": "Vui lòng chọn một bộ sưu tập!"
+        },
+        "collection_type": {
+            "PUBLIC": "Công khai",
+            "YOUR": "Đã tạo",
+            "OFFICIAL": "Chính thức",
+            "ALL": "Tất cả"
+        },
+        "gallery": {
+            "title": "Phòng trưng bày",
+            "search_place_holder": "Tên chủ đề"
+        },
+        "game_play": {
+            "waiting_screen": {
+                "wait_other": "Đang chờ người chơi khác",
+                "wait_host": "Đang chờ chủ phòng bắt đầu",
+                "wait_end_turn": "Chờ người chơi khác hoàn thành nào!",
+                "wait_next_turn": "Nghỉ ngơi một chút nào!",
+                "ready_to_start": "Sẵn sàng bắt đầu!"
+            },
+            "start_the_game": "Bắt đầu chơi!",
+            "point": " điểm",
+            "support_btn": {
+                "exit": "Thoát",
+                "share": "Chia sẻ"
+            },
+            "exit_confirm": "Bạn có chắc chắn muốn thoát khỏi phòng chơi này?",
+            "congrats": "Xin chúc mừng",
+            "share_modal": {
+                "title": "Chia sẻ phòng chơi này",
+                "link_desc": "Thông qua liên kết bên dưới",
+                "qr_code_desc": "Hoặc chia sẻ mã QR này",
+                "copy_qr": "Copy QR Code",
+                "not_copied": "Nhấn để Copy",
+                "copied": "Đã Copy"
+            },
+            "draw_board": {
+                "check": "Kiểm tra",
+                "clear": "Xóa",
+                "undo": "Hoàn tác",
+                "pencil": "Bút chì",
+                "eraser": "Bút xoá"
+            },
+            "alert": {
+                "success": "Giỏi quá, bạn vẽ đúng rồi nè!",
+                "wrong": "Oops! Sai mất rồi, thử lại nào!",
+                "time_out_title": "Hết giờ!",
+                "time_out_content": "Hết thời gian mất rồi, cố gắng trong lượt sau nhé!",
+                "welcome_title": "Chào mừng đến với DrawWithUs!",
+                "welcome_content": "Hãy cạnh tranh với các người chơi khác bằng bút vẽ của bạn nào!"
+            },
+            "draw_topic_prefix": "Chủ đề: "
+        }
+    }
+}

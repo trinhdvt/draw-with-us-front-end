@@ -1,0 +1,117 @@
+{
+    "common": {
+        "home": {
+            "finding": "Finding..."
+        },
+        "play_now": "Play Now",
+        "find_room": "Find Room",
+        "or": "Or",
+        "login_here": "Login Here",
+        "create_private_room": "Create Your Private Room",
+        "create_collection": "Create Your Collection",
+        "get_in_hall_of_fame": "Get Placed In Hall Of Fame",
+        "login_with": "Login With",
+        "no_room": "There is no room available! Let's create one!",
+        "found_room": {
+            "title": "Join now!",
+            "content": "We found the room! Do you want to join now?"
+        },
+        "back": "Back",
+        "list_room": {
+            "title": "Room List",
+            "search_place_holder": "ID, Name...",
+            "selector": {
+                "name": "Room's name",
+                "collection": "Collection's Name"
+            },
+            "tooltip": {
+                "private_room": "This is a private room",
+                "max_player": "Max players",
+                "room_id": "Room's ID",
+                "time_out": "Timeout per turn"
+            },
+            "new_room": "New Room",
+            "play": "Play",
+            "play_tooltip": {
+                "disable": "Please select a room",
+                "enable": "Join Now"
+            },
+            "room_full": "Room is already full"
+        },
+        "password_prompt": {
+            "title": "Enter room's password",
+            "place_holder": "Room's password"
+        },
+        "create_room": {
+            "title": "Create Room",
+            "name": "Name",
+            "collection": "Collection's Name",
+            "password": "Password",
+            "max_player": "Max players",
+            "time_out": "Timeout (sec)",
+            "create": "Create",
+            "password_tooltip": "Password for your room. Please remember it!",
+            "select_collection": "Select one collection",
+            "new_collection": "New Collection",
+            "login_require_tooltip": {
+                "link_text": "Sing In",
+                "content": " to create your collection"
+            },
+            "privacy": "Privacy",
+            "played_times": "Played times",
+            "number_of_topics": "Number of topics",
+            "create_disable": "Please select a collection"
+        },
+        "collection_type": {
+            "PUBLIC": "Public",
+            "YOUR": "Your",
+            "OFFICIAL": "Official",
+            "ALL": "All"
+        },
+        "gallery": {
+            "title": "Gallery",
+            "search_place_holder": "Topic's name"
+        },
+        "game_play": {
+            "waiting_screen": {
+                "wait_other": "Waiting for other players",
+                "wait_host": "Waiting for host to start the game",
+                "wait_end_turn": "Waiting for other players to finish",
+                "wait_next_turn": "Let's take a rest",
+                "ready_to_start": "Other players is waiting ..."
+            },
+            "start_the_game": "Start the game",
+            "point": " points",
+            "support_btn": {
+                "exit": "Exit",
+                "share": "Share"
+            },
+            "exit_confirm": "Are you sure you want to exit the game?",
+            "congrats": "Congratulations",
+            "share_modal": {
+                "title": "Share this game",
+                "link_desc": "Via The Link Below",
+                "qr_code_desc": "Or Share This QR Code",
+                "copy_qr": "Copy QR Code",
+                "not_copied": "Click to copy",
+                "copied": "Copied"
+            },
+            "draw_board": {
+                "check": "Check",
+                "clear": "Clear",
+                "undo": "Undo",
+                "pencil": "Pencil",
+                "eraser": "Eraser"
+            },
+            "alert": {
+                "success": "You got it right!",
+                "wrong": "Oops! You got it wrong!",
+                "time_out_title": "Time's up!",
+                "time_out_content": "No more time to draw! Let's try in the next turn!",
+                "welcome_title": "Welcome to DrawWithUs!",
+                "welcome_content": "Draw an image about the given topic to get the points!"
+            },
+            "draw_topic_prefix": "Let's draw: "
+        }
+    }
+}

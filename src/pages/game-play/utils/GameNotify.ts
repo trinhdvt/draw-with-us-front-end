@@ -1,13 +1,14 @@
 import confetti from "canvas-confetti";
 import Swal from "sweetalert2";
 
+import i18n from "../../../i18n/config";
 import notify from "../../../utils/Notify";
 
 const alertSuccess = () => {
     FireWorks();
     return notify({
         title: "Yay!",
-        text: "You got it right!",
+        text: i18n.t("game_play.alert.success"),
     });
 };
 
@@ -22,14 +23,14 @@ const alertWrong = () => {
 
     return Toast.fire({
         icon: "error",
-        title: "Oops! You got it wrong!",
+        title: i18n.t("game_play.alert.wrong"),
     });
 };
 
 const timeUp = () => {
     return notify({
-        title: "Time's up!",
-        text: "You have no more time to draw! Let's try in the next round!",
+        title: i18n.t("game_play.alert.time_out_title"),
+        text: i18n.t("game_play.alert.time_out_content"),
         icon: "error",
         timer: 2500,
     });
@@ -37,8 +38,8 @@ const timeUp = () => {
 
 const alertWelcome = () => {
     return notify({
-        title: "Welcome!",
-        text: "Draw an image about the word below to get the points!",
+        title: i18n.t("game_play.alert.welcome_title"),
+        text: i18n.t("game_play.alert.welcome_content"),
         icon: "info",
         timer: 3000,
         showConfirmButton: true,

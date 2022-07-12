@@ -6,6 +6,7 @@ import PublicIcon from "@mui/icons-material/Public";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {RiImageEditFill} from "react-icons/ri";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import styles from "../../../assets/styles/Room.module.scss";
 import {ICollection, CollectionType} from "../../../api/@types/Collection";
@@ -28,13 +29,14 @@ const CollectionCard = ({
     type,
     ...others
 }: ICollection & GridProps) => {
+    const {t} = useTranslation();
     const Icon = CollectionIcon[type];
 
     return (
         <Grid
             item
             className={clsx(
-                "grid auto-rows-auto max-h-[136px] items-center cursor-pointer rounded-xl ",
+                "grid auto-rows-auto max-h-[136px] items-center cursor-pointer rounded-xl",
                 styles.gameCollection,
                 selected && styles.selected
             )}
@@ -56,7 +58,7 @@ const CollectionCard = ({
             </div>
             <div className="w-full grid grid-cols-3 ">
                 <div className="flex flex-col items-center flex-1">
-                    <TopTooltip title="Played times">
+                    <TopTooltip title={t("create_room.played_times")}>
                         <span>
                             <VisibilityIcon color="primary" />
                         </span>
@@ -76,7 +78,7 @@ const CollectionCard = ({
                     </Typography>
                 </div>
                 <div className="flex flex-col items-center flex-1">
-                    <TopTooltip title="Number of topics">
+                    <TopTooltip title={t("create_room.number_of_topics")}>
                         <span>
                             <RiImageEditFill className="primary-icon" />
                         </span>

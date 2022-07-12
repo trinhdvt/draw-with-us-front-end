@@ -1,6 +1,6 @@
 Privacy Policy
 
-The purpose of DrawWithUs policy is to respect your privacy concerning any information we may collect while you are playing. Consequently, we have developed this
+The purpose of the DrawWithUs policy is to respect your privacy concerning any information we may collect while you are playing. Consequently, we have developed this
 Privacy Policy to ensure that you know how we handle the data.
 
 In this Privacy Policy, "data" means any data that may identify you (alone or in combination with other data), such as your name, profile image, and data for
@@ -8,9 +8,9 @@ analysis and attribution to the use of the services.
 
 1. What data we are Processing
 
-In this website, we are collecting only your information that is necessary for the operation of the website and data through a third-party account.
+On this website, we are collecting only your information that is necessary for the operation of the website and data through a third-party account.
 If you do not authorize such data collection, please do not log in with a social network.
-Data we may collect when you use our service anonymously or when you are linked to a third party log-in:
+Data we may collect when you use our service anonymously or when you are linked to a third-party log-in:
 
 > Data about your social network unique id, your social profile, a chosen nickname, room number you have played, the reference origin, and the IP address.
 > Profile picture link;
@@ -24,11 +24,11 @@ When a user creates a collection and chooses to use it in a public room, the col
 3. How we store your data
 
 We will keep the data as long as it is relevant and valuable for its originally collected purpose.
-In almost case, your data will be removed from our servers after you leave the website.
+In almost any case, your data will be removed from our servers after you leave the website or after 24 hours since you accessed this website.
 Any public data from a third-party account will be kept until you request to delete it.
 
 4. Request data deletion
 
-Please contact us at trinhvideo123@gmail.com when you have questions about these privacy policies or request a copy or deletion of your data.
+Please contact me at trinhdvtdut@gmail.com when you have questions about these privacy policies or request a copy or deletion of your data.
 Your request and choices may be limited in some instances. For example, fulfilling your request would reveal information about another person or ask to delete
 information that we are permitted by law or have compelling legitimate interests to keep.

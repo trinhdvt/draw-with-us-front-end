@@ -3,6 +3,7 @@ import {Button, Grid, GridProps, MenuItem, Typography} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import {Link, useNavigate} from "react-router-dom";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import {CollectionType, ICollection} from "../../../api/@types/Collection";
 import {useCollections} from "../../../api/services/CollectionServices";
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
+    const {t} = useTranslation();
     const navigate = useNavigate();
     const [filterType, setFilter] = React.useState(CollectionType.ALL);
     const [filteredData, setFilteredData] = React.useState<ICollection[]>();
@@ -48,7 +50,9 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
                 .map(Number)
                 .map(k => (
                     <MenuItem value={k} key={k}>
-                        {CollectionType[k]}
+                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                        {/* @ts-ignore */}
+                        {t(`collection_type.${CollectionType[k]}`)}
                     </MenuItem>
                 ))}
         </CssSelect>
@@ -61,8 +65,10 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
 
         return (
             <Typography>
-                <Link to={"/"}>Sign In</Link>
-                <span>{" to create your collection"}</span>
+                <Link to="/">
+                    {t("create_room.login_require_tooltip.link_text")}
+                </Link>
+                <span>{t("create_room.login_require_tooltip.content")}</span>
             </Typography>
         );
     };
@@ -75,7 +81,7 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
             <Grid item className={clsx(styles.selectPanel, "grid grid-cols-3")}>
                 <div className="flex items-center">
                     <Typography className="capitalize">
-                        Select one topic
+                        {t("create_room.select_collection")}
                     </Typography>
                 </div>
                 <div className="flex col-span-2 justify-end items-center">
@@ -90,7 +96,7 @@ const ListCollection = ({onCollectionSelect, ...others}: Props & GridProps) => {
                                 disabled={!isLogin}
                                 onClick={() => navigate("/collection")}
                             >
-                                New Collection
+                                {t("create_room.new_collection")}
                             </Button>
                         </div>
                     </LightTooltip>

@@ -9,9 +9,10 @@ import {
 } from "@mui/material";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 
+import i18n from "../../../i18n/config";
 import {IPlayer} from "../../../api/@types/User";
 import styles from "../../../assets/styles/Player.module.scss";
-import {useGame} from "../context/GameContext";
+import TopTooltip from "../../../components/TopTooltip";
 
 const RankingBgColor = ["bg-[#FDAC53]", "bg-[#9BB7D4]", "bg-[#0072B5]"];
 
@@ -57,16 +58,18 @@ class Player extends React.Component<IPlayer & GridProps> {
                 <Grid item md={9} xs={9} className="flex flex-col">
                     <div className="flex items-center">
                         {isMe && <HowToRegIcon color="primary" />}
-                        <Typography
-                            className="font-bold max-w-[140px]"
-                            noWrap={true}
-                        >
-                            {name}
-                        </Typography>
+                        <TopTooltip title={name}>
+                            <Typography
+                                className="font-bold max-w-[140px]"
+                                noWrap={true}
+                            >
+                                {name}
+                            </Typography>
+                        </TopTooltip>
                     </div>
                     <Typography>
                         <span className="font-bold">{point}</span>
-                        &nbsp;points
+                        {i18n.t("game_play.point") as string}
                     </Typography>
                 </Grid>
             </Grid>
@@ -74,24 +77,16 @@ class Player extends React.Component<IPlayer & GridProps> {
     }
 }
 
-const PlayerSkeleton = () => {
-    const {gameState} = useGame();
-    const isPlaying = !gameState.target;
-
-    return (
-        <Grid container alignItems="center" className={styles.playerCard}>
-            <Grid item md={3} xs={3} className="pr-2.5">
-                <Avatar className="avatar" />
-            </Grid>
-
-            <Grid item md={9} xs={9}>
-                {isPlaying && (
-                    <Typography className="font-thin">Waiting...</Typography>
-                )}
-            </Grid>
+const PlayerSkeleton = () => (
+    <Grid container alignItems="center" className={styles.playerCard}>
+        <Grid item md={3} xs={3} className="pr-2.5">
+            <Avatar className="avatar" />
         </Grid>
-    );
-};
+        <Grid item md={9} xs={9}>
+            <Typography className="font-thin">...</Typography>
+        </Grid>
+    </Grid>
+);
 
 export default Player;
 export {PlayerSkeleton, SmallChip, RankingBgColor};

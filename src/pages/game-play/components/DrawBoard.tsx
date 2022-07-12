@@ -13,6 +13,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import UndoIcon from "@mui/icons-material/Undo";
 import clsx from "clsx";
+import {useTranslation} from "react-i18next";
 
 import styles from "../../../assets/styles/Game.module.scss";
 import LoadingButton from "../../../components/LoadingButton";
@@ -21,6 +22,7 @@ import {useSocket} from "../../../store/SocketStore";
 import {alertSuccess, alertWrong} from "../utils/GameNotify";
 
 const DrawBoard = ({...others}: GridProps) => {
+    const {t} = useTranslation();
     const socket = useSocket();
     const {gameState, dispatch} = useGame();
     const {roomId} = gameState;
@@ -75,7 +77,7 @@ const DrawBoard = ({...others}: GridProps) => {
             <Stack
                 spacing={3}
                 divider={<Divider orientation="horizontal" flexItem />}
-                className="justify-start items-center ml-auto my-auto"
+                className="items-center ml-auto my-auto"
             >
                 <LoadingButton
                     isLoading={isPredicting}
@@ -83,23 +85,19 @@ const DrawBoard = ({...others}: GridProps) => {
                     endIcon={<ArrowForwardIcon />}
                     onClick={onPredict}
                     disabled={gameState.isDone}
+                    size="small"
+                    fullWidth
                 >
-                    Check
+                    {t("game_play.draw_board.check")}
                 </LoadingButton>
-                <Button
-                    onClick={clearCanvas}
-                    variant="outlined"
-                    color="error"
-                    endIcon={<HighlightOffIcon color="error" />}
-                >
-                    Clear
-                </Button>
                 <Button
                     variant="outlined"
                     onClick={() => canvasRef.current?.undo()}
                     endIcon={<UndoIcon color="primary" />}
+                    size="small"
+                    fullWidth
                 >
-                    Undo
+                    {t("game_play.draw_board.undo")}
                 </Button>
                 <FormControlLabel
                     control={
@@ -111,9 +109,23 @@ const DrawBoard = ({...others}: GridProps) => {
                             }}
                         />
                     }
-                    label={eraseMode ? "Eraser" : "Pencil"}
+                    label={
+                        eraseMode
+                            ? t("game_play.draw_board.eraser")
+                            : t("game_play.draw_board.pencil")
+                    }
                     labelPlacement="end"
                 />
+                <Button
+                    onClick={clearCanvas}
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    fullWidth
+                    endIcon={<HighlightOffIcon color="error" />}
+                >
+                    {t("game_play.draw_board.clear")}
+                </Button>
             </Stack>
         </Grid>
     );

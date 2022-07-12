@@ -7,6 +7,7 @@ import {GiEmptyHourglass} from "react-icons/gi";
 import clsx from "clsx";
 import {MdOutlineDriveFileRenameOutline} from "react-icons/md";
 import {VscShield} from "react-icons/vsc";
+import {useTranslation} from "react-i18next";
 
 import RoomLayout from "../../layout/RoomLayout";
 import {useCreateRoom} from "../../api/services/RoomServices";
@@ -23,6 +24,7 @@ import CssSelect from "../../components/CssSelect";
 import ListCollection from "./components/ListCollection";
 
 const CreateRoom = () => {
+    const {t} = useTranslation();
     const {user, token} = useUser();
     const isLoggedIn = !!token;
     const navigate = useNavigate();
@@ -59,10 +61,10 @@ const CreateRoom = () => {
         setPayload({...payload, collectionId});
         setDisableCreate(false);
     };
-    const tooltipText = isDisable ? "Please select a collection" : "";
+    const tooltipText = isDisable ? t("create_room.create_disable") : "";
 
     return (
-        <RoomLayout title="Create Room">
+        <RoomLayout title={t("create_room.title")}>
             <Grid
                 className={clsx(
                     styles.subContainer,
@@ -77,7 +79,9 @@ const CreateRoom = () => {
                 >
                     <div className="grid grid-cols-[auto_1fr_2fr] items-center">
                         <MdOutlineDriveFileRenameOutline className="primary-icon mr-1" />
-                        <Typography className="mr-1">Name</Typography>
+                        <Typography className="mr-1">
+                            {t("create_room.name")}
+                        </Typography>
                         <CssTextField
                             value={payload.name}
                             onChange={e =>
@@ -93,7 +97,7 @@ const CreateRoom = () => {
                     </div>
                     <div className="grid grid-cols-[auto_2fr_1fr] items-center">
                         <FaRegUser className="primary-icon mr-1" />
-                        <Typography>Max User</Typography>
+                        <Typography>{t("create_room.max_player")}</Typography>
                         <CssSelect
                             value={payload.maxUsers}
                             className={styles.selectBox}
@@ -111,7 +115,7 @@ const CreateRoom = () => {
                     </div>
                     <div className="grid grid-cols-[auto_2fr_1fr] items-center">
                         <GiEmptyHourglass className="primary-icon mr-1" />
-                        <Typography>Timeout (sec)</Typography>
+                        <Typography>{t("create_room.time_out")}</Typography>
                         <CssSelect
                             value={payload.timeOut}
                             className={styles.selectBox}
@@ -128,11 +132,13 @@ const CreateRoom = () => {
                         </CssSelect>
                     </div>
                     {isLoggedIn && (
-                        <div className="grid grid-cols-[auto_1fr_2fr] items-center">
+                        <div className="grid grid-cols-[auto_auto_2fr] items-center">
                             <VscShield className="primary-icon text-red-700 mr-1" />
-                            <TopTooltip title="Password for your room. Please remember it!">
+                            <TopTooltip
+                                title={t("create_room.password_tooltip")}
+                            >
                                 <Typography className="mr-1">
-                                    Password
+                                    {t("create_room.password")}
                                 </Typography>
                             </TopTooltip>
                             <PasswordField
@@ -155,7 +161,7 @@ const CreateRoom = () => {
                                     disabled={isDisable}
                                     onClick={createRoom}
                                 >
-                                    Create
+                                    {t("create_room.create")}
                                 </Button>
                             </span>
                         </TopTooltip>
