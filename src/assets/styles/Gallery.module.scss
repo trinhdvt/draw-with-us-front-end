@@ -13,8 +13,8 @@
   @apply h-[350px] max-h-[350px] py-[10px];
   border: 2px $blue-sky solid;
   border-radius: 10px;
+  margin-top: 0;
 }
-
 
 .selected {
   @apply border-[2px] border-solid border-[red];

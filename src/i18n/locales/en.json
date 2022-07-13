@@ -115,7 +115,9 @@
                 "welcome_title": "Welcome to DrawWithUs!",
                 "welcome_content": "Draw an image about the given topic to get the points!"
             },
-            "draw_topic_prefix": "Let's draw: "
+            "draw_topic_prefix": "Let's draw: ",
+            "game_info": "Info",
+            "game_history": "History"
         },
         "message_panel": {
             "place_holder": "Type a message ..."

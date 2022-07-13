@@ -24,6 +24,7 @@ import Wrapper from "./Wrapper";
 import MessagePanel from "./components/MessagePanel";
 import GameSupportController from "./components/GameSupportController";
 import CongratsModal from "./components/CongratsModal";
+import GameInfo from "./components/GameInfo";
 
 const Game = () => {
     const {t, i18n} = useTranslation();
@@ -80,8 +81,10 @@ const Game = () => {
 
     return (
         <Grid container>
-            <Grid item md={3.5} xs={3.5} />
-            <Grid item md={6} xs={6} className="mb-2.5 mx-auto">
+            <Grid item md={3.5} xs={3.5} className="mb-2">
+                <GameInfo />
+            </Grid>
+            <Grid item md={6} xs={6} className="mb-2 mx-auto flex items-center">
                 {isPlaying && !gameState.isEndTurn && !gameState.isDone && (
                     <Typography variant="h4">
                         {t("game_play.draw_topic_prefix")}

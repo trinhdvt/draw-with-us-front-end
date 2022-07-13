@@ -115,7 +115,9 @@
                 "welcome_title": "Chào mừng đến với DrawWithUs!",
                 "welcome_content": "Hãy cạnh tranh với các người chơi khác bằng bút vẽ của bạn nào!"
             },
-            "draw_topic_prefix": "Chủ đề: "
+            "draw_topic_prefix": "Chủ đề: ",
+            "game_info": "Thông tin",
+            "game_history": "Lịch sử"
         },
         "message_panel": {
             "place_holder": "Nhập tin nhắn ..."

@@ -19,6 +19,7 @@ interface IGameState {
     roomId?: string;
     isEndTurn?: boolean;
     showResult?: boolean;
+    history: Set<ITopic>;
 }
 
 const GameReducer = (state: IGameState, {payload, type}: IGameAction) => {
@@ -33,9 +34,14 @@ const GameReducer = (state: IGameState, {payload, type}: IGameAction) => {
                 isDone: false,
                 target: payload as ITopic,
                 isEndTurn: false,
+                history: state.target ? state.history : new Set<ITopic>(),
             };
         case GameActionType.END_TURN:
-            return {...state, isEndTurn: true};
+            return {
+                ...state,
+                isEndTurn: true,
+                history: state.history.add(<ITopic>state.target),
+            };
         case GameActionType.SHOW_RESULT:
             return {...state, showResult: payload as boolean};
         default:

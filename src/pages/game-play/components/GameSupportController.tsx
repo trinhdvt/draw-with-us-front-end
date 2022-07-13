@@ -1,7 +1,6 @@
 import React from "react";
 import {
     Button,
-    ButtonProps,
     Dialog,
     DialogContent,
     DialogTitle,
@@ -22,14 +21,7 @@ import {useGame} from "../context/GameContext";
 import TopTooltip from "../../../components/TopTooltip";
 import AppQrCode from "../../../components/AppQRCode";
 
-const SmallOutlineBtn = ({
-    children,
-    ...props
-}: {children: React.ReactNode} & ButtonProps) => (
-    <Button variant="outlined" size="small" {...props}>
-        {children}
-    </Button>
-);
+import SmallOutlineBtn from "./SmallOutlineBtn";
 
 const GameSupportController = () => {
     const {t} = useTranslation();

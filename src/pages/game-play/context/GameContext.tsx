@@ -1,5 +1,7 @@
 import React from "react";
 
+import ITopic from "../../../api/@types/Topic";
+
 import {
     IGameAction,
     GameReducer,
@@ -11,6 +13,7 @@ const initState: IGameState = {
     isDone: false,
     target: undefined,
     roomId: undefined,
+    history: new Set<ITopic>([]),
 };
 
 interface GameContextProps {
