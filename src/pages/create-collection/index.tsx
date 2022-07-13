@@ -13,6 +13,7 @@ import clsx from "clsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {useQueryClient} from "react-query";
 import {useNavigate} from "react-router-dom";
+import {Trans, useTranslation} from "react-i18next";
 
 import ITopic from "../../api/@types/Topic";
 import Tag from "../../components/Tag";
@@ -30,6 +31,7 @@ import useSearch from "../../hooks/useSearch";
 import TopicSampleModal from "./components/TopicSampleModal";
 
 const CreateCollection = () => {
+    const {t, i18n} = useTranslation();
     const {user} = useUser();
     const navigate = useNavigate();
     const queryClient = useQueryClient();
@@ -47,14 +49,17 @@ const CreateCollection = () => {
     const isNotEnoughTopic = addTopics.length < 5;
 
     React.useEffect(() => {
-        if (loading) {
-            fetchAllTopics().then(data => setTopics(data));
-        }
-    }, [loading]);
+        fetchAllTopics(i18n.language).then(data => {
+            setTopics(data);
+            setAddTopic([]);
+            setCurrentTopic(null);
+            setTextCrtTopic("");
+        });
+    }, [loading, i18n.language]);
 
     const [filtered, debouncedSearch] = useSearch({
         data: addTopics,
-        keys: ["nameVi"],
+        keys: ["name"],
     });
 
     const onSearch = React.useCallback(
@@ -68,7 +73,7 @@ const CreateCollection = () => {
     const onTopicSelect = (_: React.SyntheticEvent, value_: unknown) => {
         const value = value_ as ITopic;
         setCurrentTopic(value);
-        setTextCrtTopic(value.nameVi);
+        setTextCrtTopic(value.name);
     };
 
     const onTopicAdd = () => {
@@ -86,7 +91,7 @@ const CreateCollection = () => {
     const removeTopic = (topic: ITopic) => {
         setAddTopic(prev => prev.filter(t => t.id !== topic.id));
         setTopics(prev =>
-            [...prev, topic].sort((a, b) => a.nameVi.localeCompare(b.nameVi))
+            [...prev, topic].sort((a, b) => a.name.localeCompare(b.name))
         );
         debouncedSearch("");
     };
@@ -98,8 +103,8 @@ const CreateCollection = () => {
     const tooltipText = !isDisable
         ? ""
         : isNotEnoughTopic
-        ? "Please add at least 5 topic"
-        : "Please enter collection name";
+        ? t("collection_create.tooltip.not_enough")
+        : t("collection_create.tooltip.no_name");
 
     const onCreateCollection = () => {
         const payload: ICollectionRequest = {
@@ -117,7 +122,7 @@ const CreateCollection = () => {
     };
 
     return (
-        <RoomLayout title="New Collection">
+        <RoomLayout title={t("collection_create.title")}>
             <Grid
                 className={clsx(
                     styles.subContainer,
@@ -137,7 +142,8 @@ const CreateCollection = () => {
                 >
                     <div className="w-full flex flex-col justify-between">
                         <Typography className={styles.requiredInput}>
-                            1. Collection name <span>*</span>
+                            1. {t("collection_create.collection_name")}
+                            <span>*</span>
                         </Typography>
                         <CssTextField
                             variant="outlined"
@@ -149,7 +155,7 @@ const CreateCollection = () => {
                     </div>
                     <div className="w-full grid grid-cols-[auto_1fr] items-center">
                         <Typography className="capitalize">
-                            2. Share with others
+                            2. {t("collection_create.share")}
                         </Typography>
                         <Checkbox
                             className="mr-auto"
@@ -161,7 +167,8 @@ const CreateCollection = () => {
                         <Typography
                             className={clsx(styles.requiredInput, "col-span-2")}
                         >
-                            3. Select topic below <span>*</span>
+                            3. {t("collection_create.select_topic_below")}
+                            <span>*</span>
                         </Typography>
                         <Autocomplete
                             className="w-full"
@@ -177,13 +184,16 @@ const CreateCollection = () => {
                                 option.id == value.id
                             }
                             clearOnBlur={false}
-                            getOptionLabel={option => option.nameVi}
+                            getOptionLabel={option => option.name}
                             sx={{"& input": {maxWidth: "80%"}}}
                             renderInput={params => (
                                 <TextField
                                     {...params}
                                     size="small"
-                                    label="Topic"
+                                    label={t(
+                                        "collection_create.autocomplete_label"
+                                    )}
+                                    sx={{textTransform: "capitalize"}}
                                     onChange={e =>
                                         setTextCrtTopic(e.target.value)
                                     }
@@ -196,7 +206,7 @@ const CreateCollection = () => {
                             disabled={!currentTopic}
                             onClick={onTopicAdd}
                         >
-                            Add
+                            {t("collection_create.add_btn")}
                         </Button>
                         <Button
                             className="mr-auto"
@@ -205,7 +215,7 @@ const CreateCollection = () => {
                             disabled={!currentTopic}
                             onClick={handleOpenPreview}
                         >
-                            Preview
+                            {t("collection_create.preview_btn")}
                         </Button>
                     </div>
                     <div className="mt-auto mx-auto">
@@ -217,7 +227,7 @@ const CreateCollection = () => {
                                     disabled={isDisable}
                                     onClick={onCreateCollection}
                                 >
-                                    Create
+                                    {t("collection_create.create_btn")}
                                 </Button>
                             </span>
                         </TopTooltip>
@@ -228,11 +238,17 @@ const CreateCollection = () => {
                 >
                     <Grid item className="flex items-center ">
                         <Typography>
-                            You have select <b>{addTopics.length}/340</b> topics
+                            <Trans
+                                values={{
+                                    topic_count: `${addTopics.length}/340`,
+                                }}
+                            >
+                                collection_create.selected
+                            </Trans>
                         </Typography>
                         <SearchField
                             className="ml-auto w-[150px]"
-                            placeholder="Topic's name"
+                            placeholder={t("collection_create.search_holder")}
                             onChange={onSearch}
                         />
                     </Grid>
@@ -248,13 +264,13 @@ const CreateCollection = () => {
                     >
                         {addTopics.length === 0 ? (
                             <Typography>
-                                You haven&apos;t select any topics yet
+                                {t("collection_create.not_select_any")}
                             </Typography>
                         ) : (
                             (filtered?.length ? filtered : addTopics).map(
                                 topic => (
                                     <Tag
-                                        label={topic.nameVi}
+                                        label={topic.name}
                                         key={topic.id}
                                         onDelete={() => removeTopic(topic)}
                                     />

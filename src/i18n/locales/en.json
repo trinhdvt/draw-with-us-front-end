@@ -1,7 +1,11 @@
 {
     "common": {
         "home": {
-            "finding": "Finding..."
+            "finding": "Finding...",
+            "your_collection": {
+                "title": "Your collection",
+                "warn": "Not implemented yet😢"
+            }
         },
         "play_now": "Play Now",
         "find_room": "Find Room",
@@ -126,6 +130,28 @@
             "timeout": "Time per turn",
             "join_now": "Join Now",
             "cancel": "Cancel"
+        },
+        "collection_create": {
+            "title": "New Collection",
+            "collection_name": " Collection name ",
+            "share": " Share with others",
+            "select_topic_below": " Select topic below ",
+            "autocomplete_label": "Topic",
+            "add_btn": "Add",
+            "preview_btn": "Preview",
+            "create_btn": "Create",
+            "not_select_any": "You haven't select any topics yet!",
+            "selected": "You have select <b>{{topic_count}}</b> topics",
+            "search_holder": "Topic's name",
+            "tooltip": {
+                "not_enough": "Please add at least 5 topics",
+                "no_name": "Please enter collection name"
+            }
+        },
+        "footer": {
+            "term": "Terms",
+            "privacy": "Privacy Policy",
+            "status": "Status"
         }
     }
 }

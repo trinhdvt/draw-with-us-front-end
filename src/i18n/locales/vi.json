@@ -1,7 +1,11 @@
 {
     "common": {
         "home": {
-            "finding": "Đang tìm ..."
+            "finding": "Đang tìm ...",
+            "your_collection": {
+                "title": "Bộ sưu tập của bạn",
+                "warn": "Chức năng chưa được phát triển \uD83D\uDE22"
+            }
         },
         "play_now": "Chơi ngay",
         "find_room": "Tìm phòng",
@@ -126,6 +130,28 @@
             "timeout": "Thời gian",
             "join_now": "Vào ngay",
             "cancel": "Hủy"
+        },
+        "collection_create": {
+            "title": "Tạo bộ sưu tập",
+            "collection_name": " Tên bộ sưu tập ",
+            "share": " Chia sẻ công khai",
+            "select_topic_below": " Chọn các chủ đề bên dưới ",
+            "autocomplete_label": "Chủ đề",
+            "add_btn": "Thêm",
+            "preview_btn": "Xem trước",
+            "create_btn": "Tạo",
+            "not_select_any": "Bạn chưa chọn chủ đề nào!",
+            "selected": "Bạn đã chọn <b>{{topic_count}}</b> chủ đề",
+            "search_holder": "Tên chủ đề",
+            "tooltip": {
+                "not_enough": "Vui lòng chọn ít nhất 5 chủ đề",
+                "no_name": "Vui lòng nhập tên bộ sưu tập"
+            }
+        },
+        "footer": {
+            "term": "Điều khoản",
+            "privacy": "Chính sách bảo mật",
+            "status": "Trạng thái"
         }
     }
 }

@@ -18,6 +18,10 @@ i18n.use(initReactI18next)
         interpolation: {
             escapeValue: false,
         },
+        react: {
+            transSupportBasicHtmlNodes: true,
+            transKeepBasicHtmlNodesFor: ["br", "strong", "b", "i"],
+        },
     })
     .then();
 

@@ -6,7 +6,7 @@ import {useUser} from "../../store/UserStore";
 
 import PlayNowPanel from "./components/PlayNowPanel";
 import LoginPanel from "./components/LoginPanel";
-import ListCreatedCollection from "./components/ListCreatedCollection";
+import YourCollection from "./components/YourCollection";
 
 const HomePage = () => {
     const {t} = useTranslation();
@@ -23,7 +23,7 @@ const HomePage = () => {
             <Divider orientation="vertical" flexItem variant="middle">
                 <Typography className="uppercase">{t("or")}</Typography>
             </Divider>
-            {isLoggedIn ? <ListCreatedCollection /> : <LoginPanel />}
+            {isLoggedIn ? <YourCollection /> : <LoginPanel />}
         </div>
     );
 };

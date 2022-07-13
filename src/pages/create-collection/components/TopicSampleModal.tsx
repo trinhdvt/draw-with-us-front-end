@@ -18,12 +18,10 @@ const TopicSampleModal = ({topic, onClose}: TopicSampleModalProps) => (
             maxWidth="650px"
             className={clsx("flex flex-col rounded-xl", styles.centerModal)}
         >
-            <div className="flex justify-center items-center">
-                <Typography
-                    variant="h4"
-                    className="capitalize flex-1 text-center"
-                >
-                    {topic?.nameVi}
+            <div className="grid grid-cols-[1fr_11fr_1fr] items-center">
+                <div />
+                <Typography variant="h3" className="capitalize text-center">
+                    {topic?.name}
                 </Typography>
                 <IconButton onClick={onClose}>
                     <CancelPresentationIcon color="error" />

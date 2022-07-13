@@ -50,14 +50,14 @@ const AppFooter = () => {
                     target="_blank"
                     className="no-underline"
                 >
-                    <FooterText>Terms</FooterText>
+                    <FooterText>{t("footer.term")}</FooterText>
                 </Link>
                 <Link
                     to="/privacy_policy.txt"
                     target="_blank"
                     className="no-underline"
                 >
-                    <FooterText>Privacy Policy</FooterText>
+                    <FooterText>{t("footer.privacy")}</FooterText>
                 </Link>
                 <a
                     href="https://status.draw-with.trinhdvt.tech/"
@@ -65,7 +65,7 @@ const AppFooter = () => {
                     className="no-underline"
                     rel="noreferrer"
                 >
-                    <FooterText>Status</FooterText>
+                    <FooterText>{t("footer.status")}</FooterText>
                 </a>
                 <I18nSelector />
             </Stack>
