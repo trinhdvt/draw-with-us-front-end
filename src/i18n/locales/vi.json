@@ -154,6 +154,13 @@
             "term": "Điều khoản",
             "privacy": "Chính sách bảo mật",
             "status": "Trạng thái"
+        },
+        "how_to_play": {
+            "room_preview": "Bạn đang chơi trong phòng <b>{{roomName}}</b> sử dụng bộ sưu tập <b>{{collectionName}}</b>.",
+            "number_of_topics": "Có <b>{{topicCount}} chủ đề</b> trong bộ sưu tập này, và ở mỗi lượt chơi bạn sẽ được đưa cho một chủ đề trong số đó.",
+            "timeout_warn": "Ở mỗi lượt chơi, bạn sẽ có <b>{{timeOut}} giây</b> để <b>suy nghĩ và vẽ</b> một hình ảnh về chủ đề đã cho. Khu vực để vẽ nằm ở giữa màn hình.",
+            "how_to_check": "Sau khi vẽ xong, nhấn <b>Kiểm tra</b> để nộp hình vẽ của bạn. Nếu đúng bạn sẽ nhận được điểm thưởng. Nếu không, hãy cố gắng tập trung vẽ trước khi hết thời gian cho phép.",
+            "view_history": "Để xem hình vẽ mẫu của các chủ đề đã chơi, nhấn nút <b>Lịch Sử</b> ở góc trên bên trái màn hình."
         }
     }
 }

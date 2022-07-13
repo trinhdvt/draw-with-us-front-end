@@ -107,7 +107,6 @@ const DrawBoard = ({...others}: GridProps) => {
                                 canvasRef.current?.eraseMode(!eraseMode);
                                 setEraseMode(!eraseMode);
                             }}
-                    
                         />
                     }
                     label={

@@ -1,11 +1,11 @@
 import React from "react";
 import {Avatar, Grid, GridProps, Typography} from "@mui/material";
 import clsx from "clsx";
-import {BiHash} from "react-icons/bi";
 import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
 import {FcPrivacy} from "react-icons/fc";
 import {useTranslation} from "react-i18next";
+import {RiImageEditFill} from "react-icons/ri";
 
 import styles from "../../../assets/styles/Room.module.scss";
 import {IRoomResponse} from "../../../api/@types/Room";
@@ -28,6 +28,7 @@ const RoomCard = ({
     image,
     isPrivate,
     onClick,
+    numberOfTopics,
     ...others
 }: RoomProps & GridProps) => {
     const {t} = useTranslation();
@@ -72,13 +73,29 @@ const RoomCard = ({
                         <Typography
                             noWrap={true}
                             variant="h5"
-                            className="ml-1 capitalize mt-2"
+                            className="ml-1 capitalize mt-1"
                         >
                             {roomLabel}
                         </Typography>
                     </TopTooltip>
+                    <TopTooltip title={t("list_room.tooltip.room_id")}>
+                        <Typography variant="body2" className="font-light">
+                            <span className="text-[#1565c0]">#</span>
+                            {id}
+                        </Typography>
+                    </TopTooltip>
                 </div>
-                <div className="grid grid-cols-4 w-full mt-1">
+                <div className="grid grid-cols-3 w-full mt-1">
+                    <div className="flex flex-col  items-center">
+                        <TopTooltip title={t("create_room.number_of_topics")}>
+                            <span>
+                                <RiImageEditFill className="primary-icon" />
+                            </span>
+                        </TopTooltip>
+                        <Typography variant="body1" className="font-light">
+                            {numberOfTopics}
+                        </Typography>
+                    </div>
                     <div className="flex flex-col  items-center ">
                         <TopTooltip title={t("list_room.tooltip.max_player")}>
                             <span>
@@ -91,19 +108,10 @@ const RoomCard = ({
                             </span>
                         </TopTooltip>
                         <Typography variant="body1" className="font-light">
-                            {currentUsers}/{maxUsers}
+                            , {currentUsers}/{maxUsers}
                         </Typography>
                     </div>
-                    <div className="flex flex-col col-span-2 items-center">
-                        <TopTooltip title={t("list_room.tooltip.room_id")}>
-                            <span>
-                                <BiHash className="primary-icon" />
-                            </span>
-                        </TopTooltip>
-                        <Typography variant="body1" className="font-light">
-                            {id}
-                        </Typography>
-                    </div>
+
                     <div className="flex flex-col items-center">
                         <TopTooltip title={t("list_room.tooltip.time_out")}>
                             <span>
@@ -130,6 +138,7 @@ const RoomDefault = (): RoomProps => ({
     collectionName: "Demo",
     selected: false,
     isPrivate: Math.random() > 0.5,
+    numberOfTopics: Math.floor(Math.random() * 10),
 });
 
 export default RoomCard;

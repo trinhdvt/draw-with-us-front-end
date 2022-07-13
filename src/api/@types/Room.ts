@@ -8,6 +8,7 @@ interface IRoomResponse {
     collectionName: string;
     image?: string;
     isPrivate?: boolean;
+    numberOfTopics: number;
 }
 
 enum RoomStatus {

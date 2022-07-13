@@ -166,4 +166,5 @@ const JoinRoom = () => {
     );
 };
 
+export {RoomInfoDiv, TextContent};
 export default JoinRoom;

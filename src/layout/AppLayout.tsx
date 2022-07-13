@@ -15,7 +15,7 @@ const AppLayout = ({children}: {children?: React.ReactNode}) => {
                 backgroundImage:
                     "linear-gradient(to bottom right, #00C0FF, #a9d1d0)",
             }}
-            className="my-[40px] min-w-[900px] mx-auto rounded-xl"
+            className="mt-[40px] mb-[20px] min-w-[900px] mx-auto rounded-xl"
         >
             <AppHeader />
             {children ?? <Outlet />}

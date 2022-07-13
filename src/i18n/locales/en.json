@@ -154,6 +154,13 @@
             "term": "Terms",
             "privacy": "Privacy Policy",
             "status": "Status"
+        },
+        "how_to_play": {
+            "room_preview": " You are playing in room <b>{{roomName}}</b> with the collection <b>{{collectionName}}</b>.",
+            "number_of_topics": "There is <b>{{topicCount}} topic</b> in this collection that will be given to you in each turn.",
+            "timeout_warn": "In each turn, you will have <b>{{timeOut}} seconds</b> to <b>think then draw</b> an image about the given topic. The drawing board is placed in the middle of the screen.",
+            "how_to_check": "When done, press <b>Check</b> to submit your drawing and receive points if you have done a correct. If not, try your best before the time run out.",
+            "view_history": "To see played topic's sample drawing, press the <b>History</b> button at the top left corner."
         }
     }
 }
