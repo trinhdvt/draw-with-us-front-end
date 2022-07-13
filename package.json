@@ -11,7 +11,7 @@
         "axios": "latest",
         "canvas-confetti": "^1.5.1",
         "clsx": "^1.1.1",
-        "framer-motion": "^6.3.15",
+        "framer-motion": "^6.4.3",
         "fuse.js": "^6.6.2",
         "i18next": "^21.8.13",
         "jdenticon": "^3.1.1",

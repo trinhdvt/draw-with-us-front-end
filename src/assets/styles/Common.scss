@@ -41,6 +41,10 @@ $scroll-container-height: 250px;
   margin: auto auto;
 }
 
+.scaleAnimation {
+  animation: scaleMe linear 0.3s;
+}
+
 @keyframes scaleMe {
   from {
     transform: scale(0.5);

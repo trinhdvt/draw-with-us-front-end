@@ -66,7 +66,7 @@ const Timer = (props: TimerProps) => {
             </div>
             <div className="max-w-fit">
                 <Typography variant="body2" className="font-bold text-lg">
-                    {`${progress.remainingTime} S`}
+                    {progress.remainingTime}
                 </Typography>
             </div>
         </div>

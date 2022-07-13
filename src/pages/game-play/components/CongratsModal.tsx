@@ -1,7 +1,6 @@
 import React from "react";
 import {Avatar, Grid, Typography} from "@mui/material";
 import clsx from "clsx";
-import {motion} from "framer-motion";
 import {useTranslation} from "react-i18next";
 
 import styles from "../../../assets/styles/Game.module.scss";
@@ -22,12 +21,10 @@ const CongratsModal = () => {
 
     return (
         <div className="modal">
-            <motion.div
-                initial={{opacity: 0, scale: 0}}
-                animate={{opacity: 1, scale: 1}}
-                transition={{ease: "easeIn", duration: 1}}
+            <div
                 className={clsx(
                     styles.centerModal,
+                    styles.scaleAnimation,
                     "flex flex-col max-w-[500px] w-[500px] " +
                         "p-4 items-center justify-center rounded-xl"
                 )}
@@ -66,7 +63,7 @@ const CongratsModal = () => {
                         </Grid>
                     ))}
                 </Grid>
-            </motion.div>
+            </div>
         </div>
     );
 };
