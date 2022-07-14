@@ -4,6 +4,14 @@ import Swal from "sweetalert2";
 import i18n from "../../../i18n/config";
 import notify from "../../../utils/Notify";
 
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+});
+
 const alertSuccess = () => {
     FireWorks();
     return notify({
@@ -13,14 +21,6 @@ const alertSuccess = () => {
 };
 
 const alertWrong = () => {
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-    });
-
     return Toast.fire({
         icon: "error",
         title: i18n.t("game_play.alert.wrong"),
@@ -100,3 +100,4 @@ const FireWorks = (timeLimit = 3) => {
 };
 
 export {alertSuccess, alertWrong, timeUp, alertWelcome, Congrats, FireWorks};
+export default Toast;

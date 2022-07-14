@@ -108,7 +108,7 @@ const RoomCard = ({
                             </span>
                         </TopTooltip>
                         <Typography variant="body1" className="font-light">
-                            , {currentUsers}/{maxUsers}
+                            {currentUsers}/{maxUsers}
                         </Typography>
                     </div>
 

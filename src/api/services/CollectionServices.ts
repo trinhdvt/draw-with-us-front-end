@@ -14,9 +14,7 @@ const createCollection = async (payload: ICollectionRequest) => {
 };
 
 const useCollections = () => {
-    return useQuery("collections", fetchCollections, {
-        staleTime: Infinity,
-    });
+    return useQuery("collections", fetchCollections);
 };
 
 const useCreateCollection = () => {

@@ -161,6 +161,12 @@
             "timeout_warn": "Ở mỗi lượt chơi, bạn sẽ có <b>{{timeOut}} giây</b> để <b>suy nghĩ và vẽ</b> một hình ảnh về chủ đề đã cho. Khu vực để vẽ nằm ở giữa màn hình.",
             "how_to_check": "Sau khi vẽ xong, nhấn <b>Kiểm tra</b> để nộp hình vẽ của bạn. Nếu đúng bạn sẽ nhận được điểm thưởng. Nếu không, hãy cố gắng tập trung vẽ trước khi hết thời gian cho phép.",
             "view_history": "Để xem hình vẽ mẫu của các chủ đề đã chơi, nhấn nút <b>Lịch Sử</b> ở góc trên bên trái màn hình."
+        },
+        "pause_game": {
+            "paused": "Tiếp tục",
+            "resumed": "Tạm dừng",
+            "paused_msg": "Trò chơi sẽ được tạm dừng sau khi kết thúc lượt",
+            "resumed_msg": "Trò chơi đã được tiếp tục"
         }
     }
 }

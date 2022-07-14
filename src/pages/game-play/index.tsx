@@ -14,6 +14,7 @@ import {
     WaitNextTurn,
     WaitHost,
     WaitOtherPlayer,
+    PausedGame,
 } from "./components/WaitingScreen";
 import CountdownTimer from "./components/CountdownTimer";
 import DrawBoard from "./components/DrawBoard";
@@ -32,6 +33,7 @@ const Game = () => {
     const {gameState, dispatch} = useGame();
     const {data} = useRoom(gameState.roomId);
     const isPlaying = data?.status === RoomStatus.PLAYING;
+    const isPaused = data?.status === RoomStatus.PAUSED;
 
     React.useEffect(() => {
         socket?.on("game:nextTurn", (topic: ITopic) => {
@@ -64,6 +66,8 @@ const Game = () => {
 
     const GameWaitingScreen = () => {
         if (isPlaying) return;
+        if (isPaused) return <PausedGame />;
+
         const isHost = data?.isHost;
         const isReadyForGame = (data?.currentUsers ?? 0) > 1;
 
@@ -82,7 +86,9 @@ const Game = () => {
     return (
         <Grid container>
             <Grid item md={3.5} xs={3.5} className="mb-2">
-                <GameInfo />
+                <GameInfo
+                    isHostLayout={data?.isHost && (isPlaying || isPaused)}
+                />
             </Grid>
             <Grid item md={6} xs={6} className="mb-2 mx-auto flex items-center">
                 {isPlaying && !gameState.isEndTurn && !gameState.isDone && (

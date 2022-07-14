@@ -50,6 +50,8 @@ const WaitNextTurn = () => (
     <WaitingScreen title={i18n.t("game_play.waiting_screen.wait_next_turn")} />
 );
 
+const PausedGame = () => <WaitingScreen title={"The game has been paused"} />;
+
 const ReadyToStartGame = () => {
     const {t} = useTranslation();
     const socket = useSocket();
@@ -70,4 +72,11 @@ const ReadyToStartGame = () => {
     );
 };
 
-export {WaitOtherPlayer, ReadyToStartGame, WaitHost, WaitEndTurn, WaitNextTurn};
+export {
+    WaitOtherPlayer,
+    ReadyToStartGame,
+    WaitHost,
+    WaitEndTurn,
+    WaitNextTurn,
+    PausedGame,
+};
