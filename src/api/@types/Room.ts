@@ -14,6 +14,7 @@ interface IRoomResponse {
 enum RoomStatus {
     WAITING = "waiting",
     PLAYING = "playing",
+    PAUSED = "paused",
 }
 
 interface IRoomConfig extends IRoomResponse {

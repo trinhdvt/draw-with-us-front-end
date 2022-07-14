@@ -11,7 +11,7 @@ const FooterText = ({children}: {children: React.ReactNode}) => (
 
 const I18nSelector = () => {
     const {i18n} = useTranslation();
-    const [locale, setLocale] = React.useState("en");
+    const [locale, setLocale] = React.useState(i18n.language);
 
     const onLocaleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newLocale = e.target.value;
