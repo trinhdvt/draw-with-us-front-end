@@ -82,7 +82,8 @@
                 "wait_host": "Waiting for host to start the game",
                 "wait_end_turn": "Waiting for other players to finish",
                 "wait_next_turn": "Let's take a rest",
-                "ready_to_start": "Other players is waiting ..."
+                "ready_to_start": "Other players is waiting ...",
+                "paused": "The game has been paused"
             },
             "start_the_game": "Start the game",
             "point": " points",

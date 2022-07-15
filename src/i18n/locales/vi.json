@@ -82,7 +82,8 @@
                 "wait_host": "Đang chờ chủ phòng bắt đầu",
                 "wait_end_turn": "Chờ người chơi khác hoàn thành!",
                 "wait_next_turn": "Nghỉ ngơi một chút nào!",
-                "ready_to_start": "Sẵn sàng bắt đầu!"
+                "ready_to_start": "Sẵn sàng bắt đầu!",
+                "paused": "Trò chơi đã được tạm dừng!"
             },
             "start_the_game": "Bắt đầu chơi!",
             "point": " điểm",
