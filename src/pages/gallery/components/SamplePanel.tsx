@@ -1,6 +1,7 @@
 import React from "react";
 import {Grid, GridProps} from "@mui/material";
 import clsx from "clsx";
+import throttle from "lodash.throttle";
 
 import {useSamples} from "../../../api/services/TopicServices";
 import styles from "../../../assets/styles/Gallery.module.scss";
@@ -15,6 +16,10 @@ const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
     const {data, fetchNextPage} = useSamples(topicId);
     const containerRef = React.useRef<HTMLDivElement>(null);
 
+    const throttleFetch = React.useMemo(() => {
+        return throttle(fetchNextPage, 2e3);
+    }, [fetchNextPage]);
+
     React.useEffect(() => {
         containerRef.current?.scrollTo({top: 0, behavior: "smooth"});
         containerRef.current?.addEventListener("scroll", async (e: Event) => {
@@ -22,10 +27,10 @@ const SamplePanel = ({topicId, ...others}: Props & GridProps) => {
             const {scrollTop, scrollHeight, clientHeight} = target;
 
             if (scrollTop + clientHeight === scrollHeight) {
-                await fetchNextPage();
+                throttleFetch();
             }
         });
-    }, [fetchNextPage, topicId]);
+    }, [throttleFetch, topicId]);
 
     return (
         <Grid

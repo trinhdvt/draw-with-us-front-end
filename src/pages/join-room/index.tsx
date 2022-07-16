@@ -2,8 +2,8 @@ import React from "react";
 import {Avatar, Button, Divider, Grid, Typography} from "@mui/material";
 import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
+import {MdOutlineCollections} from "react-icons/md";
 import clsx from "clsx";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import LogoutIcon from "@mui/icons-material/Logout";
 import {Navigate, useNavigate, useSearchParams} from "react-router-dom";
@@ -92,10 +92,7 @@ const JoinRoom = () => {
                             </div>
                             <div className="flex items-center">
                                 <div className={styles.iconAvatar}>
-                                    <MeetingRoomIcon
-                                        color="primary"
-                                        fontSize="large"
-                                    />
+                                    <MdOutlineCollections className="primary-icon text-3xl" />
                                 </div>
                                 <RoomInfoDiv>
                                     <Typography className="capitalize">

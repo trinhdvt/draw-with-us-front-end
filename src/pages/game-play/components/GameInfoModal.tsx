@@ -1,9 +1,9 @@
 import React from "react";
 import {Avatar, Divider, Grid, IconButton, Typography} from "@mui/material";
 import clsx from "clsx";
-import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import {FaRegUser} from "react-icons/fa";
 import {GiEmptyHourglass} from "react-icons/gi";
+import {MdOutlineCollections} from "react-icons/md";
 import {Trans, useTranslation} from "react-i18next";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 
@@ -67,7 +67,7 @@ const GameInfoModal = ({onClose}: Props) => {
                     </div>
                     <div className="flex items-center">
                         <div className={styles.iconAvatar}>
-                            <MeetingRoomIcon color="primary" fontSize="large" />
+                            <MdOutlineCollections className="primary-icon text-3xl" />
                         </div>
                         <RoomInfoDiv>
                             <Typography className="capitalize">

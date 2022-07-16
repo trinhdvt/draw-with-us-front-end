@@ -45,7 +45,7 @@ const CreateRoom = () => {
             setPayload(prev => ({
                 ...prev,
                 maxUsers: createConfig.maxUsers[0],
-                timeOut: createConfig.timeOut[0],
+                timeOut: createConfig.timeOut[1],
             }));
         }
     }, [createConfig]);
