@@ -1,4 +1,4 @@
-import {useQuery} from "react-query";
+import {useQuery} from "@tanstack/react-query";
 
 import {BackendAPI} from "../HttpClient";
 
@@ -13,7 +13,7 @@ interface IAppConfig {
 
 const useAppConfig = () => {
     return useQuery<IAppConfig>(
-        "app-config",
+        ["app-config"],
         async () => {
             const {data} = await BackendAPI.get("/api/app");
             return data;

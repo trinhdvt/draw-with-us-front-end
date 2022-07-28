@@ -2,7 +2,7 @@ import React from "react";
 import {Button, Grid, GridProps, Typography} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
-import {useMutation} from "react-query";
+import {useMutation} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 

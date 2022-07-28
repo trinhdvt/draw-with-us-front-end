@@ -3,7 +3,7 @@ import {Button} from "@mui/material";
 import MeetingRoomIcon from "@mui/icons-material/MeetingRoom";
 import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import {useNavigate} from "react-router-dom";
-import {useQueryClient} from "react-query";
+import {useQueryClient} from "@tanstack/react-query";
 import clsx from "clsx";
 import {useTranslation} from "react-i18next";
 

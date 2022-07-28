@@ -11,7 +11,7 @@ import ConstructionIcon from "@mui/icons-material/Construction";
 import AddIcon from "@mui/icons-material/Add";
 import clsx from "clsx";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import {useQueryClient} from "react-query";
+import {useQueryClient} from "@tanstack/react-query";
 import {useNavigate} from "react-router-dom";
 import {Trans, useTranslation} from "react-i18next";
 
@@ -114,7 +114,7 @@ const CreateCollection = () => {
         };
         mutate(payload, {
             onSuccess: async () => {
-                await queryClient.invalidateQueries("collections");
+                await queryClient.invalidateQueries(["collections"]);
                 navigate("/create");
             },
             onError: err => alert(err.response?.data.message),

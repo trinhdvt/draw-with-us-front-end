@@ -39,6 +39,9 @@ export default defineConfig({
         }),
         splitVendorChunkPlugin(),
     ],
+    esbuild: {
+        logOverride: {"this-is-undefined-in-esm": "silent"},
+    },
     server: {
         host: true,
         port: 3000,

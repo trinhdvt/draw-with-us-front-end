@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 
 import {BackendAPI, HttpError} from "../HttpClient";
 import {
@@ -31,6 +31,7 @@ const useValidPlayer = (roomId?: string) => {
         ["valid-player", roomId],
         async () => {
             await BackendAPI.head(`/api/room/${roomId}/player`);
+            return true;
         },
         {
             enabled: !!roomId,
@@ -81,7 +82,7 @@ const usePlayers = (roomId?: string) => {
 
 const useCreateRoom = () => {
     return useMutation<IRoomResponse, HttpError, IRoomRequest>(
-        "create-room",
+        ["create-room"],
         createRoom
     );
 };

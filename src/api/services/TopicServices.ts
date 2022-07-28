@@ -1,4 +1,4 @@
-import {useInfiniteQuery, useQuery} from "react-query";
+import {useInfiniteQuery, useQuery} from "@tanstack/react-query";
 
 import {BackendAPI} from "../HttpClient";
 import ITopic from "../@types/Topic";

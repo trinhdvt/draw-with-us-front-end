@@ -1,6 +1,6 @@
 import React from "react";
 import {Navigate, useLocation, useParams} from "react-router-dom";
-import {useQueryClient} from "react-query";
+import {useQueryClient} from "@tanstack/react-query";
 
 import {useSocket} from "../../store/SocketStore";
 import {useValidPlayer} from "../../api/services/RoomServices";

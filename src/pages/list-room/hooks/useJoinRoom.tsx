@@ -1,6 +1,6 @@
 import React from "react";
 import {useNavigate} from "react-router-dom";
-import {useQueryClient} from "react-query";
+import {useQueryClient} from "@tanstack/react-query";
 
 import GetPassword from "../../../utils/PasswordDialog";
 import {notifyError} from "../../../utils/Notify";

@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from "react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 
 import {BackendAPI, HttpError} from "../HttpClient";
 import {ICollection, ICollectionRequest} from "../@types/Collection";
@@ -14,12 +14,12 @@ const createCollection = async (payload: ICollectionRequest) => {
 };
 
 const useCollections = () => {
-    return useQuery("collections", fetchCollections);
+    return useQuery(["collections"], fetchCollections);
 };
 
 const useCreateCollection = () => {
     return useMutation<unknown, HttpError, ICollectionRequest>(
-        "create-collection",
+        ["create-collection"],
         createCollection
     );
 };
