@@ -13,6 +13,7 @@ import styles from "../../../assets/styles/Room.module.scss";
 import TopTooltip from "../../../components/TopTooltip";
 import {RoomInfoDiv, TextContent} from "../../join-room";
 import {useGame} from "../context/GameContext";
+import CustomModal from "../../../components/CustomModal";
 
 type Props = {
     onClose: () => void;
@@ -25,15 +26,15 @@ const GameInfoModal = ({onClose}: Props) => {
     const {data} = usePreviewRoom(roomId);
 
     return (
-        <div className="modal">
+        <CustomModal>
             <Grid
                 maxWidth="sm"
                 className={clsx(
-                    "flex flex-col  items-center rounded-xl",
+                    "flex flex-col items-center rounded-xl",
                     gameStyles.centerModal
                 )}
             >
-                <div className="w-full grid grid-cols-[1fr_11fr_1fr]  mb-2">
+                <div className="w-full grid grid-cols-[1fr_11fr_1fr] mb-2">
                     <div />
                     <Typography
                         variant="h3"
@@ -153,7 +154,7 @@ const GameInfoModal = ({onClose}: Props) => {
                     </li>
                 </ul>
             </Grid>
-        </div>
+        </CustomModal>
     );
 };
 

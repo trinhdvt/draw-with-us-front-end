@@ -1,11 +1,12 @@
 import React from "react";
-import clsx from "clsx";
 import {Grid, IconButton, Typography} from "@mui/material";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import clsx from "clsx";
 
 import styles from "../../../assets/styles/Collection.module.scss";
 import ITopic from "../../../api/@types/Topic";
 import SamplePanel from "../../gallery/components/SamplePanel";
+import CustomModal from "../../../components/CustomModal";
 
 type TopicSampleModalProps = {
     topic: ITopic | null;
@@ -13,7 +14,7 @@ type TopicSampleModalProps = {
 };
 
 const TopicSampleModal = ({topic, onClose}: TopicSampleModalProps) => (
-    <div className="modal">
+    <CustomModal>
         <Grid
             maxWidth="650px"
             className={clsx("flex flex-col rounded-xl", styles.centerModal)}
@@ -29,7 +30,7 @@ const TopicSampleModal = ({topic, onClose}: TopicSampleModalProps) => (
             </div>
             <SamplePanel topicId={topic?.id} />
         </Grid>
-    </div>
+    </CustomModal>
 );
 
 export default TopicSampleModal;

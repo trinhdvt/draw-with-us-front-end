@@ -7,6 +7,7 @@ import styles from "../../../assets/styles/Game.module.scss";
 import {useGame} from "../context/GameContext";
 import {usePlayers} from "../../../api/services/RoomServices";
 import {Congrats} from "../utils/GameNotify";
+import CustomModal from "../../../components/CustomModal";
 
 import {RankingBgColor, SmallChip} from "./Player";
 
@@ -20,7 +21,7 @@ const CongratsModal = () => {
     }, []);
 
     return (
-        <div className="modal">
+        <CustomModal>
             <div
                 className={clsx(
                     styles.centerModal,
@@ -64,7 +65,7 @@ const CongratsModal = () => {
                     ))}
                 </Grid>
             </div>
-        </div>
+        </CustomModal>
     );
 };
 

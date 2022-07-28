@@ -1,12 +1,13 @@
 import React from "react";
 import {Grid, IconButton, Typography} from "@mui/material";
-import clsx from "clsx";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
 import {useTranslation} from "react-i18next";
+import clsx from "clsx";
 
 import styles from "../../../assets/styles/Game.module.scss";
 import {useGame} from "../context/GameContext";
 import TopicList from "../../gallery/components/TopicList";
+import CustomModal from "../../../components/CustomModal";
 
 type HistoryModalProps = {
     onClose: () => void;
@@ -18,7 +19,7 @@ const HistoryModal = ({onClose}: HistoryModalProps) => {
     const playedTopics = Array.from(gameState.history);
 
     return (
-        <div className="modal">
+        <CustomModal>
             <Grid
                 maxWidth="md"
                 className={clsx("flex flex-col rounded-xl", styles.centerModal)}
@@ -34,7 +35,7 @@ const HistoryModal = ({onClose}: HistoryModalProps) => {
                 </div>
                 <TopicList data={playedTopics} />
             </Grid>
-        </div>
+        </CustomModal>
     );
 };
 
