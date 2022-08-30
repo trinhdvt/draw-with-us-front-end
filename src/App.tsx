@@ -10,14 +10,13 @@ import OAuthLogin from "./pages/home/components/OAuthLogin";
 import SocketWrapper from "./store/SocketStore";
 import HomePage from "./pages/home";
 import {useUser} from "./store/UserStore";
-
-const AppLayout = React.lazy(() => import("./layout/AppLayout"));
-const ListRoom = React.lazy(() => import("./pages/list-room"));
-const JoinRoom = React.lazy(() => import("./pages/join-room"));
-const CreateRoom = React.lazy(() => import("./pages/create-room"));
-const CreateCollection = React.lazy(() => import("./pages/create-collection"));
-const Gallery = React.lazy(() => import("./pages/gallery"));
-const NotFound = React.lazy(() => import("./components/NotFound"));
+import ListRoom from "./pages/list-room";
+import CreateRoom from "./pages/create-room";
+import Gallery from "./pages/gallery";
+import CreateCollection from "./pages/create-collection";
+import AppLayout from "./layout/AppLayout";
+import NotFound from "./components/NotFound";
+import JoinRoom from "./pages/join-room";
 
 const queryClient = new QueryClient({
     defaultOptions: {
