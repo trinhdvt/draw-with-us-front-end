@@ -74,7 +74,7 @@
         "eslint-plugin-react": "^7.29.4",
         "eslint-plugin-react-hooks": "^4.5.0",
         "normalize.css": "^8.0.1",
-        "postcss": "^8.4.13",
+        "postcss": "^8.4.31",
         "prettier": "2.6.2",
         "sass": "^1.51.0",
         "tailwindcss": "^3",
